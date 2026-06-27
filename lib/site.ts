@@ -11,8 +11,7 @@ export const site = {
 
 export const navItems = [
   { href: "/adocao", label: "Adoção" },
-  { href: "/doacao", label: "Doação" },
-  { href: "/doar-itens", label: "Doar itens" },
+  { href: "/doacao", label: "Doações" },
   { href: "/apadrinhamento", label: "Apadrinhar" },
   { href: "/cadastro", label: "Quero ajudar" },
   { href: "/transparencia", label: "Transparência" },

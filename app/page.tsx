@@ -13,11 +13,11 @@ export default function HomePage() {
           <p>Cada adoção abre espaço para um novo resgate. Cada doação vira ração, vacina, abrigo e cuidado para quem ainda não tem para onde ir.</p>
           <div className="hero-actions">
             <Link className="button primary" href="/adocao">Quero adotar</Link>
-            <Link className="button donate" href="/doar-itens">Quero ajudar agora</Link>
+            <Link className="button donate" href="/doacao#itens">Quero ajudar agora</Link>
             <Link className="button light" href="/cadastro">Receber novidades</Link>
           </div>
           <div className="hero-links">
-            <Link href="/doar-itens">Doar item</Link>
+            <Link href="/doacao#itens">Doar item</Link>
             <Link href="/apadrinhamento">Apadrinhar</Link>
             <a href={site.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
@@ -36,7 +36,7 @@ export default function HomePage() {
         </div>
         <div className="mini-donation-grid">
           {donationItems.slice(2).map((item) => (
-            <Link key={item.key} href="/doar-itens"><span>R$ {item.price}</span><strong>{item.name}</strong></Link>
+            <Link key={item.key} href="/doacao#itens"><span>R$ {item.price}</span><strong>{item.name}</strong></Link>
           ))}
         </div>
       </section>
