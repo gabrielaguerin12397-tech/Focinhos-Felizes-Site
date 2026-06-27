@@ -81,11 +81,13 @@ export function DonationShop() {
         {donationItems.map((item) => (
           <article className={`donation-item ${item.type === "recurring" ? "recurring" : ""}`} key={item.key}>
             <img src={item.image} alt={item.name} />
-            <span className="item-icon">{item.type === "recurring" ? "Mensal" : "Item solidário"}</span>
-            <h2>{item.name}</h2>
-            <p>{item.description}</p>
-            <strong>R$ {item.price},00{item.type === "recurring" ? "/mês" : ""}</strong>
-            <button className="button primary" type="button" onClick={() => addItem(item)}>Adicionar ao carrinho</button>
+            <div className="donation-item-copy">
+              <span className="item-icon">{item.type === "recurring" ? "Mensal" : "Item solidário"}</span>
+              <h2>{item.name}</h2>
+              <p>{item.description}</p>
+              <strong>R$ {item.price},00{item.type === "recurring" ? "/mês" : ""}</strong>
+            </div>
+            <button className="button small" type="button" onClick={() => addItem(item)}>Adicionar</button>
           </article>
         ))}
       </section>
