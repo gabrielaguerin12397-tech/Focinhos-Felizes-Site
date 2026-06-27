@@ -172,6 +172,13 @@ export function AdminPanel() {
 }
 
 function AnimalAdminPreview() {
+  const [animalPhotos, setAnimalPhotos] = useState<string[]>([]);
+
+  function handleAnimalPhotos(files: FileList | null) {
+    if (!files) return;
+    setAnimalPhotos(Array.from(files).map((file) => URL.createObjectURL(file)));
+  }
+
   return (
     <div className="admin-workspace">
       <div className="empty-state">
@@ -182,6 +189,17 @@ function AnimalAdminPreview() {
       <form className="form editor-form">
         <label>Nome<input placeholder="Ex: Thor" /></label>
         <label>Cor do pelo<input placeholder="Ex: caramelo" /></label>
+        <label>
+          Fotos do animal
+          <input type="file" accept="image/*" multiple onChange={(event) => handleAnimalPhotos(event.target.files)} />
+        </label>
+        {animalPhotos.length ? (
+          <div className="upload-preview-grid" aria-label="Previa das fotos do animal">
+            {animalPhotos.map((photo, index) => (
+              <img key={photo} src={photo} alt={`Foto ${index + 1} selecionada`} />
+            ))}
+          </div>
+        ) : null}
         <label>Historia<textarea placeholder="Conte a historia do animal" /></label>
         <button className="button primary" type="button">Salvar animal</button>
       </form>
@@ -190,10 +208,26 @@ function AnimalAdminPreview() {
 }
 
 function BlogAdminPreview() {
+  const [coverImage, setCoverImage] = useState<string>("");
+
+  function handleCoverImage(files: FileList | null) {
+    const file = files?.[0];
+    setCoverImage(file ? URL.createObjectURL(file) : "");
+  }
+
   return (
     <form className="form asaas-form">
       <label>Titulo<input placeholder="Titulo da noticia ou campanha" /></label>
       <label>Categoria<input placeholder="Resgate, adocao, campanha, evento..." /></label>
+      <label>
+        Imagem de capa
+        <input type="file" accept="image/*" onChange={(event) => handleCoverImage(event.target.files)} />
+      </label>
+      {coverImage ? (
+        <div className="blog-cover-preview">
+          <img src={coverImage} alt="Previa da capa do blog" />
+        </div>
+      ) : null}
       <label>Texto<textarea placeholder="Escreva o conteudo do blog" /></label>
       <button className="button primary" type="button">Salvar post</button>
     </form>

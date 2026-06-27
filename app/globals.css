@@ -961,6 +961,28 @@ textarea {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.upload-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.upload-preview-grid img,
+.blog-cover-preview img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.upload-preview-grid img {
+  aspect-ratio: 1;
+}
+
+.blog-cover-preview img {
+  max-height: 240px;
+}
+
 .empty-state {
   padding: 16px;
   border: 1px solid var(--line);
