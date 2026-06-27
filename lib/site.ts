@@ -16,6 +16,7 @@ export const navItems = [
   { href: "/apadrinhamento", label: "Apadrinhar" },
   { href: "/cadastro", label: "Quero ajudar" },
   { href: "/transparencia", label: "Transparência" },
+  { href: "/blog", label: "Blog" },
   { href: site.instagram, label: "Instagram", external: true },
   { href: "/contato", label: "Contato" },
   { href: "/admin", label: "Admin" }
