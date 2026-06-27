@@ -18,6 +18,15 @@ export type Animal = {
   tags: string[];
 };
 
+export type DonationProduct = {
+  key: string;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+  type: "item" | "recurring";
+};
+
 export const animals: Animal[] = [
   {
     id: "thor",
@@ -97,13 +106,14 @@ export const animals: Animal[] = [
   }
 ];
 
-export const donationItems = [
-  { key: "racao-10kg", name: "Saco de ração 10 kg", price: 95, image: "/assets/donation-food.png", description: "Ajuda a alimentar cães acolhidos durante a semana." },
-  { key: "vacina-v10", name: "Vacina V10", price: 80, image: "/assets/donation-vaccine.png", description: "Proteção essencial para cães resgatados." },
-  { key: "vacina-antirrabica", name: "Vacina antirrábica", price: 45, image: "/assets/donation-vaccine.png", description: "Imunização básica para adoção responsável." },
-  { key: "cobertor", name: "Cobertor", price: 35, image: "/assets/donation-blanket.png", description: "Conforto para animais em recuperação ou lares temporários." },
-  { key: "vermifugo", name: "Vermífugo", price: 28, image: "/assets/donation-dewormer.png", description: "Primeiro cuidado de saúde para novos resgatados." },
-  { key: "kit-higiene", name: "Kit higiene", price: 50, image: "/assets/donation-hygiene.png", description: "Produtos de limpeza, tapetes higiênicos e materiais de rotina." }
+export const donationItems: DonationProduct[] = [
+  { key: "racao-10kg", name: "Saco de ração 10 kg", price: 95, image: "/assets/donation-food.png", description: "Ajuda a alimentar cães acolhidos durante a semana.", type: "item" },
+  { key: "vacina-v10", name: "Vacina V10", price: 80, image: "/assets/donation-vaccine.png", description: "Proteção essencial para cães resgatados.", type: "item" },
+  { key: "vacina-antirrabica", name: "Vacina antirrábica", price: 45, image: "/assets/donation-vaccine.png", description: "Imunização básica para adoção responsável.", type: "item" },
+  { key: "cobertor", name: "Cobertor", price: 35, image: "/assets/donation-blanket.png", description: "Conforto para animais em recuperação ou lares temporários.", type: "item" },
+  { key: "vermifugo", name: "Vermífugo", price: 28, image: "/assets/donation-dewormer.png", description: "Primeiro cuidado de saúde para novos resgatados.", type: "item" },
+  { key: "kit-higiene", name: "Kit higiene", price: 50, image: "/assets/donation-hygiene.png", description: "Produtos de limpeza, tapetes higiênicos e materiais de rotina.", type: "item" },
+  { key: "apoio-mensal", name: "Doação mensal recorrente", price: 30, image: "/assets/hero-rescue.png", description: "Um apoio fixo todo mês para ração, medicamentos e emergências.", type: "recurring" }
 ];
 
 export const posts = [

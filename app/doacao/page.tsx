@@ -3,39 +3,54 @@ import { DonationShop } from "@/components/donation-shop";
 import { site } from "@/lib/site";
 
 export const metadata = {
-  title: "Faça uma Doação",
+  title: "Doações",
   description: "Doe para a Focinhos Felizes por PIX, cartão, checkout Asaas ou itens solidários."
 };
 
 export default function DonationPage() {
   return (
     <main className="page-main">
-      <section className="section donation">
-        <div>
-          <p className="eyebrow">Faça uma doação</p>
-          <h1 className="page-title">Sua contribuição vira alimento, atendimento veterinário e novas chances.</h1>
-          <p>Doe pelo checkout seguro do Asaas, por PIX ou escolha um item específico.</p>
-          <div className="use-list"><span>Ração e sachês</span><span>Vacinas</span><span>Castrações</span><span>Exames</span></div>
+      <section className="donation-hero">
+        <img src="/assets/hero-rescue.png" alt="Animal acolhido pela Focinhos Felizes" />
+        <div className="donation-hero-content">
+          <p className="eyebrow">Doações</p>
+          <h1>Cada item comprado aqui vira cuidado real.</h1>
+          <p>Ração, vacina, cobertor e apoio mensal mantêm os animais seguros enquanto eles esperam uma família.</p>
           <div className="hero-actions donation-actions">
-            <Link className="button donate" href="#itens">Doar item</Link>
+            <Link className="button donate" href="#lojinha">Quero doar</Link>
             <Link className="button primary" href="/cadastro">Quero ajudar</Link>
           </div>
         </div>
-        <aside className="donation-box">
-          <h3>Dados de doação</h3>
-          <p><strong>WhatsApp:</strong> {site.whatsappLabel}</p>
-          <p><strong>PIX:</strong> doacoes@focinhosfelizes.ong.br</p>
-          <p><strong>Checkout:</strong> link do Asaas configurável no painel Admin.</p>
-          <div className="qr">PIX</div>
-        </aside>
       </section>
 
-      <section className="section" id="itens">
+      <section className="section donation-impact">
         <div className="section-heading">
-          <div><p className="eyebrow">Doação por item</p><h2>Escolha um cuidado concreto.</h2></div>
-          <p>Funciona como uma lojinha solidária: ração, vacina, cobertor, vermífugo e outros itens essenciais.</p>
+          <div><p className="eyebrow">Para onde vai</p><h2>Uma doação pequena resolve uma necessidade concreta.</h2></div>
+          <p>A pessoa escolhe o item, monta o carrinho e finaliza pelo checkout seguro do Asaas.</p>
+        </div>
+        <div className="impact-cards">
+          <article><img src="/assets/donation-food.png" alt="Ração" /><strong>Alimentação</strong><span>Ração e sachês para a rotina dos acolhidos.</span></article>
+          <article><img src="/assets/donation-vaccine.png" alt="Vacina" /><strong>Saúde</strong><span>Vacinas, vermífugos, exames e medicamentos.</span></article>
+          <article><img src="/assets/donation-blanket.png" alt="Cobertor" /><strong>Conforto</strong><span>Cobertores e itens de recuperação pós-resgate.</span></article>
+        </div>
+      </section>
+
+      <section className="section" id="lojinha">
+        <div className="section-heading">
+          <div><p className="eyebrow">Lojinha solidária</p><h2>Escolha os itens e finalize no carrinho.</h2></div>
+          <p>Você também pode escolher uma doação mensal recorrente para apoiar a ONG todos os meses.</p>
         </div>
         <DonationShop />
+      </section>
+
+      <section className="section donation-info">
+        <aside className="donation-box">
+          <h3>Outras formas de doar</h3>
+          <p><strong>WhatsApp:</strong> {site.whatsappLabel}</p>
+          <p><strong>PIX:</strong> doacoes@focinhosfelizes.ong.br</p>
+          <p><strong>Checkout:</strong> os produtos da lojinha serão finalizados pelo Asaas.</p>
+          <div className="qr">PIX</div>
+        </aside>
       </section>
     </main>
   );

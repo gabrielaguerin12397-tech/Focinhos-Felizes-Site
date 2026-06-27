@@ -57,3 +57,17 @@ create table if not exists public.checkout_links (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+create table if not exists public.shop_products (
+  id uuid primary key default gen_random_uuid(),
+  chave text unique not null,
+  nome text not null,
+  descricao text,
+  valor numeric(10,2) not null,
+  imagem_url text,
+  tipo text not null default 'item',
+  ativo boolean not null default true,
+  ordem integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);

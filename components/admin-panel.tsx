@@ -3,12 +3,14 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
+import { donationItems } from "@/lib/data";
 
-type AdminModule = "animais" | "blog" | "leads" | "asaas";
+type AdminModule = "animais" | "blog" | "loja" | "leads" | "asaas";
 
 const modules: Array<{ id: AdminModule; title: string; description: string }> = [
   { id: "animais", title: "Animais", description: "Cadastrar, buscar, editar, fotos e excluir perfis." },
   { id: "blog", title: "Blog", description: "Atualizar noticias, campanhas e dicas." },
+  { id: "loja", title: "Loja", description: "Editar itens de doacao, valores, fotos e produtos mensais." },
   { id: "leads", title: "Leads", description: "Ver cadastros de adotantes e doadores." },
   { id: "asaas", title: "Asaas", description: "Configurar links e API de checkout." }
 ];
@@ -163,6 +165,7 @@ export function AdminPanel() {
           <h2>{activeTitle}</h2>
           {activeModule === "animais" ? <AnimalAdminPreview /> : null}
           {activeModule === "blog" ? <BlogAdminPreview /> : null}
+          {activeModule === "loja" ? <ShopAdminPreview /> : null}
           {activeModule === "leads" ? <LeadsAdminPreview /> : null}
           {activeModule === "asaas" ? <AsaasAdminPreview /> : null}
         </div>
@@ -238,6 +241,44 @@ function LeadsAdminPreview() {
   return <p className="empty-state">Aqui vao aparecer os cadastros recebidos pelos formularios do site.</p>;
 }
 
+function ShopAdminPreview() {
+  const [productImage, setProductImage] = useState("");
+
+  function handleProductImage(files: FileList | null) {
+    const file = files?.[0];
+    setProductImage(file ? URL.createObjectURL(file) : "");
+  }
+
+  return (
+    <div className="admin-workspace">
+      <div className="profile-list">
+        {donationItems.map((item) => (
+          <button className="profile-row" type="button" key={item.key}>
+            <img src={item.image} alt={item.name} />
+            <span><strong>{item.name}</strong><small>R$ {item.price},00 {item.type === "recurring" ? "mensal" : "item avulso"}</small></span>
+          </button>
+        ))}
+      </div>
+      <form className="form editor-form">
+        <label>Nome do produto<input placeholder="Ex: Saco de ração 10 kg" /></label>
+        <label>Valor<input type="number" min="1" placeholder="95" /></label>
+        <label>Tipo<select defaultValue="item"><option value="item">Item avulso</option><option value="recurring">Doação mensal recorrente</option></select></label>
+        <label>Imagem do produto<input type="file" accept="image/*" onChange={(event) => handleProductImage(event.target.files)} /></label>
+        {productImage ? <div className="blog-cover-preview"><img src={productImage} alt="Previa do produto" /></div> : null}
+        <label>Descricao<textarea placeholder="Explique como essa doação ajuda os animais" /></label>
+        <button className="button primary" type="button">Salvar produto</button>
+        <p className="login-hint">Proximo passo: salvar produtos no Supabase e exibir automaticamente na lojinha.</p>
+      </form>
+    </div>
+  );
+}
+
 function AsaasAdminPreview() {
-  return <p className="empty-state">Aqui vamos configurar os links e produtos do checkout do Asaas.</p>;
+  return (
+    <form className="form asaas-form">
+      <label>Ambiente<select defaultValue="production"><option value="production">Produção</option><option value="sandbox">Sandbox/testes</option></select></label>
+      <label>Chave da API<input placeholder="ASAAS_API_KEY fica segura na Vercel" disabled /></label>
+      <p className="empty-state">A chave do Asaas deve ficar apenas nas variáveis de ambiente da Vercel. O site cria o checkout pela rota segura /api/asaas/checkout.</p>
+    </form>
+  );
 }

@@ -560,6 +560,81 @@ h3 {
   align-items: center;
 }
 
+.donation-hero {
+  position: relative;
+  min-height: 560px;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  color: var(--white);
+}
+
+.donation-hero > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.donation-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(14, 46, 64, 0.82), rgba(14, 46, 64, 0.25));
+}
+
+.donation-hero-content {
+  position: relative;
+  z-index: 1;
+  width: min(760px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 0 0 64px;
+}
+
+.donation-hero-content h1 {
+  color: var(--white);
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  max-width: 780px;
+}
+
+.donation-hero-content p {
+  max-width: 620px;
+  font-size: 1.18rem;
+}
+
+.impact-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.impact-cards article {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.impact-cards img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.impact-cards strong {
+  color: var(--blue-dark);
+  font: 900 1.25rem "Nunito", sans-serif;
+}
+
+.donation-info {
+  padding-top: 0;
+}
+
 .use-list span {
   padding: 8px 10px;
   border-radius: 6px;
@@ -597,6 +672,11 @@ h3 {
   border-radius: 8px;
   background: var(--white);
   box-shadow: var(--shadow);
+}
+
+.donation-item.recurring {
+  border-color: var(--gold);
+  background: #fff9ec;
 }
 
 .donation-item > img {
@@ -653,6 +733,32 @@ h3 {
   gap: 12px;
 }
 
+.cart-line {
+  align-items: center;
+}
+
+.cart-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-controls input {
+  width: 64px;
+  min-height: 36px;
+}
+
+.cart-controls button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--coral);
+  font-weight: 900;
+  cursor: pointer;
+}
+
 .cart-total {
   padding-top: 12px;
   border-top: 1px solid var(--line);
@@ -669,6 +775,15 @@ h3 {
   margin: 0;
   color: var(--muted);
   font-size: 0.94rem;
+}
+
+.checkout-alert {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #f1c26d;
+  border-radius: 8px;
+  background: #fff8e9;
+  color: #68430a;
 }
 
 .qr {
@@ -845,7 +960,7 @@ textarea {
 
 .admin-module-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
   margin-bottom: 22px;
 }
@@ -1456,6 +1571,7 @@ footer p {
   .dashboard-grid,
   .donation-shop,
   .item-grid,
+  .impact-cards,
   .split,
   .two-columns,
   .donation,
