@@ -819,6 +819,21 @@ textarea {
   font-size: 0.9rem;
 }
 
+.login-warning {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #f1c26d;
+  border-radius: 8px;
+  background: #fff8e9;
+  color: #68430a;
+  font-size: 0.92rem;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
 .admin-shell[aria-hidden="true"] {
   display: none;
 }
@@ -865,6 +880,15 @@ textarea {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 14px;
+}
+
+.admin-toolbar h1 {
+  margin-bottom: 4px;
+}
+
+.admin-user {
+  color: var(--muted);
+  font-weight: 700;
 }
 
 .filter-bar {
@@ -938,6 +962,28 @@ textarea {
   border-radius: 8px;
   background: var(--white);
   color: var(--muted);
+}
+
+.empty-state strong {
+  display: block;
+  color: var(--blue-dark);
+  margin-bottom: 10px;
+}
+
+.empty-state input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.admin-module-panel {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fbfc;
+}
+
+.admin-module-panel h2 {
+  margin-bottom: 16px;
 }
 
 .asaas-form {

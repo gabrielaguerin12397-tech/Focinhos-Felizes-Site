@@ -1,0 +1,209 @@
+"use client";
+
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import type { Session } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
+
+type AdminModule = "animais" | "blog" | "leads" | "asaas";
+
+const modules: Array<{ id: AdminModule; title: string; description: string }> = [
+  { id: "animais", title: "Animais", description: "Cadastrar, buscar, editar, fotos e excluir perfis." },
+  { id: "blog", title: "Blog", description: "Atualizar noticias, campanhas e dicas." },
+  { id: "leads", title: "Leads", description: "Ver cadastros de adotantes e doadores." },
+  { id: "asaas", title: "Asaas", description: "Configurar links e API de checkout." }
+];
+
+export function AdminPanel() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [session, setSession] = useState<Session | null>(null);
+  const [activeModule, setActiveModule] = useState<AdminModule>("animais");
+  const [loading, setLoading] = useState(Boolean(supabase));
+  const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const isSupabaseReady = Boolean(supabase);
+  const userEmail = session?.user.email ?? "";
+
+  useEffect(() => {
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setLoading(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession);
+      setMessage("");
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  const activeTitle = useMemo(() => modules.find((item) => item.id === activeModule)?.title, [activeModule]);
+
+  async function handleLogin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setMessage("");
+
+    if (!supabase) {
+      setMessage("Configure as variaveis do Supabase na Vercel para liberar o login real.");
+      return;
+    }
+
+    setSubmitting(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setSubmitting(false);
+
+    if (error) {
+      setMessage("E-mail ou senha invalidos. Confira o usuario criado no Supabase Auth.");
+    }
+  }
+
+  async function handleLogout() {
+    if (!supabase) return;
+    await supabase.auth.signOut();
+    setSession(null);
+  }
+
+  if (loading) {
+    return (
+      <main className="page-main">
+        <section className="admin-login-screen">
+          <div className="form admin-login-card">
+            <img src="/assets/logo-focinhos-felizes.jpeg" alt="Focinhos Felizes" />
+            <p className="eyebrow">Area da equipe</p>
+            <h1>Carregando painel...</h1>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  if (!session) {
+    return (
+      <main className="page-main">
+        <section className="admin-login-screen">
+          <form className="form admin-login-card" onSubmit={handleLogin}>
+            <img src="/assets/logo-focinhos-felizes.jpeg" alt="Focinhos Felizes" />
+            <p className="eyebrow">Area da equipe</p>
+            <h1>Entrar no painel</h1>
+
+            <label>
+              E-mail
+              <input
+                required
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="admin@focinhosfelizes.ong.br"
+              />
+            </label>
+
+            <label>
+              Senha
+              <input
+                required
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Digite sua senha"
+              />
+            </label>
+
+            <button className="button primary" type="submit" disabled={submitting || !isSupabaseReady}>
+              {submitting ? "Entrando..." : "Entrar"}
+            </button>
+
+            {!isSupabaseReady ? (
+              <p className="login-warning">
+                Login ainda nao conectado. Configure NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY na Vercel.
+              </p>
+            ) : null}
+            {message ? <p className="login-warning">{message}</p> : null}
+          </form>
+        </section>
+      </main>
+    );
+  }
+
+  return (
+    <main className="page-main">
+      <section className="section admin-shell">
+        <div className="admin-toolbar">
+          <div>
+            <p className="eyebrow">Painel administrativo</p>
+            <h1>Bem-vinda ao painel</h1>
+            <span className="admin-user">{userEmail}</span>
+          </div>
+          <button className="button neutral" type="button" onClick={handleLogout}>Sair</button>
+        </div>
+
+        <div className="admin-module-grid">
+          {modules.map((item) => (
+            <button
+              key={item.id}
+              className={`module-card ${activeModule === item.id ? "active" : ""}`}
+              type="button"
+              onClick={() => setActiveModule(item.id)}
+            >
+              <strong>{item.title}</strong>
+              <span>{item.description}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="admin-module-panel">
+          <h2>{activeTitle}</h2>
+          {activeModule === "animais" ? <AnimalAdminPreview /> : null}
+          {activeModule === "blog" ? <BlogAdminPreview /> : null}
+          {activeModule === "leads" ? <LeadsAdminPreview /> : null}
+          {activeModule === "asaas" ? <AsaasAdminPreview /> : null}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function AnimalAdminPreview() {
+  return (
+    <div className="admin-workspace">
+      <div className="empty-state">
+        <strong>Busca de animal</strong>
+        <input type="search" placeholder="Buscar por nome, cor, porte ou status" />
+        <p>Proximo passo: ligar esta tela na tabela animals do Supabase para editar fotos e campos.</p>
+      </div>
+      <form className="form editor-form">
+        <label>Nome<input placeholder="Ex: Thor" /></label>
+        <label>Cor do pelo<input placeholder="Ex: caramelo" /></label>
+        <label>Historia<textarea placeholder="Conte a historia do animal" /></label>
+        <button className="button primary" type="button">Salvar animal</button>
+      </form>
+    </div>
+  );
+}
+
+function BlogAdminPreview() {
+  return (
+    <form className="form asaas-form">
+      <label>Titulo<input placeholder="Titulo da noticia ou campanha" /></label>
+      <label>Categoria<input placeholder="Resgate, adocao, campanha, evento..." /></label>
+      <label>Texto<textarea placeholder="Escreva o conteudo do blog" /></label>
+      <button className="button primary" type="button">Salvar post</button>
+    </form>
+  );
+}
+
+function LeadsAdminPreview() {
+  return <p className="empty-state">Aqui vao aparecer os cadastros recebidos pelos formularios do site.</p>;
+}
+
+function AsaasAdminPreview() {
+  return <p className="empty-state">Aqui vamos configurar os links e produtos do checkout do Asaas.</p>;
+}
