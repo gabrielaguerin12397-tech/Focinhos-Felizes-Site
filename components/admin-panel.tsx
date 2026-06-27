@@ -212,10 +212,16 @@ function AnimalAdminPreview() {
 
 function BlogAdminPreview() {
   const [coverImage, setCoverImage] = useState<string>("");
+  const [videoPreview, setVideoPreview] = useState<string>("");
 
   function handleCoverImage(files: FileList | null) {
     const file = files?.[0];
     setCoverImage(file ? URL.createObjectURL(file) : "");
+  }
+
+  function handleVideo(files: FileList | null) {
+    const file = files?.[0];
+    setVideoPreview(file ? URL.createObjectURL(file) : "");
   }
 
   return (
@@ -229,6 +235,19 @@ function BlogAdminPreview() {
       {coverImage ? (
         <div className="blog-cover-preview">
           <img src={coverImage} alt="Previa da capa do blog" />
+        </div>
+      ) : null}
+      <label>
+        Video do post
+        <input type="file" accept="video/*" onChange={(event) => handleVideo(event.target.files)} />
+      </label>
+      <label>
+        Link de video
+        <input placeholder="YouTube, Instagram, TikTok ou link direto" />
+      </label>
+      {videoPreview ? (
+        <div className="blog-video-preview">
+          <video src={videoPreview} controls />
         </div>
       ) : null}
       <label>Texto<textarea placeholder="Escreva o conteudo do blog" /></label>

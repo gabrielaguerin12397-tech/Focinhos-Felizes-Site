@@ -40,6 +40,8 @@ create table if not exists public.blog_posts (
   resumo text,
   conteudo text,
   imagem_capa_url text,
+  video_url text,
+  video_embed_url text,
   publicado boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()

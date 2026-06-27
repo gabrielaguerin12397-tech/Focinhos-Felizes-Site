@@ -1083,7 +1083,8 @@ textarea {
 }
 
 .upload-preview-grid img,
-.blog-cover-preview img {
+.blog-cover-preview img,
+.blog-video-preview video {
   width: 100%;
   border-radius: 8px;
   object-fit: cover;
@@ -1096,6 +1097,11 @@ textarea {
 
 .blog-cover-preview img {
   max-height: 240px;
+}
+
+.blog-video-preview video {
+  max-height: 300px;
+  background: #000;
 }
 
 .empty-state {
