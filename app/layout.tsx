@@ -12,6 +12,10 @@ export const metadata: Metadata = {
     template: "%s | Focinhos Felizes"
   },
   description: "ONG Focinhos Felizes: adoção responsável, doações, apadrinhamento e transparência.",
+  icons: {
+    icon: "/icon.jpeg",
+    apple: "/apple-icon.jpeg"
+  },
   openGraph: {
     title: "Focinhos Felizes",
     description: "Eles não precisam de pena. Precisam de uma chance.",
