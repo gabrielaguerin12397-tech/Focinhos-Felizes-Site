@@ -112,10 +112,10 @@ export async function POST(request: Request) {
   const total = items.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.qty || 1), 0);
   const description = items.map((item) => `${item.qty || 1}x ${item.name}`).join(", ");
   const supabase = createClient(supabaseUrl as string, serviceRoleKey);
-
-  const { data: lead, error: leadError } = await supabase.from("leads").insert({
+  const cpfCnpj = onlyDigits(donor.cpfCnpj);
+  const leadPayload = {
     nome: donor.nome,
-    email: donor.email,
+    email: String(donor.email || "").trim().toLowerCase(),
     whatsapp: donor.whatsapp,
     cidade: donor.cidade,
     interesse: hasRecurring ? "doacao_mensal" : "doacao_itens",
@@ -123,7 +123,7 @@ export async function POST(request: Request) {
     consentimento: true,
     origem: "lojinha",
     etapa_funil: "checkout_iniciado",
-    cpf_cnpj: onlyDigits(donor.cpfCnpj),
+    cpf_cnpj: cpfCnpj,
     cep: onlyDigits(donor.cep),
     endereco: donor.endereco,
     numero: donor.numero,
@@ -131,8 +131,28 @@ export async function POST(request: Request) {
     bairro: donor.bairro,
     estado: String(donor.estado || "").toUpperCase(),
     carrinho: items,
-    valor_total: total
-  }).select("id").single();
+    valor_total: total,
+    asaas_checkout_url: null,
+    asaas_payment_id: null,
+    asaas_subscription_id: null,
+    asaas_event_last: null,
+    asaas_status: null
+  };
+
+  const { data: existingLead } = await supabase
+    .from("leads")
+    .select("id")
+    .eq("origem", "lojinha")
+    .eq("cpf_cnpj", cpfCnpj)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const leadMutation = existingLead?.id
+    ? supabase.from("leads").update(leadPayload).eq("id", existingLead.id).select("id").single()
+    : supabase.from("leads").insert(leadPayload).select("id").single();
+
+  const { data: lead, error: leadError } = await leadMutation;
 
   if (leadError) {
     return NextResponse.json({
