@@ -68,6 +68,11 @@ export function DonationShop() {
 
     const form = new FormData(event.currentTarget);
     const donor = Object.fromEntries(form.entries());
+    const checkoutWindow = window.open("", "_blank", "noopener,noreferrer");
+
+    if (checkoutWindow) {
+      checkoutWindow.document.write("<p style='font-family: Arial, sans-serif; padding: 24px;'>Preparando pagamento seguro...</p>");
+    }
 
     setLoading(true);
     const response = await fetch("/api/asaas/checkout", {
@@ -88,10 +93,15 @@ export function DonationShop() {
     setLoading(false);
 
     if (data.checkoutUrl) {
-      window.location.href = data.checkoutUrl;
+      if (checkoutWindow) {
+        checkoutWindow.location.href = data.checkoutUrl;
+      } else {
+        window.location.href = data.checkoutUrl;
+      }
       return;
     }
 
+    checkoutWindow?.close();
     setMessage(data.message || "Não foi possível abrir o checkout agora.");
   }
 
