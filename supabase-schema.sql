@@ -20,6 +20,7 @@ create table if not exists public.leads (
   valor_total numeric(10,2),
   asaas_checkout_url text,
   asaas_payment_link_id text,
+  asaas_customer_id text,
   asaas_payment_id text,
   asaas_subscription_id text,
   asaas_event_last text,
@@ -42,6 +43,7 @@ alter table public.leads add column if not exists carrinho jsonb;
 alter table public.leads add column if not exists valor_total numeric(10,2);
 alter table public.leads add column if not exists asaas_checkout_url text;
 alter table public.leads add column if not exists asaas_payment_link_id text;
+alter table public.leads add column if not exists asaas_customer_id text;
 alter table public.leads add column if not exists asaas_payment_id text;
 alter table public.leads add column if not exists asaas_subscription_id text;
 alter table public.leads add column if not exists asaas_event_last text;
