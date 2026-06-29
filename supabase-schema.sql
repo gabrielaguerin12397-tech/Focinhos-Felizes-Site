@@ -9,8 +9,29 @@ create table if not exists public.leads (
   consentimento boolean not null default false,
   origem text not null default 'site',
   etapa_funil text not null default 'novo',
+  cpf_cnpj text,
+  cep text,
+  endereco text,
+  numero text,
+  complemento text,
+  bairro text,
+  estado text,
+  carrinho jsonb,
+  valor_total numeric(10,2),
+  asaas_checkout_url text,
   created_at timestamptz not null default now()
 );
+
+alter table public.leads add column if not exists cpf_cnpj text;
+alter table public.leads add column if not exists cep text;
+alter table public.leads add column if not exists endereco text;
+alter table public.leads add column if not exists numero text;
+alter table public.leads add column if not exists complemento text;
+alter table public.leads add column if not exists bairro text;
+alter table public.leads add column if not exists estado text;
+alter table public.leads add column if not exists carrinho jsonb;
+alter table public.leads add column if not exists valor_total numeric(10,2);
+alter table public.leads add column if not exists asaas_checkout_url text;
 
 create table if not exists public.animais (
   id uuid primary key default gen_random_uuid(),
