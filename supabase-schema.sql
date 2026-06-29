@@ -19,6 +19,15 @@ create table if not exists public.leads (
   carrinho jsonb,
   valor_total numeric(10,2),
   asaas_checkout_url text,
+  asaas_payment_link_id text,
+  asaas_payment_id text,
+  asaas_subscription_id text,
+  asaas_event_last text,
+  asaas_status text,
+  asaas_billing_type text,
+  asaas_invoice_url text,
+  asaas_receipt_url text,
+  asaas_paid_at timestamptz,
   created_at timestamptz not null default now()
 );
 
@@ -32,6 +41,26 @@ alter table public.leads add column if not exists estado text;
 alter table public.leads add column if not exists carrinho jsonb;
 alter table public.leads add column if not exists valor_total numeric(10,2);
 alter table public.leads add column if not exists asaas_checkout_url text;
+alter table public.leads add column if not exists asaas_payment_link_id text;
+alter table public.leads add column if not exists asaas_payment_id text;
+alter table public.leads add column if not exists asaas_subscription_id text;
+alter table public.leads add column if not exists asaas_event_last text;
+alter table public.leads add column if not exists asaas_status text;
+alter table public.leads add column if not exists asaas_billing_type text;
+alter table public.leads add column if not exists asaas_invoice_url text;
+alter table public.leads add column if not exists asaas_receipt_url text;
+alter table public.leads add column if not exists asaas_paid_at timestamptz;
+
+create table if not exists public.asaas_webhook_events (
+  id uuid primary key default gen_random_uuid(),
+  event_id text unique not null,
+  event_type text not null,
+  payment_id text,
+  subscription_id text,
+  external_reference text,
+  payload jsonb not null,
+  received_at timestamptz not null default now()
+);
 
 create table if not exists public.animais (
   id uuid primary key default gen_random_uuid(),

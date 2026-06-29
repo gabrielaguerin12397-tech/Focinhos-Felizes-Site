@@ -135,7 +135,7 @@ export async function POST(request: Request) {
       subscriptionCycle: hasRecurring ? "MONTHLY" : undefined,
       dueDateLimitDays: 7,
       isAddressRequired: true,
-      externalReference: `focinhos-${Date.now()}`
+      externalReference: lead?.id || `focinhos-${Date.now()}`
     })
   });
 
@@ -153,6 +153,7 @@ export async function POST(request: Request) {
   if (lead?.id && checkoutUrl) {
     await supabase.from("leads").update({
       asaas_checkout_url: checkoutUrl,
+      asaas_payment_link_id: data.id || null,
       etapa_funil: "checkout_asaas"
     }).eq("id", lead.id);
   }

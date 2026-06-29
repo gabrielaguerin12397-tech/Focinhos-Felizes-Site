@@ -163,7 +163,7 @@ export function DonationShop() {
             <div className="checkout-actions">
               <button className="button neutral" type="button" onClick={() => setStep("cart")}>Voltar</button>
               <button className="button donate" type="submit" disabled={loading}>
-                {loading ? "Abrindo checkout..." : "Ir para o Asaas"}
+                {loading ? "Finalizando..." : "Finalizar compra"}
               </button>
             </div>
           </form>
