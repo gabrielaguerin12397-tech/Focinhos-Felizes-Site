@@ -68,9 +68,10 @@ export function DonationShop() {
 
     const form = new FormData(event.currentTarget);
     const donor = Object.fromEntries(form.entries());
-    const checkoutWindow = window.open("", "_blank", "noopener,noreferrer");
+    const checkoutWindow = window.open("about:blank", "_blank");
 
     if (checkoutWindow) {
+      checkoutWindow.opener = null;
       checkoutWindow.document.write("<p style='font-family: Arial, sans-serif; padding: 24px;'>Preparando pagamento seguro...</p>");
     }
 
@@ -96,7 +97,7 @@ export function DonationShop() {
       if (checkoutWindow) {
         checkoutWindow.location.href = data.checkoutUrl;
       } else {
-        window.location.href = data.checkoutUrl;
+        setMessage("O navegador bloqueou a nova aba. Libere pop-ups para este site e clique em Finalizar compra novamente.");
       }
       return;
     }
