@@ -724,7 +724,7 @@ h3 {
 
 .animal-card img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 11;
   object-fit: cover;
 }
 
@@ -759,6 +759,7 @@ h3 {
 
 .animal-profile-hero img {
   width: 100%;
+  max-height: 360px;
   aspect-ratio: 4 / 3;
   border-radius: 8px;
   object-fit: cover;
@@ -1726,8 +1727,8 @@ textarea {
 
 .upload-preview-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 10px;
 }
 
 .ordered-photo {
@@ -1737,6 +1738,7 @@ textarea {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--white);
+  min-width: 0;
 }
 
 .ordered-photo strong {
@@ -1758,18 +1760,22 @@ textarea {
 
 .ordered-photo div {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 34px 34px minmax(0, 1fr);
   gap: 4px;
 }
 
 .ordered-photo button {
   min-height: 32px;
+  min-width: 0;
+  padding: 0 6px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: #fff;
   color: var(--blue-dark);
   cursor: pointer;
   font-weight: 700;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 .ordered-photo button:disabled {
@@ -1788,6 +1794,7 @@ textarea {
 
 .upload-preview-grid img {
   aspect-ratio: 1;
+  max-height: 150px;
 }
 
 .blog-cover-preview img {
@@ -2330,15 +2337,41 @@ footer p {
     bottom: auto;
     transform: translateX(-50%) rotate(135deg);
   }
+
+  .editor-form {
+    position: static;
+  }
+
+  .animal-profile-hero img {
+    max-height: 300px;
+  }
 }
 
 @media (max-width: 560px) {
+  .site-header {
+    padding: 12px 16px;
+  }
+
   .brand span {
     font-size: 1rem;
   }
 
+  .brand img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .main-nav {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+  }
+
   .main-nav a {
+    flex: 0 0 auto;
     padding: 7px 8px;
+    font-size: 0.96rem;
   }
 
   h1 {
@@ -2347,6 +2380,62 @@ footer p {
 
   .hero-actions .button {
     width: 100%;
+  }
+
+  .section {
+    padding: 22px 16px;
+  }
+
+  .fred-conversation {
+    gap: 12px;
+  }
+
+  .fred-conversation > img {
+    max-width: 128px;
+  }
+
+  .fred-live-bubble {
+    min-height: 0;
+    padding: 18px;
+  }
+
+  .fred-options.in-bubble {
+    display: grid;
+  }
+
+  .fred-options.in-bubble button {
+    width: 100%;
+  }
+
+  .fred-result-card {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .fred-result-card img {
+    width: 76px;
+    height: 76px;
+  }
+
+  .upload-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ordered-photo div {
+    grid-template-columns: 30px 30px minmax(0, 1fr);
+  }
+
+  .ordered-photo button {
+    font-size: 0.76rem;
+  }
+
+  .animal-profile-hero img {
+    max-height: 250px;
+  }
+
+  .animal-profile-grid.compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .stats-band {

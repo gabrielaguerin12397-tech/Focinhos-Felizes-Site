@@ -4,6 +4,9 @@ import { slugify } from "@/lib/animals";
 
 const animalPhotoBucket = "animal-photos";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 function getSupabaseClients(authHeader: string | null) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;

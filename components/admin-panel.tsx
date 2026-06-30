@@ -266,6 +266,34 @@ function AnimalAdminPreview({ session }: { session: Session }) {
     });
   }
 
+  async function compressAnimalPhoto(file: File) {
+    if (!file.type.startsWith("image/")) return file;
+
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
+    });
+
+    const maxSize = 1400;
+    const scale = Math.min(1, maxSize / Math.max(image.width, image.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(image.width * scale);
+    canvas.height = Math.round(image.height * scale);
+    const context = canvas.getContext("2d");
+    if (!context) return file;
+
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.78));
+    URL.revokeObjectURL(image.src);
+
+    if (!blob) return file;
+
+    return new File([blob], file.name.replace(/\.[^.]+$/, ".jpg"), { type: "image/jpeg" });
+  }
+
   function startNewAnimal() {
     setSelectedAnimal(null);
     setAnimalPhotos([]);
@@ -321,7 +349,9 @@ function AnimalAdminPreview({ session }: { session: Session }) {
     form.set("slug", selectedAnimal?.slug || "");
     form.set("existing_fotos", JSON.stringify(animalPhotos.filter((photo) => photo.url).map((photo) => photo.url)));
     form.set("cover_index", String(Math.max(0, animalPhotos.findIndex((photo) => photo.id === coverPhotoId))));
-    animalPhotos.filter((photo) => photo.file).forEach((photo) => form.append("photos", photo.file as File));
+    for (const photo of animalPhotos.filter((item) => item.file)) {
+      form.append("photos", await compressAnimalPhoto(photo.file as File));
+    }
 
     const response = await fetch("/api/admin/animals", {
       method: "POST",
@@ -408,9 +438,9 @@ function AnimalAdminPreview({ session }: { session: Session }) {
                 <label><input type="radio" checked={coverPhotoId === photo.id} onChange={() => setCoverPhotoId(photo.id)} /> Capa</label>
                 <strong>{index === 0 ? "Primeira foto" : `Foto ${index + 1}`}</strong>
                 <div>
-                  <button type="button" onClick={() => moveAnimalPhoto(index, -1)} disabled={index === 0}>Subir</button>
-                  <button type="button" onClick={() => moveAnimalPhoto(index, 1)} disabled={index === animalPhotos.length - 1}>Descer</button>
-                  <button type="button" onClick={() => removeAnimalPhoto(index)}>Remover</button>
+                  <button type="button" onClick={() => moveAnimalPhoto(index, -1)} disabled={index === 0} aria-label="Subir foto">↑</button>
+                  <button type="button" onClick={() => moveAnimalPhoto(index, 1)} disabled={index === animalPhotos.length - 1} aria-label="Descer foto">↓</button>
+                  <button type="button" onClick={() => removeAnimalPhoto(index)}>Excluir</button>
                 </div>
               </div>
             ))}
