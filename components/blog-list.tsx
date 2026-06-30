@@ -33,7 +33,22 @@ export function BlogList() {
           <span className="blog-category">{selectedPost.category}</span>
           <h2>{selectedPost.title}</h2>
           <p className="blog-subtitle">{selectedPost.subtitle}</p>
-          <p>{selectedPost.content}</p>
+          {"body" in selectedPost && selectedPost.body
+            ? Array.isArray(selectedPost.body)
+              ? selectedPost.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+              : <p>{selectedPost.body}</p>
+            : <p>{selectedPost.content}</p>}
+          {"steps" in selectedPost && selectedPost.steps ? (
+            <ol>
+              {selectedPost.steps.map((step) => (
+                <li key={step.title}>
+                  <strong>{step.title}</strong>
+                  <p>{step.text}</p>
+                </li>
+              ))}
+            </ol>
+          ) : null}
+          {"closing" in selectedPost && selectedPost.closing ? <p>{selectedPost.closing}</p> : null}
         </article>
       ) : (
         <aside className="blog-reader empty">

@@ -121,9 +121,44 @@ export const posts = [
     title: "Adoção responsável: um compromisso que começa antes da chegada",
     subtitle: "Preparar rotina, espaço e segurança é parte essencial de receber um novo animal.",
     category: "Bem-estar animal",
-    summary: "Antes de adotar, a família precisa preparar rotina, espaço, segurança e paciência.",
+    summary: "Preparar rotina, espaço e segurança é parte essencial de receber um novo animal.",
     image: "/assets/blog-adocao-responsavel-2026-06-30.png",
-    content: "Adotar um animal é abrir espaço para uma nova história, mas também assumir um compromisso diário com cuidado, tempo e responsabilidade. Antes da chegada, vale conversar com todos da casa, organizar um ambiente seguro, separar potes, caminha, caixa de areia ou local de descanso, e entender que adaptação leva alguns dias ou semanas. Cães e gatos resgatados podem precisar de previsibilidade, carinho sem pressa e acompanhamento veterinário."
+    content: "Adotar um cão ou gato é uma decisão bonita, mas também prática. Antes da chegada, a família precisa entender que o animal não está entrando apenas em uma casa: ele está entrando em uma rotina, em regras, em cheiros novos e em vínculos que ainda serão construídos. Quando a adoção é planejada, a adaptação costuma ser mais tranquila para todos.",
+    body: [
+      "Adotar um cão ou gato é uma decisão bonita, mas também prática. Antes da chegada, a família precisa entender que o animal não está entrando apenas em uma casa: ele está entrando em uma rotina, em regras, em cheiros novos e em vínculos que ainda serão construídos.",
+      "Quando a adoção é planejada, a adaptação costuma ser mais tranquila para todos. O animal se sente mais seguro, a família evita frustrações e a ONG consegue acompanhar melhor esse novo começo."
+    ],
+    steps: [
+      {
+        title: "Converse com todos da casa",
+        text: "Antes de adotar, alinhe responsabilidades: quem coloca comida, quem limpa o espaço, quem leva ao veterinário e como serão os passeios ou brincadeiras. A adoção precisa ser uma escolha coletiva, não uma surpresa que vira conflito depois."
+      },
+      {
+        title: "Prepare um espaço seguro",
+        text: "Separe um cantinho calmo com água, alimento, caminha e local de higiene. Para gatos, telas de proteção e caixa de areia são essenciais. Para cães, retire produtos de limpeza, fios soltos e objetos pequenos que possam ser engolidos."
+      },
+      {
+        title: "Faça a chegada com calma",
+        text: "Evite visitas, barulho e excesso de colo no primeiro dia. O animal precisa explorar o ambiente no próprio ritmo. Alguns se aproximam rápido; outros observam de longe antes de confiar. Os dois comportamentos são normais."
+      },
+      {
+        title: "Mantenha uma rotina previsível",
+        text: "Horários parecidos para alimentação, passeio, limpeza e descanso ajudam o animal a entender o novo lar. Previsibilidade reduz ansiedade, especialmente em animais que passaram por abandono, rua ou mudanças frequentes."
+      },
+      {
+        title: "Marque uma avaliação veterinária",
+        text: "Mesmo quando o animal já chega vacinado ou castrado, uma consulta inicial ajuda a revisar vermifugação, antipulgas, alimentação, peso, exames e próximos cuidados. Saúde preventiva evita sofrimento e gastos maiores no futuro."
+      },
+      {
+        title: "Tenha paciência com a adaptação",
+        text: "Xixi fora do lugar, medo, latidos, miados ou vontade de se esconder podem acontecer nos primeiros dias. Em vez de bronca, use orientação, reforço positivo e paciência. A confiança nasce quando o animal percebe que está seguro."
+      },
+      {
+        title: "Mantenha contato com a ONG",
+        text: "Enviar notícias, fotos e dúvidas ajuda a equipe a acompanhar a adaptação. A adoção responsável não termina na assinatura do termo: ela continua no cuidado diário e no compromisso de oferecer uma vida digna."
+      }
+    ],
+    closing: "Receber um animal adotado é oferecer uma chance real de recomeço. Com preparo, respeito e acompanhamento, essa chegada pode se transformar em uma relação segura, afetuosa e duradoura."
   },
   {
     title: "Mutirão de castração abre inscrições",

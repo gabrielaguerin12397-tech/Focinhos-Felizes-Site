@@ -1129,6 +1129,30 @@ textarea {
   color: var(--muted);
 }
 
+.blog-post ol {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+  padding-left: 24px;
+}
+
+.blog-post li {
+  padding-left: 4px;
+}
+
+.blog-post li::marker {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.blog-post li strong {
+  color: var(--blue-dark);
+}
+
+.blog-post li p {
+  margin-top: 4px;
+}
+
 .news-events span {
   color: var(--muted);
 }
@@ -1208,6 +1232,26 @@ textarea {
 .blog-reader h2 {
   color: var(--blue);
   font-size: 1.8rem;
+}
+
+.blog-reader ol {
+  display: grid;
+  gap: 12px;
+  margin: 8px 0 0;
+  padding-left: 24px;
+}
+
+.blog-reader li::marker {
+  color: var(--green);
+  font-weight: 900;
+}
+
+.blog-reader li strong {
+  color: var(--blue-dark);
+}
+
+.blog-reader li p {
+  margin-top: 4px;
 }
 
 .blog-reader-close {

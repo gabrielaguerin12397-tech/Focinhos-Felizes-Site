@@ -10,7 +10,10 @@ export default function BlogPage() {
     <main className="page-main">
       <section className="section">
         <div className="section-heading">
-          <div><p className="eyebrow">Blog e notícias</p><h1 className="page-title">Campanhas, histórias e dicas.</h1></div>
+          <div>
+            <p className="eyebrow">Blog e notícias</p>
+            <h1 className="page-title">Campanhas, histórias e dicas.</h1>
+          </div>
           <p>Veja as últimas publicações da Focinhos Felizes. Clique para ler a notícia completa.</p>
         </div>
         <BlogList />
