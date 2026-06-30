@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { animals } from "@/lib/data";
+import { getAnimalSlug } from "@/lib/animals";
 
-type Step = "intro" | "especie" | "moradia" | "rotina" | "porte" | "experiencia" | "result";
+type Step = "intro" | "especie" | "moradia" | "rotina" | "porte" | "tempoSozinho" | "criancas" | "outrosAnimais" | "experiencia" | "result";
 type AdoptionMatchProps = {
   onShowAll: () => void;
 };
@@ -25,13 +26,25 @@ const questions: Record<Exclude<Step, "intro" | "result">, { text: string; optio
     text: "Você tem preferência de porte?",
     options: ["Sem preferência", "Pequeno", "Médio", "Grande"]
   },
+  tempoSozinho: {
+    text: "Quanto tempo esse aumigo ficaria sozinho por dia?",
+    options: ["Pouco", "Moderado", "Longo"]
+  },
+  criancas: {
+    text: "Tem criança convivendo na casa?",
+    options: ["Sim", "Nao", "As vezes"]
+  },
+  outrosAnimais: {
+    text: "Ja existem outros animais na casa?",
+    options: ["Sim", "Nao"]
+  },
   experiencia: {
     text: "E sua experiência com animais?",
     options: ["Primeira adoção", "Já tive animais", "Tenho animais hoje"]
   }
 };
 
-const order: Step[] = ["especie", "moradia", "rotina", "porte", "experiencia", "result"];
+const order: Step[] = ["especie", "moradia", "rotina", "porte", "tempoSozinho", "criancas", "outrosAnimais", "experiencia", "result"];
 
 export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
   const [step, setStep] = useState<Step>("intro");
@@ -41,11 +54,23 @@ export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
     return animals
       .map((animal) => {
         let score = 0;
-        if (answers.especie === "Sem preferência" || animal.especie === answers.especie) score += 4;
+        if (answers.especie === "Sem preferência" || animal.especie === answers.especie) score += 8;
+        if (answers.especie && answers.especie !== "Sem preferência" && animal.especie !== answers.especie) score -= 20;
         if (animal.moradia.includes(answers.moradia)) score += 3;
         if (animal.energia === answers.rotina) score += 3;
+        if (animal.energia === "Calma" && answers.rotina === "Moderada") score += 1;
+        if (animal.energia === "Moderada" && answers.rotina === "Ativa") score += 1;
         if (answers.porte === "Sem preferência" || animal.porte === answers.porte) score += 2;
-        if (answers.experiencia === "Primeira adoção" && animal.energia === "Calma") score += 1;
+        if (animal.compatibilidade.tempoSozinho === answers.tempoSozinho) score += 3;
+        if (answers.tempoSozinho === "Longo" && animal.compatibilidade.tempoSozinho === "Pouco") score -= 4;
+        if (answers.criancas === "Sim" && animal.compatibilidade.criancas === "Sim") score += 3;
+        if (answers.criancas === "Sim" && animal.compatibilidade.criancas === "Nao recomendado") score -= 8;
+        if (answers.outrosAnimais === "Sim" && animal.compatibilidade.outrosAnimais === "Sim") score += 3;
+        if (answers.outrosAnimais === "Sim" && animal.compatibilidade.outrosAnimais === "Com adaptacao") score += 1;
+        if (answers.outrosAnimais === "Sim" && animal.compatibilidade.outrosAnimais === "Prefere ser unico") score -= 6;
+        if (animal.compatibilidade.experiencia === answers.experiencia) score += 2;
+        if (answers.experiencia === "Primeira adoção" && animal.energia === "Calma") score += 2;
+        if (answers.experiencia === "Primeira adoção" && animal.energia === "Ativa") score -= 2;
         if (animal.status === "Disponível") score += 1;
         return { animal, score };
       })
@@ -53,6 +78,16 @@ export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
       .slice(0, 3)
       .map((item) => item.animal);
   }, [answers]);
+
+  const matchReasons = (animal: (typeof animals)[number]) => {
+    const reasons = [];
+    if (answers.especie === "Sem preferência" || animal.especie === answers.especie) reasons.push(animal.especie === "Cão" ? "é cachorro" : "é gatinho");
+    if (animal.moradia.includes(answers.moradia)) reasons.push(`combina com ${answers.moradia?.toLowerCase()}`);
+    if (animal.energia === answers.rotina) reasons.push(`tem energia ${animal.energia.toLowerCase()}`);
+    if (answers.porte === "Sem preferência" || animal.porte === answers.porte) reasons.push(`porte ${animal.porte.toLowerCase()}`);
+    if (animal.compatibilidade.tempoSozinho === answers.tempoSozinho) reasons.push(`fica bem com tempo sozinho ${answers.tempoSozinho?.toLowerCase()}`);
+    return reasons.slice(0, 3).join(", ");
+  };
 
   function answer(value: string) {
     if (step === "intro" || step === "result") return;
@@ -103,7 +138,7 @@ export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
 
         {step === "result" ? (
           <div className="fred-results">
-            <div className="fred-message">Pelo que você me contou, esses três aumigos podem combinar com sua rotina:</div>
+            <div className="fred-message">Esses são os aumigos que acho que vão se encaixar bem na sua rotina.</div>
             <div className="fred-result-list">
               {matches.map((animal) => (
                 <article className="fred-result-card" key={animal.id}>
@@ -112,7 +147,8 @@ export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
                     <p className="eyebrow">Sugestão do Fred</p>
                     <h3>{animal.nome}</h3>
                     <p>{animal.personalidade}</p>
-                    <a className="button small" href={`/cadastro?animal=${animal.id}`}>Quero conversar sobre {animal.nome}</a>
+                    <p className="match-reason">Por que indiquei: {matchReasons(animal)}.</p>
+                    <a className="button small" href={`/adocao/${getAnimalSlug(animal)}`}>Ver perfil de {animal.nome}</a>
                   </div>
                 </article>
               ))}

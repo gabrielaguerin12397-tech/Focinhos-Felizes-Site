@@ -191,7 +191,26 @@ function AnimalAdminPreview() {
       </div>
       <form className="form editor-form">
         <label>Nome<input placeholder="Ex: Thor" /></label>
+        <label>Especie<select defaultValue="Cao"><option value="Cao">Cao</option><option value="Gato">Gato</option></select></label>
+        <label>Idade<input placeholder="Ex: 3 anos, 5 meses" /></label>
+        <label>Faixa etaria<select defaultValue="adulto"><option value="filhote">Filhote</option><option value="adulto">Adulto</option><option value="idoso">Idoso</option></select></label>
+        <label>Sexo<select defaultValue="Macho"><option>Macho</option><option>Femea</option></select></label>
+        <label>Porte<select defaultValue="Medio"><option>Pequeno</option><option>Medio</option><option>Grande</option></select></label>
         <label>Cor do pelo<input placeholder="Ex: caramelo" /></label>
+        <label>Cidade<input placeholder="Ex: Manaus" /></label>
+        <label>Status<select defaultValue="Disponivel"><option>Disponivel</option><option>Em processo</option><option>Adotado</option><option>Apadrinhado</option></select></label>
+        <label>Nivel de energia<select defaultValue="Moderada"><option>Calma</option><option>Moderada</option><option>Ativa</option></select></label>
+        <label>Moradia ideal<select multiple defaultValue={["Casa com quintal"]}><option>Apartamento</option><option>Casa com quintal</option><option>Casa sem quintal</option></select></label>
+        <label>Tempo sozinho<select defaultValue="Moderado"><option>Pouco</option><option>Moderado</option><option>Longo</option></select></label>
+        <label>Convivencia com criancas<select defaultValue="Com supervisao"><option>Sim</option><option>Com supervisao</option><option>Nao recomendado</option></select></label>
+        <label>Convivencia com outros animais<select defaultValue="Com adaptacao"><option>Sim</option><option>Com adaptacao</option><option>Prefere ser unico</option></select></label>
+        <label>Experiencia indicada<select defaultValue="Primeira adocao"><option>Primeira adocao</option><option>Ja tive animais</option><option>Tenho animais hoje</option></select></label>
+        <label>Caracteristicas para o Fred<textarea placeholder="Ex: familia presente, passeios diarios, apartamento telado" /></label>
+        <div className="form-check-grid">
+          <label><input type="checkbox" /> Castrado</label>
+          <label><input type="checkbox" /> Vacinado</label>
+          <label><input type="checkbox" /> Vermifugado</label>
+        </div>
         <label>
           Fotos do animal
           <input type="file" accept="image/*" multiple onChange={(event) => handleAnimalPhotos(event.target.files)} />
@@ -203,6 +222,7 @@ function AnimalAdminPreview() {
             ))}
           </div>
         ) : null}
+        <label>Personalidade<textarea placeholder="Ex: carinhoso, sociavel, tranquilo, brincalhao" /></label>
         <label>Historia<textarea placeholder="Conte a historia do animal" /></label>
         <button className="button primary" type="button">Salvar animal</button>
       </form>

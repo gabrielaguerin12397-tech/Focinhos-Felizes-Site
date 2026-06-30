@@ -15,6 +15,13 @@ export type Animal = {
   historia: string;
   energia: "Calma" | "Moderada" | "Ativa";
   moradia: string[];
+  perfilIdeal: string[];
+  compatibilidade: {
+    criancas: "Sim" | "Com supervisao" | "Nao recomendado";
+    outrosAnimais: "Sim" | "Com adaptacao" | "Prefere ser unico";
+    tempoSozinho: "Pouco" | "Moderado" | "Longo";
+    experiencia: "Primeira adocao" | "Ja tive animais" | "Tenho animais hoje";
+  };
   foto: string;
   tags: string[];
 };
@@ -46,6 +53,13 @@ export const animals: Animal[] = [
     historia: "Resgatado após abandono em via pública, hoje está pronto para uma casa segura.",
     energia: "Moderada",
     moradia: ["Casa com quintal", "Casa sem quintal"],
+    perfilIdeal: ["Familia presente", "Passeios diarios", "Criancas"],
+    compatibilidade: {
+      criancas: "Sim",
+      outrosAnimais: "Com adaptacao",
+      tempoSozinho: "Moderado",
+      experiencia: "Primeira adocao"
+    },
     foto: "/assets/caramel-dog.png",
     tags: ["adulto", "macho", "medio"]
   },
@@ -66,6 +80,13 @@ export const animals: Animal[] = [
     historia: "Chegou com filhotes, cuidou de todos e agora espera sua própria família.",
     energia: "Calma",
     moradia: ["Apartamento", "Casa sem quintal"],
+    perfilIdeal: ["Apartamento telado", "Rotina calma", "Adultos"],
+    compatibilidade: {
+      criancas: "Com supervisao",
+      outrosAnimais: "Com adaptacao",
+      tempoSozinho: "Longo",
+      experiencia: "Primeira adocao"
+    },
     foto: "/assets/tabby-cat.png",
     tags: ["adulto", "femea", "pequeno"]
   },
@@ -86,6 +107,13 @@ export const animals: Animal[] = [
     historia: "Foi acolhido em lar temporário e precisa de uma família paciente para crescer.",
     energia: "Ativa",
     moradia: ["Casa com quintal", "Casa sem quintal"],
+    perfilIdeal: ["Familia ativa", "Tempo para educar", "Brincadeiras"],
+    compatibilidade: {
+      criancas: "Sim",
+      outrosAnimais: "Sim",
+      tempoSozinho: "Pouco",
+      experiencia: "Ja tive animais"
+    },
     foto: "/assets/puppy.png",
     tags: ["filhote", "macho", "pequeno"]
   },
@@ -106,6 +134,13 @@ export const animals: Animal[] = [
     historia: "Um veterano gentil que merece viver seus próximos anos com dignidade.",
     energia: "Calma",
     moradia: ["Casa com quintal"],
+    perfilIdeal: ["Rotina tranquila", "Companhia", "Poucas escadas"],
+    compatibilidade: {
+      criancas: "Com supervisao",
+      outrosAnimais: "Prefere ser unico",
+      tempoSozinho: "Moderado",
+      experiencia: "Primeira adocao"
+    },
     foto: "/assets/senior-dog.png",
     tags: ["idoso", "macho", "grande"]
   }
