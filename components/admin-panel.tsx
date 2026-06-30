@@ -174,18 +174,78 @@ export function AdminPanel() {
   );
 }
 
+type AdminAnimal = {
+  slug: string;
+  nome: string;
+  especie?: string;
+  idade?: string;
+  faixa_etaria?: string;
+  sexo?: string;
+  porte?: string;
+  cor?: string;
+  cidade?: string;
+  status?: string;
+  energia?: string;
+  moradia?: string[];
+  tempo_sozinho?: string;
+  criancas?: string;
+  outros_animais?: string;
+  experiencia?: string;
+  perfil_ideal?: string[];
+  castrado?: boolean;
+  vacinado?: boolean;
+  vermifugado?: boolean;
+  foto_principal_url?: string;
+  fotos?: string[];
+  personalidade?: string;
+  historia?: string;
+};
+
+type AnimalPhotoDraft = {
+  id: string;
+  preview: string;
+  file?: File;
+  url?: string;
+};
+
 function AnimalAdminPreview({ session }: { session: Session }) {
-  const [animalPhotos, setAnimalPhotos] = useState<Array<{ id: string; file: File; preview: string }>>([]);
+  const [animals, setAnimals] = useState<AdminAnimal[]>([]);
+  const [selectedAnimal, setSelectedAnimal] = useState<AdminAnimal | null>(null);
+  const [animalPhotos, setAnimalPhotos] = useState<AnimalPhotoDraft[]>([]);
+  const [coverPhotoId, setCoverPhotoId] = useState("");
+  const [animalQuery, setAnimalQuery] = useState("");
   const [saveMessage, setSaveMessage] = useState("");
   const [saving, setSaving] = useState(false);
+  const [loadingAnimals, setLoadingAnimals] = useState(false);
+
+  useEffect(() => {
+    loadAnimals();
+  }, []);
+
+  async function loadAnimals() {
+    setLoadingAnimals(true);
+    const response = await fetch("/api/admin/animals", {
+      headers: { Authorization: `Bearer ${session.access_token}` }
+    });
+    const result = await response.json();
+    setLoadingAnimals(false);
+
+    if (response.ok) setAnimals(result.animals || []);
+  }
 
   function handleAnimalPhotos(files: FileList | null) {
     if (!files) return;
-    setAnimalPhotos(Array.from(files).map((file) => ({
+    const newPhotos = Array.from(files).map((file) => ({
       id: `${file.name}-${file.lastModified}-${crypto.randomUUID()}`,
       file,
       preview: URL.createObjectURL(file)
-    })));
+    }));
+
+    setAnimalPhotos((current) => {
+      const next = [...current, ...newPhotos];
+      if (!coverPhotoId && next[0]) setCoverPhotoId(next[0].id);
+      return next;
+    });
   }
 
   function moveAnimalPhoto(index: number, direction: -1 | 1) {
@@ -199,7 +259,50 @@ function AnimalAdminPreview({ session }: { session: Session }) {
   }
 
   function removeAnimalPhoto(index: number) {
-    setAnimalPhotos((current) => current.filter((_, currentIndex) => currentIndex !== index));
+    setAnimalPhotos((current) => {
+      const next = current.filter((_, currentIndex) => currentIndex !== index);
+      if (current[index]?.id === coverPhotoId) setCoverPhotoId(next[0]?.id || "");
+      return next;
+    });
+  }
+
+  function startNewAnimal() {
+    setSelectedAnimal(null);
+    setAnimalPhotos([]);
+    setCoverPhotoId("");
+    setSaveMessage("");
+  }
+
+  function editAnimal(animal: AdminAnimal) {
+    const photos = (animal.fotos?.length ? animal.fotos : animal.foto_principal_url ? [animal.foto_principal_url] : []).map((url) => ({
+      id: url,
+      url,
+      preview: url
+    }));
+
+    setSelectedAnimal(animal);
+    setAnimalPhotos(photos);
+    setCoverPhotoId(animal.foto_principal_url || photos[0]?.id || "");
+    setSaveMessage("");
+  }
+
+  async function deleteAnimal(animal: AdminAnimal) {
+    if (!window.confirm(`Excluir o cadastro de ${animal.nome}?`)) return;
+
+    const response = await fetch(`/api/admin/animals?slug=${encodeURIComponent(animal.slug)}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${session.access_token}` }
+    });
+
+    if (!response.ok) {
+      const result = await response.json();
+      setSaveMessage(`Nao foi possivel excluir: ${result.error || "erro desconhecido"}`);
+      return;
+    }
+
+    if (selectedAnimal?.slug === animal.slug) startNewAnimal();
+    setAnimals((current) => current.filter((item) => item.slug !== animal.slug));
+    setSaveMessage("Cadastro excluido.");
   }
 
   async function handleSaveAnimal(event: FormEvent<HTMLFormElement>) {
@@ -215,7 +318,10 @@ function AnimalAdminPreview({ session }: { session: Session }) {
 
     form.delete("photos");
     form.set("perfil_ideal", perfilIdeal.join(", "));
-    animalPhotos.forEach((photo) => form.append("photos", photo.file));
+    form.set("slug", selectedAnimal?.slug || "");
+    form.set("existing_fotos", JSON.stringify(animalPhotos.filter((photo) => photo.url).map((photo) => photo.url)));
+    form.set("cover_index", String(Math.max(0, animalPhotos.findIndex((photo) => photo.id === coverPhotoId))));
+    animalPhotos.filter((photo) => photo.file).forEach((photo) => form.append("photos", photo.file as File));
 
     const response = await fetch("/api/admin/animals", {
       method: "POST",
@@ -232,41 +338,64 @@ function AnimalAdminPreview({ session }: { session: Session }) {
       return;
     }
 
-    setSaveMessage(`Animal salvo. Foto principal definida automaticamente. Pagina criada: /adocao/${result.slug}`);
+    setSaveMessage(`Animal salvo. Pagina criada: /adocao/${result.slug}`);
     event.currentTarget.reset();
+    setSelectedAnimal(null);
     setAnimalPhotos([]);
+    setCoverPhotoId("");
+    await loadAnimals();
   }
+
+  const filteredAnimals = animals.filter((animal) => {
+    const query = animalQuery.toLowerCase();
+    return [animal.nome, animal.cor, animal.porte, animal.status, animal.especie].some((value) => String(value || "").toLowerCase().includes(query));
+  });
+
+  const formKey = selectedAnimal?.slug || "new-animal";
 
   return (
     <div className="admin-workspace">
       <div className="empty-state">
         <strong>Busca de animal</strong>
-        <input type="search" placeholder="Buscar por nome, cor, porte ou status" />
-        <p>Proximo passo: ligar esta tela na tabela animals do Supabase para editar fotos e campos.</p>
+        <input type="search" value={animalQuery} onChange={(event) => setAnimalQuery(event.target.value)} placeholder="Buscar por nome, cor, porte ou status" />
+        <button className="button neutral" type="button" onClick={startNewAnimal}>Novo animal</button>
+        <div className="profile-list">
+          {loadingAnimals ? <p>Carregando animais...</p> : null}
+          {filteredAnimals.map((animal) => (
+            <div className="profile-row editable-row" key={animal.slug}>
+              <button type="button" onClick={() => editAnimal(animal)}>
+                <img src={animal.foto_principal_url || animal.fotos?.[0] || "/assets/caramel-dog.png"} alt={animal.nome} />
+                <span><strong>{animal.nome}</strong><small>{animal.especie} - {animal.porte} - {animal.status}</small></span>
+              </button>
+              <button type="button" onClick={() => deleteAnimal(animal)}>Excluir</button>
+            </div>
+          ))}
+        </div>
       </div>
-      <form className="form editor-form" onSubmit={handleSaveAnimal}>
-        <label>Nome<input name="nome" required placeholder="Ex: Thor" /></label>
+      <form key={formKey} className="form editor-form" onSubmit={handleSaveAnimal}>
+        <h3>{selectedAnimal ? `Editando ${selectedAnimal.nome}` : "Novo animal"}</h3>
+        <label>Nome<input name="nome" required defaultValue={selectedAnimal?.nome || ""} placeholder="Ex: Thor" /></label>
         <label>Especie<select name="especie" defaultValue="Cão"><option value="Cão">Cao</option><option value="Gato">Gato</option></select></label>
-        <label>Idade<input name="idade" placeholder="Ex: 3 anos, 5 meses" /></label>
-        <label>Faixa etaria<select name="faixa_etaria" defaultValue="adulto"><option value="filhote">Filhote</option><option value="adulto">Adulto</option><option value="idoso">Idoso</option></select></label>
+        <label>Idade<input name="idade" defaultValue={selectedAnimal?.idade || ""} placeholder="Ex: 3 anos, 5 meses" /></label>
+        <label>Faixa etaria<select name="faixa_etaria" defaultValue={selectedAnimal?.faixa_etaria || "adulto"}><option value="filhote">Filhote</option><option value="adulto">Adulto</option><option value="idoso">Idoso</option></select></label>
         <label>Sexo<select name="sexo" defaultValue="Macho"><option>Macho</option><option>Fêmea</option></select></label>
         <label>Porte<select name="porte" defaultValue="Médio"><option>Pequeno</option><option>Médio</option><option>Grande</option></select></label>
-        <label>Cor do pelo<input name="cor" placeholder="Ex: caramelo" /></label>
-        <label>Cidade<input name="cidade" defaultValue="Manaus" placeholder="Ex: Manaus" /></label>
+        <label>Cor do pelo<input name="cor" defaultValue={selectedAnimal?.cor || ""} placeholder="Ex: caramelo" /></label>
+        <label>Cidade<input name="cidade" defaultValue={selectedAnimal?.cidade || "Manaus"} placeholder="Ex: Manaus" /></label>
         <label>Status<select name="status" defaultValue="Disponível"><option>Disponível</option><option>Em processo</option><option>Adotado</option><option>Apadrinhado</option></select></label>
         <label>Nivel de energia<select name="energia" defaultValue="Moderada"><option>Calma</option><option>Moderada</option><option>Ativa</option></select></label>
-        <label>Moradia ideal<select name="moradia" multiple defaultValue={["Casa com quintal"]}><option>Apartamento</option><option>Casa com quintal</option><option>Casa sem quintal</option></select></label>
+        <label>Moradia ideal<select name="moradia" multiple defaultValue={selectedAnimal?.moradia?.length ? selectedAnimal.moradia : ["Casa com quintal"]}><option>Apartamento</option><option>Casa com quintal</option><option>Casa sem quintal</option></select></label>
         <label>Tempo sozinho<select name="tempo_sozinho" defaultValue="Moderado"><option>Pouco</option><option>Moderado</option><option>Longo</option></select></label>
         <label>Convivencia com criancas<select name="criancas" defaultValue="Com supervisão"><option>Sim</option><option>Com supervisão</option><option>Não recomendado</option></select></label>
         <label>Convivencia com outros animais<select name="outros_animais" defaultValue="Com adaptação"><option>Sim</option><option>Com adaptação</option><option>Prefere ser único</option></select></label>
         <label>Experiencia indicada<select name="experiencia" defaultValue="Primeira adoção"><option>Primeira adoção</option><option>Já tive animais</option><option>Tenho animais hoje</option></select></label>
-        <label>Caracteristicas para o Fred<textarea name="perfil_ideal" placeholder="Ex: familia presente, passeios diarios, apartamento telado" /></label>
+        <label>Caracteristicas para o Fred<textarea name="perfil_ideal" defaultValue={selectedAnimal?.perfil_ideal?.join(", ") || ""} placeholder="Ex: familia presente, passeios diarios, apartamento telado" /></label>
         <div className="form-check-grid">
-          <label><input name="castrado" type="checkbox" /> Castrado</label>
-          <label><input name="vacinado" type="checkbox" /> Vacinado</label>
-          <label><input name="vermifugado" type="checkbox" /> Vermifugado</label>
+          <label><input name="castrado" type="checkbox" defaultChecked={Boolean(selectedAnimal?.castrado)} /> Castrado</label>
+          <label><input name="vacinado" type="checkbox" defaultChecked={Boolean(selectedAnimal?.vacinado)} /> Vacinado</label>
+          <label><input name="vermifugado" type="checkbox" defaultChecked={Boolean(selectedAnimal?.vermifugado)} /> Vermifugado</label>
         </div>
-        <label>URL da foto principal<input name="foto_principal_url" placeholder="Opcional: use apenas se quiser colar uma imagem pronta" /></label>
+        <label>URL da foto principal<input name="foto_principal_url" defaultValue={selectedAnimal?.foto_principal_url || ""} placeholder="Opcional: use apenas se quiser colar uma imagem pronta" /></label>
         <label>
           Fotos do animal
           <input type="file" accept="image/*" multiple onChange={(event) => handleAnimalPhotos(event.target.files)} />
@@ -276,7 +405,8 @@ function AnimalAdminPreview({ session }: { session: Session }) {
             {animalPhotos.map((photo, index) => (
               <div className="ordered-photo" key={photo.id}>
                 <img src={photo.preview} alt={`Foto ${index + 1} selecionada`} />
-                <strong>{index === 0 ? "Foto principal" : `Foto ${index + 1}`}</strong>
+                <label><input type="radio" checked={coverPhotoId === photo.id} onChange={() => setCoverPhotoId(photo.id)} /> Capa</label>
+                <strong>{index === 0 ? "Primeira foto" : `Foto ${index + 1}`}</strong>
                 <div>
                   <button type="button" onClick={() => moveAnimalPhoto(index, -1)} disabled={index === 0}>Subir</button>
                   <button type="button" onClick={() => moveAnimalPhoto(index, 1)} disabled={index === animalPhotos.length - 1}>Descer</button>
@@ -286,8 +416,8 @@ function AnimalAdminPreview({ session }: { session: Session }) {
             ))}
           </div>
         ) : null}
-        <label>Personalidade<textarea name="personalidade" placeholder="Ex: carinhoso, sociavel, tranquilo, brincalhao" /></label>
-        <label>Historia<textarea name="historia" placeholder="Conte a historia do animal" /></label>
+        <label>Personalidade<textarea name="personalidade" defaultValue={selectedAnimal?.personalidade || ""} placeholder="Ex: carinhoso, sociavel, tranquilo, brincalhao" /></label>
+        <label>Historia<textarea name="historia" defaultValue={selectedAnimal?.historia || ""} placeholder="Conte a historia do animal" /></label>
         <button className="button primary" type="submit" disabled={saving}>{saving ? "Salvando..." : "Salvar animal"}</button>
         {saveMessage ? <p className="login-warning">{saveMessage}</p> : null}
       </form>

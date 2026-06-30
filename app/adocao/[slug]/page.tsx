@@ -51,17 +51,35 @@ export default async function AnimalProfilePage({ params }: AnimalPageProps) {
       areaServed: "Manaus, AM"
     }
   };
+  const healthItems = [
+    animal.castrado ? "Castrado" : "",
+    animal.vacinado ? "Vacinado" : "",
+    animal.vermifugado ? "Vermifugado" : ""
+  ].filter(Boolean);
 
   return (
     <main className="page-main">
-      <article className="section animal-profile-page">
+      <article className="section animal-profile-page compact-profile">
         <Link className="button neutral" href="/adocao">Voltar para adoção</Link>
         <div className="animal-profile-hero">
           <img src={animal.foto} alt={`${animal.nome}, ${animal.especie.toLowerCase()} ${animal.cor.toLowerCase()} para adoção em Manaus`} />
-          <div>
+          <div className="animal-profile-card">
             <p className="eyebrow">Adoção responsável em Manaus</p>
             <h1 className="page-title">{animal.nome}</h1>
             <p>{animal.personalidade}</p>
+            <div className="animal-quick-facts">
+              <span>🐾 {animal.especie}</span>
+              <span>🎂 {animal.idade}</span>
+              <span>📍 {animal.cidade}</span>
+              <span>📏 {animal.porte}</span>
+              <span>🎨 {animal.cor}</span>
+              <span>⚡ {animal.energia}</span>
+            </div>
+            {healthItems.length ? (
+              <div className="animal-health-list" aria-label="Cuidados veterinarios ja realizados">
+                {healthItems.map((item) => <span key={item}>✓ {item}</span>)}
+              </div>
+            ) : null}
             <div className="animal-profile-actions">
               <Link className="button primary" href={`/cadastro?animal=${animal.id}`}>Quero adotar {animal.nome}</Link>
               <a className="button neutral" href={`https://wa.me/55${site.whatsapp}?text=Tenho%20interesse%20em%20adotar%20${encodeURIComponent(animal.nome)}`} target="_blank" rel="noopener noreferrer">Conversar no WhatsApp</a>
@@ -69,16 +87,13 @@ export default async function AnimalProfilePage({ params }: AnimalPageProps) {
           </div>
         </div>
 
-        <section className="animal-profile-grid" aria-label={`Informações de ${animal.nome}`}>
+        <section className="animal-profile-grid compact" aria-label={`Informações de ${animal.nome}`}>
           <div><strong>Espécie</strong><span>{animal.especie}</span></div>
           <div><strong>Idade</strong><span>{animal.idade}</span></div>
           <div><strong>Sexo</strong><span>{animal.sexo}</span></div>
           <div><strong>Porte</strong><span>{animal.porte}</span></div>
           <div><strong>Cor do pelo</strong><span>{animal.cor}</span></div>
           <div><strong>Cidade</strong><span>{animal.cidade}</span></div>
-          <div><strong>Castração</strong><span>{animal.castrado ? "Castrado" : "A programar"}</span></div>
-          <div><strong>Vacinas</strong><span>{animal.vacinado ? "Vacinado" : "Em andamento"}</span></div>
-          <div><strong>Vermifugação</strong><span>{animal.vermifugado ? "Vermifugado" : "Em andamento"}</span></div>
         </section>
 
         {animal.fotos?.length ? (

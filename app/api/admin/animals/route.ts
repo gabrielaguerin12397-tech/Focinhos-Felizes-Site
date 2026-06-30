@@ -39,11 +39,17 @@ function getList(form: FormData, key: string) {
 async function uploadAnimalPhotos(adminClient: any, slug: string, files: File[]) {
   if (!files.length) return [];
 
-  await adminClient.storage.createBucket(animalPhotoBucket, {
+  const { error: bucketError } = await adminClient.storage.createBucket(animalPhotoBucket, {
     public: true,
     fileSizeLimit: 8 * 1024 * 1024,
     allowedMimeTypes: ["image/png", "image/jpeg", "image/webp"]
   });
+
+  if (bucketError && !String(bucketError.message || "").toLowerCase().includes("already exists")) {
+    throw bucketError;
+  }
+
+  await adminClient.storage.updateBucket(animalPhotoBucket, { public: true });
 
   const urls: string[] = [];
 
@@ -64,17 +70,59 @@ async function uploadAnimalPhotos(adminClient: any, slug: string, files: File[])
   return urls;
 }
 
-export async function POST(request: Request) {
+async function requireAdmin(request: Request) {
   const clients = getSupabaseClients(request.headers.get("authorization"));
 
   if (!clients) {
-    return NextResponse.json({ error: "Supabase nao configurado." }, { status: 500 });
+    return { error: NextResponse.json({ error: "Supabase nao configurado." }, { status: 500 }) };
   }
 
   const { data: userData } = await clients.userClient.auth.getUser();
   if (!userData.user) {
-    return NextResponse.json({ error: "Login administrativo obrigatorio." }, { status: 401 });
+    return { error: NextResponse.json({ error: "Login administrativo obrigatorio." }, { status: 401 }) };
   }
+
+  return { clients };
+}
+
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (auth.error) return auth.error;
+
+  const { data, error } = await auth.clients.adminClient
+    .from("animais")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ animals: data || [] });
+}
+
+export async function DELETE(request: Request) {
+  const auth = await requireAdmin(request);
+  if (auth.error) return auth.error;
+
+  const slug = new URL(request.url).searchParams.get("slug");
+  if (!slug) {
+    return NextResponse.json({ error: "Informe o animal para excluir." }, { status: 400 });
+  }
+
+  const { error } = await auth.clients.adminClient.from("animais").delete().eq("slug", slug);
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true });
+}
+
+export async function POST(request: Request) {
+  const auth = await requireAdmin(request);
+  if (auth.error) return auth.error;
+  const { clients } = auth;
 
   const contentType = request.headers.get("content-type") || "";
   const isMultipart = contentType.includes("multipart/form-data");
@@ -88,6 +136,16 @@ export async function POST(request: Request) {
 
   const slug = slugify(form ? getString(form, "slug", nome) : body.slug || nome);
   const existingMainPhoto = form ? getString(form, "foto_principal_url") : String(body.foto_principal_url || "").trim();
+  const existingPhotos = form
+    ? (() => {
+        try {
+          const parsed = JSON.parse(getString(form, "existing_fotos", "[]"));
+          return Array.isArray(parsed) ? parsed.map(String).filter(Boolean) : [];
+        } catch {
+          return [];
+        }
+      })()
+    : [];
 
   let uploadedPhotos: string[] = [];
   try {
@@ -103,7 +161,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: `Nao foi possivel enviar as fotos: ${message}` }, { status: 500 });
   }
 
-  const photos = uploadedPhotos.length ? uploadedPhotos : existingMainPhoto ? [existingMainPhoto] : [];
+  const photos = [...existingPhotos, ...uploadedPhotos];
+  if (!photos.length && existingMainPhoto) photos.push(existingMainPhoto);
+  const coverIndex = Number(form ? getString(form, "cover_index", "0") : body.cover_index || 0);
+  const coverPhoto = photos[Number.isFinite(coverIndex) ? coverIndex : 0] || photos[0] || null;
   const perfilIdeal = form
     ? getString(form, "perfil_ideal")
         .split(",")
@@ -136,7 +197,7 @@ export async function POST(request: Request) {
     outros_animais: form ? getString(form, "outros_animais", "Com adaptacao") : body.outros_animais || "Com adaptacao",
     tempo_sozinho: form ? getString(form, "tempo_sozinho", "Moderado") : body.tempo_sozinho || "Moderado",
     experiencia: form ? getString(form, "experiencia", "Primeira adocao") : body.experiencia || "Primeira adocao",
-    foto_principal_url: photos[0] || null,
+    foto_principal_url: coverPhoto,
     fotos: photos,
     updated_at: new Date().toISOString()
   };
@@ -151,5 +212,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ slug: data.slug, foto_principal_url: photos[0] || null, fotos: photos });
+  return NextResponse.json({ slug: data.slug, foto_principal_url: coverPhoto, fotos: photos });
 }
