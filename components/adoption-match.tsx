@@ -3,12 +3,16 @@
 import { useMemo, useState } from "react";
 import { animals } from "@/lib/data";
 
-type Step = "intro" | "moradia" | "rotina" | "porte" | "experiencia" | "result";
+type Step = "intro" | "especie" | "moradia" | "rotina" | "porte" | "experiencia" | "result";
 type AdoptionMatchProps = {
   onShowAll: () => void;
 };
 
 const questions: Record<Exclude<Step, "intro" | "result">, { text: string; options: string[] }> = {
+  especie: {
+    text: "Você prefere encontrar um cachorro ou um gatinho?",
+    options: ["Sem preferência", "Cão", "Gato"]
+  },
   moradia: {
     text: "Primeiro, me conta: onde esse aumigo vai morar?",
     options: ["Apartamento", "Casa com quintal", "Casa sem quintal"]
@@ -27,7 +31,7 @@ const questions: Record<Exclude<Step, "intro" | "result">, { text: string; optio
   }
 };
 
-const order: Step[] = ["moradia", "rotina", "porte", "experiencia", "result"];
+const order: Step[] = ["especie", "moradia", "rotina", "porte", "experiencia", "result"];
 
 export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
   const [step, setStep] = useState<Step>("intro");
@@ -37,6 +41,7 @@ export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
     return animals
       .map((animal) => {
         let score = 0;
+        if (answers.especie === "Sem preferência" || animal.especie === answers.especie) score += 4;
         if (animal.moradia.includes(answers.moradia)) score += 3;
         if (animal.energia === answers.rotina) score += 3;
         if (answers.porte === "Sem preferência" || animal.porte === answers.porte) score += 2;
@@ -59,7 +64,7 @@ export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
 
   function restart() {
     setAnswers({});
-    setStep("moradia");
+    setStep("especie");
   }
 
   const currentQuestion = step !== "intro" && step !== "result" ? questions[step] : null;
@@ -80,7 +85,7 @@ export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
         {step === "intro" ? (
           <>
             <div className="fred-message">Me responda algumas perguntinhas e eu sugiro o perfil que mais combina com você.</div>
-            <button className="button primary" type="button" onClick={() => setStep("moradia")}>Conversar com o Fred</button>
+            <button className="button primary" type="button" onClick={() => setStep("especie")}>Conversar com o Fred</button>
             <button className="button neutral" type="button" onClick={onShowAll}>Ver todos os animais disponíveis</button>
           </>
         ) : null}
