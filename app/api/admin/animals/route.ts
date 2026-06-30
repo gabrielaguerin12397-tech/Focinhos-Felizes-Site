@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { revalidatePath } from "next/cache";
 import { slugify } from "@/lib/animals";
 
 const animalPhotoBucket = "animal-photos";
@@ -109,15 +110,22 @@ export async function DELETE(request: Request) {
   if (auth.error) return auth.error;
 
   const slug = new URL(request.url).searchParams.get("slug");
-  if (!slug) {
+  const id = new URL(request.url).searchParams.get("id");
+  if (!slug && !id) {
     return NextResponse.json({ error: "Informe o animal para excluir." }, { status: 400 });
   }
 
-  const { error } = await auth.clients.adminClient.from("animais").delete().eq("slug", slug);
+  const query = auth.clients.adminClient.from("animais").delete();
+  const { error } = id ? await query.eq("id", id) : await query.eq("slug", slug);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  revalidatePath("/");
+  revalidatePath("/adocao");
+  if (slug) revalidatePath(`/adocao/${slug}`);
+  revalidatePath("/sitemap.xml");
 
   return NextResponse.json({ ok: true });
 }
@@ -214,6 +222,11 @@ export async function POST(request: Request) {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  revalidatePath("/");
+  revalidatePath("/adocao");
+  revalidatePath(`/adocao/${data.slug}`);
+  revalidatePath("/sitemap.xml");
 
   return NextResponse.json({ slug: data.slug, foto_principal_url: coverPhoto, fotos: photos });
 }

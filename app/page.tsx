@@ -3,6 +3,9 @@ import { donationItems } from "@/lib/data";
 import { getAnimals } from "@/lib/animals";
 import { site } from "@/lib/site";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function HomePage() {
   const animals = await getAnimals();
 

@@ -175,6 +175,7 @@ export function AdminPanel() {
 }
 
 type AdminAnimal = {
+  id?: string;
   slug: string;
   nome: string;
   especie?: string;
@@ -317,7 +318,8 @@ function AnimalAdminPreview({ session }: { session: Session }) {
   async function deleteAnimal(animal: AdminAnimal) {
     if (!window.confirm(`Excluir o cadastro de ${animal.nome}?`)) return;
 
-    const response = await fetch(`/api/admin/animals?slug=${encodeURIComponent(animal.slug)}`, {
+    const params = animal.id ? `id=${encodeURIComponent(animal.id)}` : `slug=${encodeURIComponent(animal.slug)}`;
+    const response = await fetch(`/api/admin/animals?${params}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${session.access_token}` }
     });

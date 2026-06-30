@@ -2,6 +2,7 @@ import { AdoptionPageClient } from "@/components/adoption-page-client";
 import { getAnimals } from "@/lib/animals";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata = {
   title: "Adoção de cães e gatos em Manaus",

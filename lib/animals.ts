@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { unstable_noStore as noStore } from "next/cache";
 import type { Animal } from "@/lib/data";
 
 type AnimalRow = {
@@ -149,6 +150,7 @@ export function getAnimalSlug(animal: AnimalProfile) {
 }
 
 export async function getAnimals() {
+  noStore();
   const supabase = getServerSupabase();
   if (!supabase) return [];
 
@@ -164,6 +166,7 @@ export async function getAnimals() {
 }
 
 export async function getAnimalBySlug(slug: string) {
+  noStore();
   const supabase = getServerSupabase();
 
   if (supabase) {
