@@ -755,6 +755,20 @@ h3 {
   color: var(--blue-dark);
 }
 
+.animal-photo-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.animal-photo-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
 .match-reason {
   font-size: 0.92rem;
   color: var(--muted);
@@ -2081,6 +2095,7 @@ footer p {
   .animal-grid,
   .animal-profile-hero,
   .animal-profile-grid,
+  .animal-photo-gallery,
   .adoption-filters,
   .sponsor-list,
   .page-cards,

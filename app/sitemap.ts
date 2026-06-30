@@ -1,11 +1,15 @@
-import { animals, posts } from "@/lib/data";
-import { getAnimalSlug } from "@/lib/animals";
+import { posts } from "@/lib/data";
+import { getAnimalSlug, getAnimals } from "@/lib/animals";
 import { getPostSlug } from "@/lib/blog";
 import { site } from "@/lib/site";
 
+export const dynamic = "force-dynamic";
+
 const routes = ["", "/adocao", "/doacao", "/cadastro", "/apadrinhamento", "/blog", "/eventos"];
 
-export default function sitemap() {
+export default async function sitemap() {
+  const animals = await getAnimals();
+
   const staticRoutes = routes.map((route) => ({
     url: `${site.url}${route}`,
     lastModified: new Date(),

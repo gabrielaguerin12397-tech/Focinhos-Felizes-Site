@@ -163,7 +163,7 @@ export function AdminPanel() {
 
         <div className="admin-module-panel">
           <h2>{activeTitle}</h2>
-          {activeModule === "animais" ? <AnimalAdminPreview /> : null}
+          {activeModule === "animais" ? <AnimalAdminPreview session={session} /> : null}
           {activeModule === "blog" ? <BlogAdminPreview /> : null}
           {activeModule === "loja" ? <ShopAdminPreview /> : null}
           {activeModule === "leads" ? <LeadsAdminPreview /> : null}
@@ -174,12 +174,71 @@ export function AdminPanel() {
   );
 }
 
-function AnimalAdminPreview() {
+function AnimalAdminPreview({ session }: { session: Session }) {
   const [animalPhotos, setAnimalPhotos] = useState<string[]>([]);
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saving, setSaving] = useState(false);
 
   function handleAnimalPhotos(files: FileList | null) {
     if (!files) return;
     setAnimalPhotos(Array.from(files).map((file) => URL.createObjectURL(file)));
+  }
+
+  async function handleSaveAnimal(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSaveMessage("");
+    setSaving(true);
+
+    const form = new FormData(event.currentTarget);
+    const perfilIdeal = String(form.get("perfil_ideal") || "")
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+
+    const payload = {
+      nome: form.get("nome"),
+      especie: form.get("especie"),
+      idade: form.get("idade"),
+      faixa_etaria: form.get("faixa_etaria"),
+      sexo: form.get("sexo"),
+      porte: form.get("porte"),
+      cor: form.get("cor"),
+      cidade: form.get("cidade"),
+      status: form.get("status"),
+      energia: form.get("energia"),
+      moradia: form.getAll("moradia"),
+      tempo_sozinho: form.get("tempo_sozinho"),
+      criancas: form.get("criancas"),
+      outros_animais: form.get("outros_animais"),
+      experiencia: form.get("experiencia"),
+      perfil_ideal: perfilIdeal,
+      castrado: form.get("castrado") === "on",
+      vacinado: form.get("vacinado") === "on",
+      vermifugado: form.get("vermifugado") === "on",
+      foto_principal_url: form.get("foto_principal_url"),
+      personalidade: form.get("personalidade"),
+      historia: form.get("historia")
+    };
+
+    const response = await fetch("/api/admin/animals", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.access_token}`
+      },
+      body: JSON.stringify(payload)
+    });
+    const result = await response.json();
+    setSaving(false);
+
+    if (!response.ok) {
+      setSaveMessage(`Nao foi possivel salvar: ${result.error || "erro desconhecido"}`);
+      return;
+    }
+
+    setSaveMessage(`Animal salvo. Pagina criada: /adocao/${result.slug}`);
+    event.currentTarget.reset();
+    setAnimalPhotos([]);
   }
 
   return (
@@ -189,28 +248,29 @@ function AnimalAdminPreview() {
         <input type="search" placeholder="Buscar por nome, cor, porte ou status" />
         <p>Proximo passo: ligar esta tela na tabela animals do Supabase para editar fotos e campos.</p>
       </div>
-      <form className="form editor-form">
-        <label>Nome<input placeholder="Ex: Thor" /></label>
-        <label>Especie<select defaultValue="Cao"><option value="Cao">Cao</option><option value="Gato">Gato</option></select></label>
-        <label>Idade<input placeholder="Ex: 3 anos, 5 meses" /></label>
-        <label>Faixa etaria<select defaultValue="adulto"><option value="filhote">Filhote</option><option value="adulto">Adulto</option><option value="idoso">Idoso</option></select></label>
-        <label>Sexo<select defaultValue="Macho"><option>Macho</option><option>Femea</option></select></label>
-        <label>Porte<select defaultValue="Medio"><option>Pequeno</option><option>Medio</option><option>Grande</option></select></label>
-        <label>Cor do pelo<input placeholder="Ex: caramelo" /></label>
-        <label>Cidade<input placeholder="Ex: Manaus" /></label>
-        <label>Status<select defaultValue="Disponivel"><option>Disponivel</option><option>Em processo</option><option>Adotado</option><option>Apadrinhado</option></select></label>
-        <label>Nivel de energia<select defaultValue="Moderada"><option>Calma</option><option>Moderada</option><option>Ativa</option></select></label>
-        <label>Moradia ideal<select multiple defaultValue={["Casa com quintal"]}><option>Apartamento</option><option>Casa com quintal</option><option>Casa sem quintal</option></select></label>
-        <label>Tempo sozinho<select defaultValue="Moderado"><option>Pouco</option><option>Moderado</option><option>Longo</option></select></label>
-        <label>Convivencia com criancas<select defaultValue="Com supervisao"><option>Sim</option><option>Com supervisao</option><option>Nao recomendado</option></select></label>
-        <label>Convivencia com outros animais<select defaultValue="Com adaptacao"><option>Sim</option><option>Com adaptacao</option><option>Prefere ser unico</option></select></label>
-        <label>Experiencia indicada<select defaultValue="Primeira adocao"><option>Primeira adocao</option><option>Ja tive animais</option><option>Tenho animais hoje</option></select></label>
-        <label>Caracteristicas para o Fred<textarea placeholder="Ex: familia presente, passeios diarios, apartamento telado" /></label>
+      <form className="form editor-form" onSubmit={handleSaveAnimal}>
+        <label>Nome<input name="nome" required placeholder="Ex: Thor" /></label>
+        <label>Especie<select name="especie" defaultValue="Cão"><option value="Cão">Cao</option><option value="Gato">Gato</option></select></label>
+        <label>Idade<input name="idade" placeholder="Ex: 3 anos, 5 meses" /></label>
+        <label>Faixa etaria<select name="faixa_etaria" defaultValue="adulto"><option value="filhote">Filhote</option><option value="adulto">Adulto</option><option value="idoso">Idoso</option></select></label>
+        <label>Sexo<select name="sexo" defaultValue="Macho"><option>Macho</option><option>Fêmea</option></select></label>
+        <label>Porte<select name="porte" defaultValue="Médio"><option>Pequeno</option><option>Médio</option><option>Grande</option></select></label>
+        <label>Cor do pelo<input name="cor" placeholder="Ex: caramelo" /></label>
+        <label>Cidade<input name="cidade" defaultValue="Manaus" placeholder="Ex: Manaus" /></label>
+        <label>Status<select name="status" defaultValue="Disponível"><option>Disponível</option><option>Em processo</option><option>Adotado</option><option>Apadrinhado</option></select></label>
+        <label>Nivel de energia<select name="energia" defaultValue="Moderada"><option>Calma</option><option>Moderada</option><option>Ativa</option></select></label>
+        <label>Moradia ideal<select name="moradia" multiple defaultValue={["Casa com quintal"]}><option>Apartamento</option><option>Casa com quintal</option><option>Casa sem quintal</option></select></label>
+        <label>Tempo sozinho<select name="tempo_sozinho" defaultValue="Moderado"><option>Pouco</option><option>Moderado</option><option>Longo</option></select></label>
+        <label>Convivencia com criancas<select name="criancas" defaultValue="Com supervisão"><option>Sim</option><option>Com supervisão</option><option>Não recomendado</option></select></label>
+        <label>Convivencia com outros animais<select name="outros_animais" defaultValue="Com adaptação"><option>Sim</option><option>Com adaptação</option><option>Prefere ser único</option></select></label>
+        <label>Experiencia indicada<select name="experiencia" defaultValue="Primeira adoção"><option>Primeira adoção</option><option>Já tive animais</option><option>Tenho animais hoje</option></select></label>
+        <label>Caracteristicas para o Fred<textarea name="perfil_ideal" placeholder="Ex: familia presente, passeios diarios, apartamento telado" /></label>
         <div className="form-check-grid">
-          <label><input type="checkbox" /> Castrado</label>
-          <label><input type="checkbox" /> Vacinado</label>
-          <label><input type="checkbox" /> Vermifugado</label>
+          <label><input name="castrado" type="checkbox" /> Castrado</label>
+          <label><input name="vacinado" type="checkbox" /> Vacinado</label>
+          <label><input name="vermifugado" type="checkbox" /> Vermifugado</label>
         </div>
+        <label>URL da foto principal<input name="foto_principal_url" placeholder="Cole aqui a URL da imagem no Supabase Storage ou Cloudinary" /></label>
         <label>
           Fotos do animal
           <input type="file" accept="image/*" multiple onChange={(event) => handleAnimalPhotos(event.target.files)} />
@@ -222,9 +282,10 @@ function AnimalAdminPreview() {
             ))}
           </div>
         ) : null}
-        <label>Personalidade<textarea placeholder="Ex: carinhoso, sociavel, tranquilo, brincalhao" /></label>
-        <label>Historia<textarea placeholder="Conte a historia do animal" /></label>
-        <button className="button primary" type="button">Salvar animal</button>
+        <label>Personalidade<textarea name="personalidade" placeholder="Ex: carinhoso, sociavel, tranquilo, brincalhao" /></label>
+        <label>Historia<textarea name="historia" placeholder="Conte a historia do animal" /></label>
+        <button className="button primary" type="submit" disabled={saving}>{saving ? "Salvando..." : "Salvar animal"}</button>
+        {saveMessage ? <p className="login-warning">{saveMessage}</p> : null}
       </form>
     </div>
   );

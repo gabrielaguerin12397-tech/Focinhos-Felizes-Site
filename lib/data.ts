@@ -17,12 +17,13 @@ export type Animal = {
   moradia: string[];
   perfilIdeal: string[];
   compatibilidade: {
-    criancas: "Sim" | "Com supervisao" | "Nao recomendado";
-    outrosAnimais: "Sim" | "Com adaptacao" | "Prefere ser unico";
-    tempoSozinho: "Pouco" | "Moderado" | "Longo";
-    experiencia: "Primeira adocao" | "Ja tive animais" | "Tenho animais hoje";
+    criancas: string;
+    outrosAnimais: string;
+    tempoSozinho: string;
+    experiencia: string;
   };
   foto: string;
+  fotos?: string[];
   tags: string[];
 };
 

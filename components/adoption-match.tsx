@@ -1,11 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { animals } from "@/lib/data";
+import type { Animal } from "@/lib/data";
 import { getAnimalSlug } from "@/lib/animals";
 
 type Step = "intro" | "especie" | "moradia" | "rotina" | "porte" | "tempoSozinho" | "criancas" | "outrosAnimais" | "experiencia" | "result";
 type AdoptionMatchProps = {
+  animals: Animal[];
   onShowAll: () => void;
 };
 
@@ -46,7 +47,7 @@ const questions: Record<Exclude<Step, "intro" | "result">, { text: string; optio
 
 const order: Step[] = ["especie", "moradia", "rotina", "porte", "tempoSozinho", "criancas", "outrosAnimais", "experiencia", "result"];
 
-export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
+export function AdoptionMatch({ animals, onShowAll }: AdoptionMatchProps) {
   const [step, setStep] = useState<Step>("intro");
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
@@ -77,9 +78,9 @@ export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map((item) => item.animal);
-  }, [answers]);
+  }, [animals, answers]);
 
-  const matchReasons = (animal: (typeof animals)[number]) => {
+  const matchReasons = (animal: Animal) => {
     const reasons = [];
     if (answers.especie === "Sem preferência" || animal.especie === answers.especie) reasons.push(animal.especie === "Cão" ? "é cachorro" : "é gatinho");
     if (animal.moradia.includes(answers.moradia)) reasons.push(`combina com ${answers.moradia?.toLowerCase()}`);

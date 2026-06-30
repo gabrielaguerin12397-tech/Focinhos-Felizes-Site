@@ -1,8 +1,11 @@
 import Link from "next/link";
-import { animals, donationItems } from "@/lib/data";
+import { donationItems } from "@/lib/data";
+import { getAnimals } from "@/lib/animals";
 import { site } from "@/lib/site";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const animals = await getAnimals();
+
   return (
     <main>
       <section className="hero emotional-hero" aria-label="Página inicial">

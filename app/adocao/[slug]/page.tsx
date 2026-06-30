@@ -1,19 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { animals } from "@/lib/data";
 import { getAnimalBySlug, getAnimalSlug } from "@/lib/animals";
 import { site } from "@/lib/site";
+
+export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 
 type AnimalPageProps = {
   params: { slug: string };
 };
 
-export function generateStaticParams() {
-  return animals.map((animal) => ({ slug: getAnimalSlug(animal) }));
-}
-
-export function generateMetadata({ params }: AnimalPageProps) {
-  const animal = getAnimalBySlug(params.slug);
+export async function generateMetadata({ params }: AnimalPageProps) {
+  const animal = await getAnimalBySlug(params.slug);
 
   if (!animal) return {};
 
@@ -34,8 +32,8 @@ export function generateMetadata({ params }: AnimalPageProps) {
   };
 }
 
-export default function AnimalProfilePage({ params }: AnimalPageProps) {
-  const animal = getAnimalBySlug(params.slug);
+export default async function AnimalProfilePage({ params }: AnimalPageProps) {
+  const animal = await getAnimalBySlug(params.slug);
 
   if (!animal) notFound();
 
@@ -82,6 +80,14 @@ export default function AnimalProfilePage({ params }: AnimalPageProps) {
           <div><strong>Vacinas</strong><span>{animal.vacinado ? "Vacinado" : "Em andamento"}</span></div>
           <div><strong>Vermifugação</strong><span>{animal.vermifugado ? "Vermifugado" : "Em andamento"}</span></div>
         </section>
+
+        {animal.fotos?.length ? (
+          <section className="animal-photo-gallery" aria-label={`Fotos de ${animal.nome}`}>
+            {animal.fotos.map((foto, index) => (
+              <img key={foto} src={foto} alt={`${animal.nome} para adoção em Manaus - foto ${index + 1}`} />
+            ))}
+          </section>
+        ) : null}
 
         <section className="animal-story">
           <h2>História de {animal.nome}</h2>

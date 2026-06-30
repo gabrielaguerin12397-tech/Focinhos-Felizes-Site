@@ -1,11 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { animals } from "@/lib/data";
+import type { Animal } from "@/lib/data";
 import { AnimalCard } from "@/components/animal-card";
 import { AdoptionMatch } from "@/components/adoption-match";
 
-export function AdoptionPageClient() {
+export function AdoptionPageClient({ animals }: { animals: Animal[] }) {
   const [showAnimals, setShowAnimals] = useState(false);
   const [filters, setFilters] = useState({
     especie: "",
@@ -40,7 +40,7 @@ export function AdoptionPageClient() {
 
   return (
     <>
-      <AdoptionMatch onShowAll={() => setShowAnimals(true)} />
+      <AdoptionMatch animals={animals} onShowAll={() => setShowAnimals(true)} />
 
       {showAnimals ? (
         <section className="adoption-browser" aria-label="Todos os animais disponíveis para adoção">
