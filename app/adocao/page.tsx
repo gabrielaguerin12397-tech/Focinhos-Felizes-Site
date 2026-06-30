@@ -1,8 +1,8 @@
 import { AdoptionPageClient } from "@/components/adoption-page-client";
 
 export const metadata = {
-  title: "Animais para Adoção",
-  description: "Conheça cães e gatos disponíveis para adoção responsável na ONG Focinhos Felizes."
+  title: "Adoção de cães e gatos em Manaus",
+  description: "Conheça cães e gatos disponíveis para adoção responsável em Manaus com a ONG Focinhos Felizes."
 };
 
 export default function AdoptionPage() {

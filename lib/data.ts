@@ -6,6 +6,7 @@ export type Animal = {
   sexo: "Macho" | "Fêmea";
   porte: "Pequeno" | "Médio" | "Grande";
   cor: string;
+  cidade: string;
   status: "Disponível" | "Em processo" | "Adotado" | "Apadrinhado";
   castrado: boolean;
   vacinado: boolean;
@@ -36,6 +37,7 @@ export const animals: Animal[] = [
     sexo: "Macho",
     porte: "Médio",
     cor: "Caramelo",
+    cidade: "Manaus",
     status: "Disponível",
     castrado: true,
     vacinado: true,
@@ -55,6 +57,7 @@ export const animals: Animal[] = [
     sexo: "Fêmea",
     porte: "Pequeno",
     cor: "Tigrado",
+    cidade: "Manaus",
     status: "Disponível",
     castrado: true,
     vacinado: true,
@@ -74,6 +77,7 @@ export const animals: Animal[] = [
     sexo: "Macho",
     porte: "Pequeno",
     cor: "Preto e branco",
+    cidade: "Manaus",
     status: "Em processo",
     castrado: false,
     vacinado: true,
@@ -93,6 +97,7 @@ export const animals: Animal[] = [
     sexo: "Macho",
     porte: "Grande",
     cor: "Dourado",
+    cidade: "Manaus",
     status: "Disponível",
     castrado: true,
     vacinado: true,

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { posts } from "@/lib/data";
 import { getPostBySlug, getPostParagraphs, getPostSlug } from "@/lib/blog";
+import { site } from "@/lib/site";
 
 type BlogPostPageProps = {
   params: { slug: string };
@@ -18,7 +19,16 @@ export function generateMetadata({ params }: BlogPostPageProps) {
 
   return {
     title: post.title,
-    description: post.subtitle
+    description: post.subtitle,
+    alternates: {
+      canonical: `${site.url}/blog/${getPostSlug(post)}`
+    },
+    openGraph: {
+      title: post.title,
+      description: post.subtitle,
+      images: [post.image],
+      type: "article"
+    }
   };
 }
 
@@ -26,6 +36,27 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   const post = getPostBySlug(params.slug);
 
   if (!post) notFound();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.subtitle,
+    image: `${site.url}${post.image}`,
+    author: {
+      "@type": "Organization",
+      name: site.name
+    },
+    publisher: {
+      "@type": "Organization",
+      name: site.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${site.url}/assets/logo-focinhos-felizes.jpeg`
+      }
+    },
+    mainEntityOfPage: `${site.url}/blog/${getPostSlug(post)}`
+  };
 
   return (
     <main className="page-main">
@@ -55,6 +86,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           {"closing" in post && post.closing ? <p>{post.closing}</p> : null}
         </div>
       </article>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </main>
   );
 }
