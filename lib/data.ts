@@ -119,12 +119,34 @@ export const donationItems: DonationProduct[] = [
 export const posts = [
   {
     title: "Adoção responsável: um compromisso que começa antes da chegada",
+    subtitle: "Preparar rotina, espaço e segurança é parte essencial de receber um novo animal.",
     category: "Bem-estar animal",
-    summary: "Antes de adotar, a família precisa preparar rotina, espaço, segurança e paciência para receber um cão ou gato com respeito.",
+    summary: "Antes de adotar, a família precisa preparar rotina, espaço, segurança e paciência.",
     image: "/assets/blog-adocao-responsavel-2026-06-30.png",
-    body: "Adotar um animal é abrir espaço para uma nova história, mas também assumir um compromisso diário com cuidado, tempo e responsabilidade. Antes da chegada, vale conversar com todos da casa, organizar um ambiente seguro, separar potes, caminha, caixa de areia ou local de descanso, e entender que adaptação leva alguns dias ou semanas. Cães e gatos resgatados podem precisar de previsibilidade, carinho sem pressa e acompanhamento veterinário. A adoção responsável protege o animal, apoia quem adota e ajuda ONGs a seguirem resgatando outros focinhos que ainda esperam por uma chance."
+    content: "Adotar um animal é abrir espaço para uma nova história, mas também assumir um compromisso diário com cuidado, tempo e responsabilidade. Antes da chegada, vale conversar com todos da casa, organizar um ambiente seguro, separar potes, caminha, caixa de areia ou local de descanso, e entender que adaptação leva alguns dias ou semanas. Cães e gatos resgatados podem precisar de previsibilidade, carinho sem pressa e acompanhamento veterinário."
   },
-  { title: "Mutirão de castração abre inscrições", category: "Campanhas", summary: "Orientações e critérios para famílias atendidas." },
-  { title: "12 adoções confirmadas na feira de sábado", category: "Adoções", summary: "Novas famílias, termos assinados e acompanhamento iniciado." },
-  { title: "Como preparar a casa para um gato recém-adotado", category: "Dicas", summary: "Dicas de adaptação, telas, caixa de areia e enriquecimento." }
+  {
+    title: "Mutirão de castração abre inscrições",
+    subtitle: "Famílias podem se cadastrar para atendimento social com vagas limitadas.",
+    category: "Campanhas",
+    summary: "Orientações, critérios e documentos necessários para participar do próximo mutirão.",
+    image: "/assets/donation-vaccine.png",
+    content: "A castração é uma das ações mais importantes para reduzir abandono e sofrimento animal. Nesta campanha, a Focinhos Felizes organiza inscrições para famílias que precisam de apoio, priorizando animais em situação de vulnerabilidade e tutores de baixa renda."
+  },
+  {
+    title: "12 adoções confirmadas na feira de sábado",
+    subtitle: "Novas famílias assinaram termo de adoção e iniciaram acompanhamento.",
+    category: "Adoções",
+    summary: "A feira reuniu voluntários, adotantes e animais que agora começam uma nova fase.",
+    image: "/assets/caramel-dog.png",
+    content: "Cada adoção responsável libera espaço para um novo resgate. Depois da feira, a equipe continua acompanhando as famílias para orientar adaptação, rotina, alimentação e segurança dos animais adotados."
+  },
+  {
+    title: "Como preparar a casa para um gato recém-adotado",
+    subtitle: "Pequenos cuidados deixam a adaptação mais tranquila e segura.",
+    category: "Dicas",
+    summary: "Veja dicas sobre telas, caixa de areia, enriquecimento ambiental e rotina.",
+    image: "/assets/tabby-cat.png",
+    content: "Gatos precisam de tempo, esconderijos seguros e uma rotina previsível para se adaptar. Antes da chegada, organize caixa de areia, água, alimento, arranhadores e proteja janelas com telas."
+  }
 ];

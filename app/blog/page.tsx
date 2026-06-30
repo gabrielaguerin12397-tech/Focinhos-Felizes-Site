@@ -1,4 +1,4 @@
-import { posts } from "@/lib/data";
+import { BlogList } from "@/components/blog-list";
 
 export const metadata = {
   title: "Blog e Notícias",
@@ -8,22 +8,12 @@ export const metadata = {
 export default function BlogPage() {
   return (
     <main className="page-main">
-      <section className="section news-events">
-        <div>
-          <p className="eyebrow">Blog e notícias</p>
-          <h1 className="page-title">Últimas campanhas e histórias.</h1>
-          {posts.map((post) => (
-            <article className="blog-post" key={post.title}>
-              {"image" in post ? <img src={post.image} alt="" /> : null}
-              <div>
-                <small>{post.category}</small>
-                <strong>{post.title}</strong>
-                <span>{post.summary}</span>
-                {"body" in post ? <p>{post.body}</p> : null}
-              </div>
-            </article>
-          ))}
+      <section className="section">
+        <div className="section-heading">
+          <div><p className="eyebrow">Blog e notícias</p><h1 className="page-title">Campanhas, histórias e dicas.</h1></div>
+          <p>Veja as últimas publicações da Focinhos Felizes. Clique para ler a notícia completa.</p>
         </div>
+        <BlogList />
       </section>
     </main>
   );

@@ -961,6 +961,15 @@ h3 {
     grid-template-columns: 72px minmax(0, 1fr);
   }
 
+  .blog-card {
+    grid-template-columns: 96px minmax(0, 1fr);
+  }
+
+  .blog-card img {
+    width: 96px;
+    height: 86px;
+  }
+
   .donation-item > img {
     width: 72px;
     height: 66px;
@@ -1122,6 +1131,95 @@ textarea {
 
 .news-events span {
   color: var(--muted);
+}
+
+.blog-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.blog-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.blog-card {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: 0 8px 18px rgba(24, 49, 63, 0.08);
+}
+
+.blog-card img {
+  width: 128px;
+  height: 104px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.blog-card h2 {
+  margin: 3px 0 4px;
+  color: var(--blue-dark);
+  font-size: 1.22rem;
+  line-height: 1.15;
+}
+
+.blog-category {
+  color: var(--coral);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.blog-subtitle {
+  margin: 0 0 10px;
+  color: var(--muted);
+}
+
+.blog-reader {
+  position: sticky;
+  top: 94px;
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.blog-reader.empty {
+  color: var(--muted);
+}
+
+.blog-reader img {
+  width: 100%;
+  max-height: 260px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.blog-reader h2 {
+  color: var(--blue);
+  font-size: 1.8rem;
+}
+
+.blog-reader-close {
+  justify-self: end;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f8fbfc;
+  color: var(--blue-dark);
+  font-weight: 900;
+  cursor: pointer;
 }
 
 .map {
@@ -1817,6 +1915,7 @@ footer p {
   .donation-shop,
   .item-grid,
   .impact-cards,
+  .blog-layout,
   .split,
   .two-columns,
   .donation,
