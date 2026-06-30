@@ -1095,6 +1095,31 @@ textarea {
   border-bottom: 1px solid var(--line);
 }
 
+.news-events .blog-post {
+  grid-template-columns: minmax(120px, 0.35fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.blog-post img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.blog-post small {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.blog-post p {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
 .news-events span {
   color: var(--muted);
 }
@@ -1813,6 +1838,10 @@ footer p {
   .filter-bar,
   .admin-toolbar,
   .admin-list-header {
+    grid-template-columns: 1fr;
+  }
+
+  .news-events .blog-post {
     grid-template-columns: 1fr;
   }
 

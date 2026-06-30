@@ -117,6 +117,13 @@ export const donationItems: DonationProduct[] = [
 ];
 
 export const posts = [
+  {
+    title: "Adoção responsável: um compromisso que começa antes da chegada",
+    category: "Bem-estar animal",
+    summary: "Antes de adotar, a família precisa preparar rotina, espaço, segurança e paciência para receber um cão ou gato com respeito.",
+    image: "/assets/blog-adocao-responsavel-2026-06-30.png",
+    body: "Adotar um animal é abrir espaço para uma nova história, mas também assumir um compromisso diário com cuidado, tempo e responsabilidade. Antes da chegada, vale conversar com todos da casa, organizar um ambiente seguro, separar potes, caminha, caixa de areia ou local de descanso, e entender que adaptação leva alguns dias ou semanas. Cães e gatos resgatados podem precisar de previsibilidade, carinho sem pressa e acompanhamento veterinário. A adoção responsável protege o animal, apoia quem adota e ajuda ONGs a seguirem resgatando outros focinhos que ainda esperam por uma chance."
+  },
   { title: "Mutirão de castração abre inscrições", category: "Campanhas", summary: "Orientações e critérios para famílias atendidas." },
   { title: "12 adoções confirmadas na feira de sábado", category: "Adoções", summary: "Novas famílias, termos assinados e acompanhamento iniciado." },
   { title: "Como preparar a casa para um gato recém-adotado", category: "Dicas", summary: "Dicas de adaptação, telas, caixa de areia e enriquecimento." }
