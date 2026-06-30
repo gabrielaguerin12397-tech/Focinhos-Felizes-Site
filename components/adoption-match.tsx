@@ -4,6 +4,9 @@ import { useMemo, useState } from "react";
 import { animals } from "@/lib/data";
 
 type Step = "intro" | "moradia" | "rotina" | "porte" | "experiencia" | "result";
+type AdoptionMatchProps = {
+  onShowAll: () => void;
+};
 
 const questions: Record<Exclude<Step, "intro" | "result">, { text: string; options: string[] }> = {
   moradia: {
@@ -26,12 +29,12 @@ const questions: Record<Exclude<Step, "intro" | "result">, { text: string; optio
 
 const order: Step[] = ["moradia", "rotina", "porte", "experiencia", "result"];
 
-export function AdoptionMatch() {
+export function AdoptionMatch({ onShowAll }: AdoptionMatchProps) {
   const [step, setStep] = useState<Step>("intro");
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
-  const match = useMemo(() => {
-    const scored = animals
+  const matches = useMemo(() => {
+    return animals
       .map((animal) => {
         let score = 0;
         if (animal.moradia.includes(answers.moradia)) score += 3;
@@ -41,9 +44,9 @@ export function AdoptionMatch() {
         if (animal.status === "Disponível") score += 1;
         return { animal, score };
       })
-      .sort((a, b) => b.score - a.score);
-
-    return scored[0].animal;
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map((item) => item.animal);
   }, [answers]);
 
   function answer(value: string) {
@@ -78,6 +81,7 @@ export function AdoptionMatch() {
           <>
             <div className="fred-message">Me responda algumas perguntinhas e eu sugiro o perfil que mais combina com você.</div>
             <button className="button primary" type="button" onClick={() => setStep("moradia")}>Conversar com o Fred</button>
+            <button className="button neutral" type="button" onClick={onShowAll}>Ver todos os animais disponíveis</button>
           </>
         ) : null}
 
@@ -93,14 +97,24 @@ export function AdoptionMatch() {
         ) : null}
 
         {step === "result" ? (
-          <div className="fred-result-card">
-            <img src={match.foto} alt={match.nome} />
-            <div>
-              <p className="eyebrow">Sugestão do Fred</p>
-              <h3>{match.nome}</h3>
-              <p>{match.personalidade}</p>
-              <a className="button small" href={`/cadastro?animal=${match.id}`}>Quero conversar sobre {match.nome}</a>
+          <div className="fred-results">
+            <div className="fred-message">Pelo que você me contou, esses três aumigos podem combinar com sua rotina:</div>
+            <div className="fred-result-list">
+              {matches.map((animal) => (
+                <article className="fred-result-card" key={animal.id}>
+                  <img src={animal.foto} alt={animal.nome} />
+                  <div>
+                    <p className="eyebrow">Sugestão do Fred</p>
+                    <h3>{animal.nome}</h3>
+                    <p>{animal.personalidade}</p>
+                    <a className="button small" href={`/cadastro?animal=${animal.id}`}>Quero conversar sobre {animal.nome}</a>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="fred-result-actions">
               <button className="button neutral" type="button" onClick={restart}>Responder de novo</button>
+              <button className="button primary" type="button" onClick={onShowAll}>Ver todos os animais disponíveis</button>
             </div>
           </div>
         ) : null}

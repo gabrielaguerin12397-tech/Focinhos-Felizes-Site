@@ -1,6 +1,4 @@
-import { animals } from "@/lib/data";
-import { AnimalCard } from "@/components/animal-card";
-import { AdoptionMatch } from "@/components/adoption-match";
+import { AdoptionPageClient } from "@/components/adoption-page-client";
 
 export const metadata = {
   title: "Animais para Adoção",
@@ -15,10 +13,7 @@ export default function AdoptionPage() {
           <div><p className="eyebrow">Animais para adoção</p><h1 className="page-title">Encontre um novo amigo.</h1></div>
           <p>Cada adoção passa por entrevista, termo de responsabilidade e acompanhamento inicial.</p>
         </div>
-        <AdoptionMatch />
-        <div className="animal-grid">
-          {animals.map((animal) => <AnimalCard key={animal.id} animal={animal} />)}
-        </div>
+        <AdoptionPageClient />
       </section>
     </main>
   );
