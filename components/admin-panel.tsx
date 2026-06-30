@@ -175,13 +175,31 @@ export function AdminPanel() {
 }
 
 function AnimalAdminPreview({ session }: { session: Session }) {
-  const [animalPhotos, setAnimalPhotos] = useState<string[]>([]);
+  const [animalPhotos, setAnimalPhotos] = useState<Array<{ id: string; file: File; preview: string }>>([]);
   const [saveMessage, setSaveMessage] = useState("");
   const [saving, setSaving] = useState(false);
 
   function handleAnimalPhotos(files: FileList | null) {
     if (!files) return;
-    setAnimalPhotos(Array.from(files).map((file) => URL.createObjectURL(file)));
+    setAnimalPhotos(Array.from(files).map((file) => ({
+      id: `${file.name}-${file.lastModified}-${crypto.randomUUID()}`,
+      file,
+      preview: URL.createObjectURL(file)
+    })));
+  }
+
+  function moveAnimalPhoto(index: number, direction: -1 | 1) {
+    setAnimalPhotos((current) => {
+      const next = [...current];
+      const targetIndex = index + direction;
+      if (targetIndex < 0 || targetIndex >= next.length) return current;
+      [next[index], next[targetIndex]] = [next[targetIndex], next[index]];
+      return next;
+    });
+  }
+
+  function removeAnimalPhoto(index: number) {
+    setAnimalPhotos((current) => current.filter((_, currentIndex) => currentIndex !== index));
   }
 
   async function handleSaveAnimal(event: FormEvent<HTMLFormElement>) {
@@ -195,38 +213,16 @@ function AnimalAdminPreview({ session }: { session: Session }) {
       .map((item) => item.trim())
       .filter(Boolean);
 
-    const payload = {
-      nome: form.get("nome"),
-      especie: form.get("especie"),
-      idade: form.get("idade"),
-      faixa_etaria: form.get("faixa_etaria"),
-      sexo: form.get("sexo"),
-      porte: form.get("porte"),
-      cor: form.get("cor"),
-      cidade: form.get("cidade"),
-      status: form.get("status"),
-      energia: form.get("energia"),
-      moradia: form.getAll("moradia"),
-      tempo_sozinho: form.get("tempo_sozinho"),
-      criancas: form.get("criancas"),
-      outros_animais: form.get("outros_animais"),
-      experiencia: form.get("experiencia"),
-      perfil_ideal: perfilIdeal,
-      castrado: form.get("castrado") === "on",
-      vacinado: form.get("vacinado") === "on",
-      vermifugado: form.get("vermifugado") === "on",
-      foto_principal_url: form.get("foto_principal_url"),
-      personalidade: form.get("personalidade"),
-      historia: form.get("historia")
-    };
+    form.delete("photos");
+    form.set("perfil_ideal", perfilIdeal.join(", "));
+    animalPhotos.forEach((photo) => form.append("photos", photo.file));
 
     const response = await fetch("/api/admin/animals", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${session.access_token}`
       },
-      body: JSON.stringify(payload)
+      body: form
     });
     const result = await response.json();
     setSaving(false);
@@ -236,7 +232,7 @@ function AnimalAdminPreview({ session }: { session: Session }) {
       return;
     }
 
-    setSaveMessage(`Animal salvo. Pagina criada: /adocao/${result.slug}`);
+    setSaveMessage(`Animal salvo. Foto principal definida automaticamente. Pagina criada: /adocao/${result.slug}`);
     event.currentTarget.reset();
     setAnimalPhotos([]);
   }
@@ -270,7 +266,7 @@ function AnimalAdminPreview({ session }: { session: Session }) {
           <label><input name="vacinado" type="checkbox" /> Vacinado</label>
           <label><input name="vermifugado" type="checkbox" /> Vermifugado</label>
         </div>
-        <label>URL da foto principal<input name="foto_principal_url" placeholder="Cole aqui a URL da imagem no Supabase Storage ou Cloudinary" /></label>
+        <label>URL da foto principal<input name="foto_principal_url" placeholder="Opcional: use apenas se quiser colar uma imagem pronta" /></label>
         <label>
           Fotos do animal
           <input type="file" accept="image/*" multiple onChange={(event) => handleAnimalPhotos(event.target.files)} />
@@ -278,7 +274,15 @@ function AnimalAdminPreview({ session }: { session: Session }) {
         {animalPhotos.length ? (
           <div className="upload-preview-grid" aria-label="Previa das fotos do animal">
             {animalPhotos.map((photo, index) => (
-              <img key={photo} src={photo} alt={`Foto ${index + 1} selecionada`} />
+              <div className="ordered-photo" key={photo.id}>
+                <img src={photo.preview} alt={`Foto ${index + 1} selecionada`} />
+                <strong>{index === 0 ? "Foto principal" : `Foto ${index + 1}`}</strong>
+                <div>
+                  <button type="button" onClick={() => moveAnimalPhoto(index, -1)} disabled={index === 0}>Subir</button>
+                  <button type="button" onClick={() => moveAnimalPhoto(index, 1)} disabled={index === animalPhotos.length - 1}>Descer</button>
+                  <button type="button" onClick={() => removeAnimalPhoto(index)}>Remover</button>
+                </div>
+              </div>
             ))}
           </div>
         ) : null}

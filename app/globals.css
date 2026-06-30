@@ -1611,6 +1611,41 @@ textarea {
   gap: 8px;
 }
 
+.ordered-photo {
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.ordered-photo strong {
+  font-size: 0.82rem;
+  color: var(--blue-dark);
+}
+
+.ordered-photo div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.ordered-photo button {
+  min-height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--blue-dark);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ordered-photo button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .upload-preview-grid img,
 .blog-cover-preview img,
 .blog-video-preview video {
