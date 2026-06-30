@@ -24,7 +24,7 @@ export function Assistant() {
   return (
     <aside className={`ai-assistant ${open ? "open" : ""}`}>
       <button className="ai-toggle" type="button" aria-expanded={open} onClick={() => setOpen(!open)}>
-        IA
+        Precisa de ajuda?
       </button>
       <section className="ai-panel" aria-label="Assistente de navegação">
         <header>

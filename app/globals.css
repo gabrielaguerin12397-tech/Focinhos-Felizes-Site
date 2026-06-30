@@ -622,6 +622,54 @@ h3 {
   margin-top: 8px;
 }
 
+.fred-stage {
+  display: grid;
+  place-items: center;
+  min-height: min(680px, 72vh);
+  padding: clamp(18px, 4vw, 42px);
+}
+
+.fred-conversation {
+  display: grid;
+  grid-template-columns: minmax(120px, 190px) minmax(280px, 760px);
+  align-items: end;
+  gap: clamp(14px, 3vw, 30px);
+  width: min(100%, 980px);
+}
+
+.fred-conversation > img {
+  width: 100%;
+  max-width: 190px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 5px solid var(--white);
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+}
+
+.fred-live-bubble {
+  min-height: 230px;
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  padding: clamp(22px, 4vw, 34px);
+}
+
+.fred-live-bubble .fred-options {
+  margin-top: 4px;
+}
+
+.fred-question {
+  color: var(--blue-dark);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 900;
+}
+
+.fred-options.in-bubble button {
+  background: #fffaf1;
+  border-color: #ead7ab;
+}
+
 .adoption-browser {
   display: grid;
   gap: 18px;
@@ -2066,13 +2114,14 @@ footer p {
 }
 
 .ai-toggle {
-  width: 58px;
-  height: 58px;
+  min-width: 132px;
+  height: 52px;
+  padding: 0 16px;
   border: 0;
-  border-radius: 50%;
+  border-radius: 999px;
   background: var(--blue);
   color: var(--white);
-  font: 900 1rem "Nunito", sans-serif;
+  font: 900 0.92rem "Nunito", sans-serif;
   box-shadow: var(--shadow);
   cursor: pointer;
 }
@@ -2220,6 +2269,7 @@ footer p {
   .mini-donation-grid,
   .home-animal-grid,
   .adoption-helper,
+  .fred-conversation,
   .admin-heading,
   .admin-grid,
   .lead-page,
@@ -2264,6 +2314,21 @@ footer p {
 
   .hero-overlay {
     margin: 0 auto 34px;
+  }
+
+  .fred-stage {
+    min-height: auto;
+  }
+
+  .fred-conversation {
+    justify-items: center;
+  }
+
+  .fred-bubble::before {
+    left: 50%;
+    top: -12px;
+    bottom: auto;
+    transform: translateX(-50%) rotate(135deg);
   }
 }
 

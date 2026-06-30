@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { animals as fallbackAnimals, type Animal } from "@/lib/data";
+import type { Animal } from "@/lib/data";
 
 type AnimalRow = {
   id: string;
@@ -150,7 +150,7 @@ export function getAnimalSlug(animal: AnimalProfile) {
 
 export async function getAnimals() {
   const supabase = getServerSupabase();
-  if (!supabase) return fallbackAnimals;
+  if (!supabase) return [];
 
   const { data, error } = await supabase
     .from("animais")
@@ -158,7 +158,7 @@ export async function getAnimals() {
     .neq("status", "Adotado")
     .order("created_at", { ascending: false });
 
-  if (error || !data?.length) return fallbackAnimals;
+  if (error || !data?.length) return [];
 
   return (data as AnimalRow[]).map(animalFromRow);
 }
@@ -176,5 +176,5 @@ export async function getAnimalBySlug(slug: string) {
     if (data) return animalFromRow(data as AnimalRow);
   }
 
-  return fallbackAnimals.find((animal) => getAnimalSlug(animal) === slug) || null;
+  return null;
 }

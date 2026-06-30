@@ -9,9 +9,9 @@ export default async function HomePage() {
   return (
     <main>
       <section className="hero emotional-hero" aria-label="Página inicial">
-        <img className="hero-image" src="/assets/caramel-dog.png" alt="Thor, cachorro resgatado pela Focinhos Felizes" />
+        <img className="hero-image" src="/assets/caramel-dog.png" alt="Animal acolhido pela Focinhos Felizes" />
         <div className="hero-overlay">
-          <p className="eyebrow">Thor ainda espera por uma família</p>
+          <p className="eyebrow">Um aumigo ainda espera por uma família</p>
           <h1>Eles não precisam de pena. Precisam de uma chance.</h1>
           <p>Cada adoção abre espaço para um novo resgate. Cada doação vira ração, vacina, abrigo e cuidado para quem ainda não tem para onde ir.</p>
           <div className="hero-actions">
