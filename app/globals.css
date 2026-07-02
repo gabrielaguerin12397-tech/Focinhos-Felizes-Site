@@ -984,6 +984,37 @@ h3 {
   width: auto;
 }
 
+.option-check-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.option-check-grid legend {
+  grid-column: 1 / -1;
+  font-weight: 900;
+  color: var(--blue-dark);
+}
+
+.option-check-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  font-weight: 800;
+}
+
+.option-check-grid input {
+  width: auto;
+}
+
 .muted {
   width: 100%;
   max-width: none;
@@ -2534,6 +2565,10 @@ footer p {
 
   .animal-profile-grid.compact {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .option-check-grid {
+    grid-template-columns: 1fr;
   }
 
   .animal-card {

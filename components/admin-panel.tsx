@@ -417,11 +417,27 @@ function AnimalAdminPreview({ session }: { session: Session }) {
         <label>Cidade<input name="cidade" defaultValue={selectedAnimal?.cidade || "Manaus"} placeholder="Ex: Manaus" /></label>
         <label>Status<select name="status" defaultValue="Disponível"><option>Disponível</option><option>Em processo</option><option>Adotado</option><option>Apadrinhado</option></select></label>
         <label>Nivel de energia<select name="energia" defaultValue="Moderada"><option>Calma</option><option>Moderada</option><option>Ativa</option></select></label>
-        <label>Moradia ideal<select name="moradia" multiple defaultValue={selectedAnimal?.moradia?.length ? selectedAnimal.moradia : ["Casa com quintal"]}><option>Apartamento</option><option>Casa com quintal</option><option>Casa sem quintal</option></select></label>
+        <fieldset className="option-check-grid">
+          <legend>Moradia ideal</legend>
+          {["Apartamento", "Casa com quintal", "Casa sem quintal"].map((option) => (
+            <label key={option}>
+              <input name="moradia" type="checkbox" value={option} defaultChecked={(selectedAnimal?.moradia?.length ? selectedAnimal.moradia : ["Casa com quintal"]).includes(option)} />
+              {option}
+            </label>
+          ))}
+        </fieldset>
         <label>Tempo sozinho<select name="tempo_sozinho" defaultValue="Moderado"><option>Pouco</option><option>Moderado</option><option>Longo</option></select></label>
         <label>Convivencia com criancas<select name="criancas" defaultValue="Com supervisão"><option>Sim</option><option>Com supervisão</option><option>Não recomendado</option></select></label>
         <label>Convivencia com outros animais<select name="outros_animais" defaultValue="Com adaptação"><option>Sim</option><option>Com adaptação</option><option>Prefere ser único</option></select></label>
-        <label>Experiencia indicada<select name="experiencia" multiple defaultValue={selectedAnimal?.experiencias?.length ? selectedAnimal.experiencias : selectedAnimal?.experiencia ? [selectedAnimal.experiencia] : ["Primeira adoção"]}><option>Primeira adoção</option><option>Já tive animais</option><option>Tenho animais hoje</option></select></label>
+        <fieldset className="option-check-grid">
+          <legend>Experiencia indicada</legend>
+          {["Primeira adoção", "Já tive animais", "Tenho animais hoje"].map((option) => (
+            <label key={option}>
+              <input name="experiencia" type="checkbox" value={option} defaultChecked={(selectedAnimal?.experiencias?.length ? selectedAnimal.experiencias : selectedAnimal?.experiencia ? [selectedAnimal.experiencia] : ["Primeira adoção"]).includes(option)} />
+              {option}
+            </label>
+          ))}
+        </fieldset>
         <label>Caracteristicas para o Fred<textarea name="perfil_ideal" defaultValue={selectedAnimal?.perfil_ideal?.join(", ") || ""} placeholder="Ex: familia presente, passeios diarios, apartamento telado" /></label>
         <div className="form-check-grid">
           <label><input name="castrado" type="checkbox" defaultChecked={Boolean(selectedAnimal?.castrado)} /> Castrado</label>
