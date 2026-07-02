@@ -159,6 +159,49 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Calor e pets: passo a passo para proteger cães e gatos nos dias quentes",
+    subtitle: "Hidratação, sombra, horários seguros e atenção aos sinais de alerta ajudam a evitar sofrimento.",
+    category: "Cuidados",
+    summary: "Veja cuidados práticos para manter cães e gatos seguros em dias de calor, especialmente animais resgatados, idosos, filhotes ou em adaptação.",
+    image: "/assets/blog-calor-pets-2026-07-02.png",
+    content: "Dias quentes exigem atenção redobrada com cães e gatos. Água fresca, sombra, ventilação e rotina ajustada reduzem riscos e tornam o cuidado mais seguro, principalmente para animais resgatados, idosos, filhotes ou pets que ainda estão se adaptando a uma nova casa.",
+    body: [
+      "O calor pode afetar cães e gatos com rapidez. Diferente das pessoas, eles não conseguem regular a temperatura do corpo da mesma forma, e muitos sinais de desconforto aparecem quando o animal já está cansado, ofegante ou buscando um local mais fresco.",
+      "Para ONGs, lares temporários e famílias adotantes, a prevenção é o ponto central. Pequenas decisões de rotina, como trocar a água mais vezes, evitar passeios em horários inadequados e observar o comportamento do animal, ajudam a proteger a saúde e o bem-estar."
+    ],
+    steps: [
+      {
+        title: "Mantenha água fresca sempre disponível",
+        text: "Use mais de um pote pela casa ou abrigo, lave os recipientes diariamente e troque a água sempre que ela esquentar. Em dias muito quentes, pedras de gelo podem ajudar, desde que o animal aceite bem e não fique assustado."
+      },
+      {
+        title: "Garanta sombra e ventilação",
+        text: "O animal precisa ter acesso a locais cobertos, frescos e bem ventilados durante todo o dia. Varandas, quintais e áreas externas só são seguras quando existe sombra real, circulação de ar e possibilidade de entrar em um ambiente mais fresco."
+      },
+      {
+        title: "Evite passeios no sol forte",
+        text: "Prefira sair cedo pela manhã ou no fim da tarde. Antes do passeio, encoste a mão no chão por alguns segundos: se estiver desconfortável para você, também pode machucar as patas do cão. Leve água e faça trajetos mais curtos."
+      },
+      {
+        title: "Nunca deixe o animal preso em carro ou local abafado",
+        text: "Mesmo por poucos minutos, ambientes fechados podem aquecer rapidamente e colocar o animal em risco. Isso vale para carros, caixas de transporte expostas ao sol, cômodos sem ventilação e áreas pequenas sem sombra."
+      },
+      {
+        title: "Observe sinais de alerta",
+        text: "Ofegância intensa, fraqueza, salivação excessiva, vômito, língua muito vermelha, desorientação ou dificuldade para andar exigem atenção imediata. Leve o animal para um local fresco, ofereça água aos poucos e procure atendimento veterinário."
+      },
+      {
+        title: "Ajuste a rotina de alimentação e descanso",
+        text: "Alguns pets comem menos nos horários mais quentes. Mantenha a alimentação orientada pelo veterinário, evite exercícios após as refeições e ofereça um local tranquilo para descanso. Animais idosos, braquicefálicos, filhotes e doentes precisam de cuidado extra."
+      },
+      {
+        title: "Use enriquecimento ambiental sem esforço excessivo",
+        text: "Brinquedos recheáveis, tapetes úmidos em local ventilado e brincadeiras leves dentro de casa ajudam a gastar energia com menos risco. O objetivo é manter o animal estimulado sem forçar corrida, agitação ou exposição ao calor."
+      }
+    ],
+    closing: "Proteger cães e gatos do calor é uma forma simples e direta de bem-estar animal. Quando a família ou o lar temporário prepara o ambiente, observa sinais e ajusta a rotina, o animal fica mais seguro para descansar, brincar e se adaptar com tranquilidade."
+  },
+  {
     title: "Adoção responsável: um compromisso que começa antes da chegada",
     subtitle: "Preparar rotina, espaço e segurança é parte essencial de receber um novo animal.",
     category: "Bem-estar animal",
