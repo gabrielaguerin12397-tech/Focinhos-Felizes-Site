@@ -5,9 +5,15 @@ import { getAnimalSlug } from "@/lib/animals";
 export function AnimalCard({ animal }: { animal: Animal }) {
   return (
     <article className="animal-card">
-      <img src={animal.foto} alt={`${animal.nome}, ${animal.especie.toLowerCase()} para adocao em Manaus`} />
-      <div>
-        <h3>{animal.nome}</h3>
+      <div className="animal-card-photo">
+        <img src={animal.foto} alt={`${animal.nome}, ${animal.especie.toLowerCase()} para adocao em Manaus`} />
+        <span>{animal.especie}</span>
+      </div>
+      <div className="animal-card-body">
+        <div className="animal-card-header">
+          <h3>{animal.nome}</h3>
+          <span>{animal.status}</span>
+        </div>
         <p className="meta">{animal.idade} • {animal.sexo.toLowerCase()} • {animal.porte.toLowerCase()} • {animal.cidade}</p>
         <p className="animal-card-story">{animal.historia}</p>
         <Link className="button small" href={`/adocao/${getAnimalSlug(animal)}`}>Ver perfil</Link>
