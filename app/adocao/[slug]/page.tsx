@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AnimalPhotoViewer } from "@/components/animal-photo-viewer";
 import { getAnimalBySlug, getAnimalSlug } from "@/lib/animals";
 import { site } from "@/lib/site";
 
@@ -69,12 +70,12 @@ export default async function AnimalProfilePage({ params }: AnimalPageProps) {
             <h1 className="page-title">{animal.nome}</h1>
             <p>{animal.personalidade}</p>
             <div className="animal-quick-facts">
-              <span>🐾 {animal.especie}</span>
-              <span>🎂 {animal.idade}</span>
-              <span>📍 {animal.cidade}</span>
-              <span>📏 {animal.porte}</span>
-              <span>🎨 {animal.cor}</span>
-              <span>⚡ {animal.energia}</span>
+              <span>Pet: {animal.especie}</span>
+              <span>Idade: {animal.idade}</span>
+              <span>Cidade: {animal.cidade}</span>
+              <span>Porte: {animal.porte}</span>
+              <span>Cor: {animal.cor}</span>
+              <span>Energia: {animal.energia}</span>
             </div>
             {healthItems.length ? (
               <div className="animal-health-list" aria-label="Cuidados veterinarios ja realizados">
@@ -82,8 +83,7 @@ export default async function AnimalProfilePage({ params }: AnimalPageProps) {
               </div>
             ) : null}
             <div className="animal-profile-actions">
-              <Link className="button primary" href={`/cadastro?animal=${animal.id}`}>Quero adotar {animal.nome}</Link>
-              <a className="button neutral" href={`https://wa.me/55${site.whatsapp}?text=Tenho%20interesse%20em%20adotar%20${encodeURIComponent(animal.nome)}`} target="_blank" rel="noopener noreferrer">Conversar no WhatsApp</a>
+              <a className="button primary" href={`https://wa.me/55${site.whatsapp}?text=Tenho%20interesse%20em%20adotar%20${encodeURIComponent(animal.nome)}`} target="_blank" rel="noopener noreferrer">Conversar no WhatsApp</a>
             </div>
           </div>
         </div>
@@ -97,13 +97,7 @@ export default async function AnimalProfilePage({ params }: AnimalPageProps) {
           <div><strong>Cidade</strong><span>{animal.cidade}</span></div>
         </section>
 
-        {animal.fotos?.length ? (
-          <section className="animal-photo-gallery" aria-label={`Fotos de ${animal.nome}`}>
-            {animal.fotos.map((foto, index) => (
-              <img key={foto} src={foto} alt={`${animal.nome} para adoção em Manaus - foto ${index + 1}`} />
-            ))}
-          </section>
-        ) : null}
+        <AnimalPhotoViewer animalName={animal.nome} photos={animal.fotos?.length ? animal.fotos : [animal.foto]} />
 
         <section className="animal-story">
           <h2>História de {animal.nome}</h2>

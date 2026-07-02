@@ -719,26 +719,50 @@ h3 {
 }
 
 .animal-card {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: stretch;
   overflow: hidden;
 }
 
 .animal-card img {
   width: 100%;
-  aspect-ratio: 16 / 11;
+  height: 100%;
+  min-height: 150px;
+  max-height: 190px;
   object-fit: cover;
 }
 
 .animal-card div {
-  padding: 18px;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 14px;
+}
+
+.animal-card h3 {
+  font-size: 1.35rem;
+  line-height: 1.05;
+}
+
+.animal-card .button {
+  justify-self: start;
+  margin-top: 2px;
 }
 
 .meta {
   color: var(--muted);
   font-weight: 700;
+  font-size: 0.92rem;
 }
 
-.animal-card ul {
-  padding-left: 20px;
+.animal-card-story {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--ink);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-height: 1.45;
 }
 
 .animal-profile-page {
@@ -852,12 +876,86 @@ h3 {
   gap: 12px;
 }
 
+.animal-photo-gallery button {
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: zoom-in;
+}
+
 .animal-photo-gallery img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid var(--line);
+}
+
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 56px clamp(14px, 4vw, 54px);
+  background: rgba(6, 20, 29, 0.88);
+}
+
+.photo-lightbox img {
+  max-width: min(980px, 100%);
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.photo-lightbox-close,
+.photo-lightbox-nav {
+  position: fixed;
+  border: 0;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--blue-dark);
+  font-weight: 900;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+.photo-lightbox-close {
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  font-size: 1.8rem;
+}
+
+.photo-lightbox-nav {
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 2.2rem;
+  transform: translateY(-50%);
+}
+
+.photo-lightbox-nav.previous {
+  left: 18px;
+}
+
+.photo-lightbox-nav.next {
+  right: 18px;
+}
+
+.photo-lightbox span {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--blue-dark);
+  font-weight: 900;
+  transform: translateX(-50%);
 }
 
 .match-reason {
@@ -2436,6 +2534,37 @@ footer p {
 
   .animal-profile-grid.compact {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .animal-card {
+    grid-template-columns: 108px minmax(0, 1fr);
+  }
+
+  .animal-card img {
+    min-height: 132px;
+    max-height: 160px;
+  }
+
+  .animal-card div {
+    padding: 12px;
+  }
+
+  .animal-card h3 {
+    font-size: 1.15rem;
+  }
+
+  .animal-card-story {
+    -webkit-line-clamp: 2;
+    font-size: 0.92rem;
+  }
+
+  .photo-lightbox {
+    padding: 54px 10px;
+  }
+
+  .photo-lightbox-nav {
+    width: 40px;
+    height: 40px;
   }
 
   .stats-band {
