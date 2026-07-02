@@ -26,6 +26,7 @@ type AnimalRow = {
   outros_animais: string | null;
   tempo_sozinho: string | null;
   experiencia: string | null;
+  experiencias: string[] | null;
   foto_principal_url: string | null;
   fotos: string[] | null;
 };
@@ -107,6 +108,11 @@ function normalizeExperience(value?: string | null): Animal["compatibilidade"]["
   return "Primeira adoção";
 }
 
+function normalizeExperiences(values?: string[] | null, fallback?: string | null) {
+  const list = values?.length ? values : fallback ? [fallback] : [];
+  return list.map((item) => normalizeExperience(item)).filter(Boolean);
+}
+
 export function animalFromRow(row: AnimalRow): Animal {
   const slug = row.slug || slugify(row.nome);
   const faixaEtaria = row.faixa_etaria || "adulto";
@@ -133,7 +139,8 @@ export function animalFromRow(row: AnimalRow): Animal {
       criancas: normalizeChildren(row.criancas),
       outrosAnimais: normalizeOtherAnimals(row.outros_animais),
       tempoSozinho: normalizeAloneTime(row.tempo_sozinho),
-      experiencia: normalizeExperience(row.experiencia)
+      experiencia: normalizeExperience(row.experiencia),
+      experiencias: normalizeExperiences(row.experiencias, row.experiencia)
     },
     foto: row.foto_principal_url || row.fotos?.[0] || "/assets/caramel-dog.png",
     fotos: row.fotos?.length ? row.fotos : row.foto_principal_url ? [row.foto_principal_url] : [],

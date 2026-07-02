@@ -207,7 +207,8 @@ export async function POST(request: Request) {
     criancas: form ? getString(form, "criancas", "Com supervisao") : body.criancas || "Com supervisao",
     outros_animais: form ? getString(form, "outros_animais", "Com adaptacao") : body.outros_animais || "Com adaptacao",
     tempo_sozinho: form ? getString(form, "tempo_sozinho", "Moderado") : body.tempo_sozinho || "Moderado",
-    experiencia: form ? getString(form, "experiencia", "Primeira adocao") : body.experiencia || "Primeira adocao",
+    experiencia: form ? getList(form, "experiencia")[0] || "Primeira adocao" : body.experiencia || "Primeira adocao",
+    experiencias: form ? getList(form, "experiencia") : Array.isArray(body.experiencias) ? body.experiencias : body.experiencia ? [body.experiencia] : [],
     foto_principal_url: coverPhoto,
     fotos: photos,
     updated_at: new Date().toISOString()

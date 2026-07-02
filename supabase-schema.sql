@@ -135,6 +135,7 @@ alter table public.animais add column if not exists criancas text;
 alter table public.animais add column if not exists outros_animais text;
 alter table public.animais add column if not exists tempo_sozinho text;
 alter table public.animais add column if not exists experiencia text;
+alter table public.animais add column if not exists experiencias text[] default '{}';
 alter table public.animais add column if not exists fotos text[] default '{}';
 
 create unique index if not exists animais_slug_idx on public.animais (slug);

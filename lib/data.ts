@@ -21,6 +21,7 @@ export type Animal = {
     outrosAnimais: string;
     tempoSozinho: string;
     experiencia: string;
+    experiencias?: string[];
   };
   foto: string;
   fotos?: string[];

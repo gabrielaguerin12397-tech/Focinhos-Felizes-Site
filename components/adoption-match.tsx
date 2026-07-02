@@ -77,7 +77,8 @@ export function AdoptionMatch({ animals, onShowAll }: AdoptionMatchProps) {
         if (answers.outrosAnimais === "Sim" && animal.compatibilidade.outrosAnimais === "Sim") score += 3;
         if (answers.outrosAnimais === "Sim" && normalize(animal.compatibilidade.outrosAnimais).includes("adapt")) score += 1;
         if (answers.outrosAnimais === "Sim" && normalize(animal.compatibilidade.outrosAnimais).includes("unico")) score -= 6;
-        if (normalize(animal.compatibilidade.experiencia) === normalize(answers.experiencia)) score += 2;
+        const animalExperiences = animal.compatibilidade.experiencias?.length ? animal.compatibilidade.experiencias : [animal.compatibilidade.experiencia];
+        if (animalExperiences.some((item) => normalize(item) === normalize(answers.experiencia))) score += 2;
         if (answers.experiencia === "Primeira adocao" && animal.energia === "Calma") score += 2;
         if (answers.experiencia === "Primeira adocao" && animal.energia === "Ativa") score -= 2;
         if (normalize(animal.status).includes("dispon")) score += 1;

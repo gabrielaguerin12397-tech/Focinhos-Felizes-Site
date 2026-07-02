@@ -192,6 +192,7 @@ type AdminAnimal = {
   criancas?: string;
   outros_animais?: string;
   experiencia?: string;
+  experiencias?: string[];
   perfil_ideal?: string[];
   castrado?: boolean;
   vacinado?: boolean;
@@ -420,7 +421,7 @@ function AnimalAdminPreview({ session }: { session: Session }) {
         <label>Tempo sozinho<select name="tempo_sozinho" defaultValue="Moderado"><option>Pouco</option><option>Moderado</option><option>Longo</option></select></label>
         <label>Convivencia com criancas<select name="criancas" defaultValue="Com supervisão"><option>Sim</option><option>Com supervisão</option><option>Não recomendado</option></select></label>
         <label>Convivencia com outros animais<select name="outros_animais" defaultValue="Com adaptação"><option>Sim</option><option>Com adaptação</option><option>Prefere ser único</option></select></label>
-        <label>Experiencia indicada<select name="experiencia" defaultValue="Primeira adoção"><option>Primeira adoção</option><option>Já tive animais</option><option>Tenho animais hoje</option></select></label>
+        <label>Experiencia indicada<select name="experiencia" multiple defaultValue={selectedAnimal?.experiencias?.length ? selectedAnimal.experiencias : selectedAnimal?.experiencia ? [selectedAnimal.experiencia] : ["Primeira adoção"]}><option>Primeira adoção</option><option>Já tive animais</option><option>Tenho animais hoje</option></select></label>
         <label>Caracteristicas para o Fred<textarea name="perfil_ideal" defaultValue={selectedAnimal?.perfil_ideal?.join(", ") || ""} placeholder="Ex: familia presente, passeios diarios, apartamento telado" /></label>
         <div className="form-check-grid">
           <label><input name="castrado" type="checkbox" defaultChecked={Boolean(selectedAnimal?.castrado)} /> Castrado</label>
