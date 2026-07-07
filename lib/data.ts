@@ -160,6 +160,57 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Encontrei um animal abandonado: passo a passo para ajudar com segurança",
+    subtitle: "Agir com calma, proteger o animal e acionar apoio correto aumenta as chances de um resgate responsável.",
+    category: "Resgate responsável",
+    summary: "Saiba o que fazer ao encontrar cão ou gato abandonado, desde a aproximação segura até lar temporário, atendimento veterinário e divulgação.",
+    image: "/assets/blog-animal-abandonado-2026-07-07.png",
+    content: "Encontrar um cão ou gato abandonado costuma gerar urgência e emoção. A ajuda é importante, mas precisa ser feita com segurança para o animal, para quem está ajudando e para as pessoas ao redor. Um resgate responsável começa com calma, observação e decisões práticas.",
+    body: [
+      "Animais em situação de rua podem estar assustados, com fome, feridos, perdidos ou simplesmente tentando se proteger. Por isso, a primeira atitude não deve ser correr, gritar ou tentar pegar no colo imediatamente. A aproximação precisa respeitar o estado emocional do animal.",
+      "Também é importante entender que resgatar não é apenas tirar o animal da rua. O processo envolve acolhimento, avaliação de saúde, busca por tutor, lar temporário, divulgação responsável e, quando for o caso, adoção com critérios. Quanto melhor esse caminho for organizado, maior a chance de o animal realmente ficar seguro."
+    ],
+    steps: [
+      {
+        title: "Observe antes de se aproximar",
+        text: "Veja se o animal está em local de risco, como avenida movimentada, estacionamento ou área com outros animais. Observe sinais de medo, agressividade, dor, cansaço ou desorientação. Essa leitura inicial ajuda a decidir se é seguro agir sozinho ou se é melhor chamar apoio."
+      },
+      {
+        title: "Aproxime-se devagar e sem pressionar",
+        text: "Fale baixo, evite movimentos bruscos e não tente encurralar o animal. Se tiver alimento ou água, coloque no chão a uma distância segura e espere. Muitos cães e gatos precisam de alguns minutos para entender que a aproximação não é uma ameaça."
+      },
+      {
+        title: "Evite colocar a mão diretamente no animal assustado",
+        text: "Mesmo animais dóceis podem morder ou arranhar quando estão com dor ou medo. Se precisar conduzir o animal, use guia, toalha, caixa de transporte ou peça ajuda a alguém experiente. Segurança reduz acidentes e evita que o animal fuja para uma área mais perigosa."
+      },
+      {
+        title: "Verifique se ele pode estar perdido",
+        text: "Procure coleira, plaquinha, identificação, sinais de tosa recente ou comportamento de animal domiciliado. Tire fotos nítidas e divulgue em grupos locais informando bairro, rua aproximada e características. Evite divulgar todos os detalhes se houver suspeita de tutor: isso ajuda a confirmar quem realmente conhece o animal."
+      },
+      {
+        title: "Ofereça água, sombra e contenção segura",
+        text: "Antes de qualquer decisão, tire o animal do sol, ofereça água aos poucos e mantenha-o em ambiente calmo. Se for levá-lo em carro, use caixa de transporte, guia ou contenção adequada. Não transporte animal solto, pois ele pode se assustar e causar acidente."
+      },
+      {
+        title: "Procure avaliação veterinária",
+        text: "A consulta ajuda a identificar ferimentos, desidratação, parasitas, doenças transmissíveis, necessidade de exames, vacinas ou medicação. Se houver sangramento, dificuldade para respirar, atropelamento, apatia intensa ou convulsão, trate como emergência."
+      },
+      {
+        title: "Organize lar temporário antes da divulgação para adoção",
+        text: "O animal precisa de um local seguro para se recuperar e ser observado. Em casa, mantenha-o separado de outros animais até avaliação veterinária. Separe potes, panos, caixa de areia ou caminha e mantenha uma rotina tranquila."
+      },
+      {
+        title: "Divulgue com responsabilidade",
+        text: "Use fotos boas, conte a situação com objetividade e informe necessidades reais: ração, consulta, castração, lar temporário ou adoção. Evite doar o animal para a primeira pessoa interessada. Faça perguntas sobre rotina, segurança da casa, experiência e compromisso com castração e cuidados."
+      },
+      {
+        title: "Peça ajuda, mas não transfira o problema sem combinar",
+        text: "ONGs e protetores costumam estar lotados e dependem de recursos. Ao pedir apoio, informe claramente onde o animal está, condição de saúde, fotos, se você pode oferecer transporte, lar temporário ou ajuda com custos. Isso torna o pedido mais viável."
+      }
+    ],
+    closing: "Ajudar um animal abandonado é um gesto de responsabilidade. Quando a ação é organizada, o resgate deixa de ser apenas impulso e vira uma chance real de proteção, recuperação e encaminhamento seguro para uma nova família."
+  },
+  {
     title: "Calor e pets: passo a passo para proteger cães e gatos nos dias quentes",
     subtitle: "Hidratação, sombra, horários seguros e atenção aos sinais de alerta ajudam a evitar sofrimento.",
     category: "Cuidados",
