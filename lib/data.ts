@@ -160,6 +160,53 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Castração responsável: por que ela protege animais, famílias e a comunidade",
+    subtitle: "Entenda quando conversar com o veterinário, quais cuidados preparar e como a castração ajuda a reduzir abandono.",
+    category: "Saúde preventiva",
+    summary: "A castração é uma medida de saúde pública e bem-estar animal que ajuda a prevenir ninhadas não planejadas, abandono e alguns problemas de saúde.",
+    image: "/assets/blog-castracao-responsavel-2026-07-14.png",
+    content: "A castração responsável é uma das ações mais efetivas para proteger cães e gatos, reduzir ninhadas não planejadas e diminuir o ciclo de abandono. Ela deve ser planejada com orientação veterinária, cuidados antes e depois do procedimento e compromisso da família com a recuperação do animal.",
+    body: [
+      "Quando uma ONG fala sobre castração, o objetivo não é apenas evitar filhotes. A conversa envolve saúde, segurança, planejamento familiar e responsabilidade coletiva. Cada ninhada não planejada aumenta a pressão sobre lares temporários, protetores, abrigos e famílias que muitas vezes não conseguem cuidar de todos os animais.",
+      "A castração também precisa ser tratada com seriedade. Ela é um procedimento veterinário e deve respeitar idade, condição clínica, exames recomendados e recuperação adequada. Com informação correta, tutores e adotantes tomam decisões melhores e os animais passam pelo processo com mais segurança."
+    ],
+    steps: [
+      {
+        title: "Entenda a castração como prevenção, não como punição",
+        text: "Cães e gatos não precisam cruzar para serem saudáveis ou felizes. A castração é uma ferramenta de prevenção que reduz ninhadas indesejadas e ajuda a evitar que mais animais nasçam sem garantia de lar, cuidado veterinário e alimentação adequada."
+      },
+      {
+        title: "Converse com um veterinário antes de marcar",
+        text: "A avaliação profissional define o melhor momento para o procedimento, considerando idade, peso, histórico de saúde, vacinas, vermifugação e possíveis exames. Filhotes, idosos, fêmeas no cio, animais doentes ou recém-resgatados podem precisar de uma preparação específica."
+      },
+      {
+        title: "Organize o pré-operatório com antecedência",
+        text: "Siga corretamente as orientações sobre jejum, transporte, documentação e medicamentos. Prepare uma caixa de transporte segura para gatos e uma guia adequada para cães. Evite improvisos no dia, porque estresse e atrasos prejudicam o bem-estar do animal."
+      },
+      {
+        title: "Prepare um espaço calmo para a volta para casa",
+        text: "Depois da cirurgia, o animal precisa descansar em local limpo, seco, ventilado e sem acesso a escadas, pulos ou brincadeiras intensas. Separe caminha, água, alimento orientado pelo veterinário e um ambiente onde ele possa se recuperar sem ser incomodado."
+      },
+      {
+        title: "Use roupa cirúrgica ou colar quando indicado",
+        text: "Lamber ou morder os pontos pode causar inflamação, abertura da cirurgia e dor. Se o veterinário recomendar roupa cirúrgica ou colar elizabetano, mantenha o uso pelo período indicado, mesmo que o animal pareça incomodado no início."
+      },
+      {
+        title: "Observe sinais de alerta no pós-operatório",
+        text: "Procure orientação veterinária se houver sangramento, inchaço intenso, mau cheiro, apatia prolongada, vômitos repetidos, falta de apetite persistente, dor forte ou tentativa constante de mexer nos pontos. A recuperação deve ser acompanhada, não apenas esperada."
+      },
+      {
+        title: "Mantenha o acompanhamento e a retirada de pontos",
+        text: "Se houver retorno agendado, compareça. A retirada de pontos, quando necessária, deve ser feita no prazo correto. Esse acompanhamento confirma se a cicatrização está adequada e evita complicações que poderiam ser resolvidas cedo."
+      },
+      {
+        title: "Apoie campanhas de castração e educação",
+        text: "Além de castrar o próprio animal, divulgar informação responsável ajuda a comunidade. Campanhas, mutirões e doações para castrações sociais reduzem abandono de forma concreta, especialmente em regiões com muitos animais vulneráveis."
+      }
+    ],
+    closing: "Castração responsável é cuidado individual e impacto coletivo. Quando tutores, adotantes, ONGs e veterinários trabalham juntos, menos animais nascem em situação de risco e mais cães e gatos têm chance de viver com saúde, segurança e dignidade."
+  },
+  {
     title: "Encontrei um animal abandonado: passo a passo para ajudar com segurança",
     subtitle: "Agir com calma, proteger o animal e acionar apoio correto aumenta as chances de um resgate responsável.",
     category: "Resgate responsável",
