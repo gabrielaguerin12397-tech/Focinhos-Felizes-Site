@@ -160,6 +160,53 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Lar temporário para cães e gatos: como ajudar mesmo sem adotar agora",
+    subtitle: "Abrir a casa por um período combinado pode salvar vidas e liberar espaço para novos resgates.",
+    category: "Voluntariado",
+    summary: "Entenda o que é lar temporário, como preparar a casa e quais cuidados tornam essa ajuda mais segura para animais resgatados.",
+    image: "/assets/blog-lar-temporario-2026-07-17.png",
+    content: "O lar temporário é uma das formas mais importantes de ajudar uma ONG de proteção animal. Ele oferece abrigo, rotina e cuidado enquanto o cão ou gato se recupera, aguarda adoção ou precisa sair de uma situação de risco.",
+    body: [
+      "Nem toda pessoa pode adotar de forma definitiva, mas muitas conseguem ajudar por alguns dias, semanas ou meses. Esse período pode ser decisivo para um animal resgatado que precisa ganhar peso, se recuperar de estresse, terminar tratamento, aprender a confiar ou simplesmente esperar uma família responsável.",
+      "Para a ONG, cada lar temporário amplia a capacidade de resgate sem depender apenas de abrigos cheios. Para o animal, significa sair de um ambiente inseguro e viver uma rotina mais próxima da vida em família, com observação diária e cuidados individualizados."
+    ],
+    steps: [
+      {
+        title: "Entenda o compromisso antes de aceitar",
+        text: "Lar temporário não é adoção definitiva, mas exige responsabilidade. Combine com a ONG o prazo previsto, quem fornece ração, medicamentos, transporte, atendimento veterinário e como será feita a divulgação para adoção. Tudo precisa estar claro antes da chegada do animal."
+      },
+      {
+        title: "Prepare um espaço separado e seguro",
+        text: "Reserve um cômodo ou área tranquila para os primeiros dias. O animal pode chegar assustado, cansado ou sem histórico completo de saúde. Separar de outros pets evita brigas, fugas, estresse e possíveis transmissões até que a adaptação seja feita com segurança."
+      },
+      {
+        title: "Monte um kit básico de acolhimento",
+        text: "Tenha potes de água e comida, caminha ou manta lavável, tapete higiênico ou caixa de areia, guia ou caixa de transporte, brinquedos simples e produtos de limpeza adequados. O objetivo é oferecer conforto sem depender de improviso."
+      },
+      {
+        title: "Faça a adaptação sem pressa",
+        text: "Nos primeiros dias, evite visitas, excesso de colo, barulho e contato direto com muitos animais. Deixe o resgatado explorar no próprio ritmo. Medo, silêncio, vontade de se esconder ou pouca interação inicial podem ser respostas normais ao estresse."
+      },
+      {
+        title: "Observe comportamento, alimentação e saúde",
+        text: "Anote se o animal come bem, bebe água, faz xixi e cocô, dorme, brinca, manca, coça, tosse ou demonstra dor. Essas informações ajudam a ONG e o veterinário a entenderem o estado real do animal fora da rua ou do abrigo."
+      },
+      {
+        title: "Registre fotos e pequenas evoluções",
+        text: "Fotos nítidas, vídeos curtos e relatos sobre personalidade ajudam muito na adoção. Conte se o animal é calmo, brincalhão, sociável, independente, medroso, acostumado com crianças ou melhor para uma rotina tranquila. Informação honesta evita devoluções."
+      },
+      {
+        title: "Respeite os critérios de adoção da ONG",
+        text: "Mesmo que alguém conhecido se interesse, o encaminhamento deve seguir o processo combinado: entrevista, orientação, termo de adoção e checagem de segurança. O lar temporário ajuda a cuidar, mas a adoção precisa ser responsável e documentada."
+      },
+      {
+        title: "Prepare-se emocionalmente para a despedida",
+        text: "Apego acontece, e isso é normal. A despedida pode ser difícil, mas também é o sinal de que o lar temporário cumpriu sua missão. Quando um animal é adotado com segurança, outro pode ocupar aquele espaço e receber a mesma chance."
+      }
+    ],
+    closing: "Ser lar temporário é transformar espaço disponível em proteção concreta. Com organização, comunicação com a ONG e cuidado diário, essa ajuda cria pontes entre o resgate e a adoção definitiva, uma vida por vez."
+  },
+  {
     title: "Castração responsável: por que ela protege animais, famílias e a comunidade",
     subtitle: "Entenda quando conversar com o veterinário, quais cuidados preparar e como a castração ajuda a reduzir abandono.",
     category: "Saúde preventiva",
