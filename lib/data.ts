@@ -160,6 +160,53 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Enriquecimento ambiental: como reduzir estresse e melhorar a vida de cães e gatos",
+    subtitle: "Brincadeiras simples, rotina previsível e desafios seguros ajudam animais resgatados a ganhar confiança.",
+    category: "Bem-estar animal",
+    summary: "Veja como preparar atividades de baixo custo para cães e gatos, especialmente em adoção, lar temporário ou adaptação depois do resgate.",
+    image: "/assets/blog-enriquecimento-ambiental-2026-07-21.png",
+    content: "Enriquecimento ambiental é o conjunto de cuidados que torna a rotina do animal mais interessante, segura e parecida com suas necessidades naturais. Para cães e gatos resgatados, isso pode reduzir ansiedade, melhorar a adaptação e evitar comportamentos ligados ao tédio ou ao medo.",
+    body: [
+      "Muitos animais chegam ao lar temporário ou à nova família depois de experiências difíceis: rua, abandono, barulho, fome, disputa por espaço ou longos períodos sem previsibilidade. Nesses casos, carinho é importante, mas não basta. O animal também precisa de ambiente organizado, estímulos adequados e tempo para entender que está seguro.",
+      "O enriquecimento ambiental não precisa ser caro. Caixas de papelão, brinquedos simples, passeios bem conduzidos, cheiros diferentes, arranhadores, comedouros interativos e pequenas rotinas já fazem diferença. O ponto principal é oferecer escolhas e atividades sem forçar contato, exposição ou agitação excessiva."
+    ],
+    steps: [
+      {
+        title: "Comece pela segurança do ambiente",
+        text: "Antes de oferecer brinquedos ou desafios, retire fios soltos, produtos de limpeza, objetos pequenos, plantas tóxicas e qualquer item que possa ser engolido. Para gatos, janelas teladas são prioridade. Para cães, portões, guias e áreas de descanso precisam estar bem definidos."
+      },
+      {
+        title: "Crie uma rotina previsível",
+        text: "Horários parecidos para alimentação, descanso, passeio, limpeza e brincadeiras ajudam o animal a relaxar. Animais resgatados costumam se beneficiar de repetição, porque a previsibilidade mostra que comida, atenção e descanso não são eventos incertos."
+      },
+      {
+        title: "Ofereça alimentação com desafio leve",
+        text: "Tapetes de farejar, brinquedos recheáveis e ração escondida em pequenas porções estimulam o olfato e a concentração. Comece fácil para não gerar frustração. O objetivo é ocupar a mente do animal, não criar competição ou estresse."
+      },
+      {
+        title: "Use cheiros e exploração controlada",
+        text: "Cães podem explorar cheiros durante passeios tranquilos, sem pressa. Gatos podem investigar caixas, túneis, mantas e objetos novos em ambiente seguro. O olfato é uma forma poderosa de enriquecimento, especialmente para animais medrosos ou com energia acumulada."
+      },
+      {
+        title: "Monte pontos de descanso protegidos",
+        text: "Todo animal precisa de um local onde possa ficar sem ser incomodado. Caminhas em cantos calmos, caixas para gatos, mantas laváveis e espaços longe de barulho ajudam na recuperação emocional. Crianças e visitas devem ser orientadas a respeitar esse refúgio."
+      },
+      {
+        title: "Adapte atividades para a espécie e personalidade",
+        text: "Gatos costumam gostar de altura, arranhadores, esconderijos e brincadeiras de caça com varinhas. Cães podem preferir farejar, roer itens seguros, treinar comandos simples ou passear. O que funciona para um animal pode não funcionar para outro."
+      },
+      {
+        title: "Evite excesso de estímulo",
+        text: "Brincadeira demais, visitas frequentes, barulho e tentativa constante de interação podem aumentar ansiedade. Observe sinais como bocejos repetidos, tentativa de se esconder, rosnado, pupilas dilatadas, ofegância ou agitação. Pausas fazem parte do cuidado."
+      },
+      {
+        title: "Registre o que ajuda na adaptação",
+        text: "Anote quais brinquedos, horários, alimentos e atividades deixam o animal mais tranquilo. Essas informações ajudam a ONG, o lar temporário e a futura família a manter uma rotina compatível com a personalidade do cão ou gato."
+      }
+    ],
+    closing: "Enriquecimento ambiental é bem-estar colocado em prática. Com segurança, observação e criatividade, é possível transformar a rotina de cães e gatos resgatados em uma experiência mais calma, saudável e preparada para a adoção responsável."
+  },
+  {
     title: "Lar temporário para cães e gatos: como ajudar mesmo sem adotar agora",
     subtitle: "Abrir a casa por um período combinado pode salvar vidas e liberar espaço para novos resgates.",
     category: "Voluntariado",
