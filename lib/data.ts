@@ -160,6 +160,53 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Vacinação e vermifugação: cuidados essenciais antes e depois da adoção",
+    subtitle: "Prevenção organizada protege o animal, a família e outros cães e gatos da casa.",
+    category: "Saúde preventiva",
+    summary: "Entenda como organizar carteira de vacinação, vermifugação, antipulgas e acompanhamento veterinário para cães e gatos adotados.",
+    image: "/assets/blog-vacinacao-vermifugacao-2026-07-23.png",
+    content: "Vacinação, vermifugação e controle de parasitas fazem parte da base de uma adoção responsável. Esses cuidados ajudam a proteger cães e gatos contra doenças, reduzem riscos para outros animais da casa e dão mais segurança para a adaptação.",
+    body: [
+      "Quando um animal é resgatado, nem sempre existe histórico completo de saúde. Ele pode ter passado por rua, abrigo, lar temporário, contato com outros animais ou períodos sem acompanhamento veterinário. Por isso, a prevenção precisa ser organizada desde o início, sem depender apenas de aparência saudável.",
+      "A carteira de vacinação, a vermifugação, o controle de pulgas e carrapatos e as consultas de rotina ajudam a construir um plano real de cuidado. Para adotantes, isso evita dúvidas e atrasos. Para ONGs, facilita acompanhamento e reduz devoluções motivadas por problemas que poderiam ser orientados previamente."
+    ],
+    steps: [
+      {
+        title: "Comece com uma avaliação veterinária",
+        text: "Antes de aplicar vacinas ou medicamentos por conta própria, leve o animal para avaliação. O veterinário verifica idade aproximada, peso, temperatura, hidratação, mucosas, pele, fezes, histórico disponível e sinais de doença. Esse primeiro check-up define o que pode ser feito com segurança."
+      },
+      {
+        title: "Organize a carteira de vacinação",
+        text: "Cães e gatos precisam de protocolos diferentes, definidos por idade, região, risco de exposição e histórico. Guarde a carteira física ou digital e anote datas de reforço. Vacina atrasada não deve ser ignorada: peça orientação para regularizar sem pular etapas importantes."
+      },
+      {
+        title: "Respeite o intervalo entre doses",
+        text: "Filhotes geralmente precisam de uma sequência de doses para desenvolver proteção adequada. Adultos sem histórico também podem precisar reiniciar ou atualizar protocolo. O intervalo correto é parte do tratamento preventivo; antecipar ou atrasar demais pode comprometer a proteção."
+      },
+      {
+        title: "Faça vermifugação com dose correta",
+        text: "Vermífugo deve considerar peso, idade, espécie e condição clínica. Dose errada pode não funcionar ou causar efeitos indesejados. Em animais recém-resgatados, o veterinário pode pedir exame de fezes ou indicar repetição em datas específicas."
+      },
+      {
+        title: "Controle pulgas, carrapatos e ácaros",
+        text: "Parasitas causam coceira, feridas, anemia e podem transmitir doenças. O controle precisa incluir o animal e o ambiente: caminhas, mantas, frestas, quintal e locais de descanso. Use apenas produtos indicados para a espécie; alguns produtos seguros para cães são perigosos para gatos."
+      },
+      {
+        title: "Mantenha quarentena quando houver outros animais",
+        text: "Se já existem cães ou gatos na casa, faça uma adaptação gradual. Até avaliação veterinária e orientação sobre vacinas e parasitas, mantenha o recém-chegado separado, com potes, caixa de areia ou caminha próprios. Isso protege todos e reduz estresse."
+      },
+      {
+        title: "Observe reações e sinais de alerta",
+        text: "Após vacinas ou medicamentos, algum cansaço leve pode acontecer, mas sinais como inchaço intenso, vômitos repetidos, dificuldade para respirar, prostração forte, diarreia persistente ou piora rápida exigem contato imediato com o veterinário."
+      },
+      {
+        title: "Planeje os reforços como parte da adoção",
+        text: "Adoção responsável continua depois da chegada. Coloque lembretes para reforços, consultas, antiparasitários e exames. Quando a família assume esse calendário, o animal fica protegido e a ONG consegue acompanhar melhor o sucesso da adoção."
+      }
+    ],
+    closing: "Prevenção é uma forma concreta de cuidado. Com orientação veterinária, registros organizados e rotina de acompanhamento, cães e gatos adotados têm mais chance de viver com saúde, segurança e estabilidade na nova família."
+  },
+  {
     title: "Enriquecimento ambiental: como reduzir estresse e melhorar a vida de cães e gatos",
     subtitle: "Brincadeiras simples, rotina previsível e desafios seguros ajudam animais resgatados a ganhar confiança.",
     category: "Bem-estar animal",
