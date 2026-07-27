@@ -165,7 +165,7 @@ export function AdminPanel() {
           <h2>{activeTitle}</h2>
           {activeModule === "animais" ? <AnimalAdminPreview session={session} /> : null}
           {activeModule === "blog" ? <BlogAdminPreview /> : null}
-          {activeModule === "loja" ? <ShopAdminPreview /> : null}
+          {activeModule === "loja" ? <ShopAdminPreview session={session} /> : null}
           {activeModule === "leads" ? <LeadsAdminPreview /> : null}
           {activeModule === "asaas" ? <AsaasAdminPreview /> : null}
         </div>
@@ -524,7 +524,143 @@ function LeadsAdminPreview() {
   return <p className="empty-state">Aqui vao aparecer os cadastros recebidos pelos formularios do site.</p>;
 }
 
-function ShopAdminPreview() {
+type AdminShopProduct = {
+  chave: string;
+  nome: string;
+  descricao?: string | null;
+  valor: number | string;
+  imagem_url?: string | null;
+  tipo?: string | null;
+  ativo?: boolean | null;
+  ordem?: number | null;
+};
+
+function ShopAdminPreview({ session }: { session: Session }) {
+  const [products, setProducts] = useState<AdminShopProduct[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<AdminShopProduct | null>(null);
+  const [productImage, setProductImage] = useState("");
+  const [savingProduct, setSavingProduct] = useState(false);
+  const [shopMessage, setShopMessage] = useState("");
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  async function loadProducts() {
+    const response = await fetch("/api/admin/shop-products", {
+      headers: { Authorization: `Bearer ${session.access_token}` }
+    });
+    const result = await response.json().catch(() => ({}));
+    if (response.ok) setProducts(result.products || []);
+  }
+
+  function handleProductImage(files: FileList | null) {
+    const file = files?.[0];
+    setProductImage(file ? URL.createObjectURL(file) : "");
+  }
+
+  function editProduct(product: AdminShopProduct) {
+    setSelectedProduct(product);
+    setProductImage(product.imagem_url || "");
+    setShopMessage("");
+  }
+
+  function newProduct() {
+    setSelectedProduct(null);
+    setProductImage("");
+    setShopMessage("");
+  }
+
+  async function saveProduct(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setSavingProduct(true);
+    setShopMessage("");
+
+    const form = new FormData(event.currentTarget);
+    form.set("chave", selectedProduct?.chave || "");
+    form.set("imagem_url", selectedProduct?.imagem_url || "");
+
+    const response = await fetch("/api/admin/shop-products", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${session.access_token}` },
+      body: form
+    });
+    const result = await response.json().catch(() => ({}));
+    setSavingProduct(false);
+
+    if (!response.ok) {
+      setShopMessage(`Nao foi possivel salvar: ${result.error || "erro desconhecido"}`);
+      return;
+    }
+
+    setShopMessage(`Produto salvo. Link para divulgar: ${result.link}`);
+    event.currentTarget.reset();
+    setSelectedProduct(null);
+    setProductImage("");
+    await loadProducts();
+  }
+
+  async function deleteProduct(product: AdminShopProduct) {
+    if (!window.confirm(`Excluir ${product.nome} da lojinha?`)) return;
+
+    const response = await fetch(`/api/admin/shop-products?key=${encodeURIComponent(product.chave)}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${session.access_token}` }
+    });
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      setShopMessage(`Nao foi possivel excluir: ${result.error || "erro desconhecido"}`);
+      return;
+    }
+
+    if (selectedProduct?.chave === product.chave) {
+      setSelectedProduct(null);
+      setProductImage("");
+    }
+    setProducts((current) => current.filter((item) => item.chave !== product.chave));
+    setShopMessage("Produto excluido.");
+  }
+
+  const formKey = selectedProduct?.chave || "new-product";
+
+  return (
+    <div className="admin-workspace">
+      <div className="empty-state">
+        <button className="button neutral" type="button" onClick={newProduct}>Novo produto</button>
+        <div className="profile-list">
+          {products.map((item) => (
+            <div className="profile-row editable-row" key={item.chave}>
+              <button type="button" onClick={() => editProduct(item)}>
+                <img src={item.imagem_url || "/assets/donation-food.png"} alt={item.nome} />
+                <span>
+                  <strong>{item.nome}</strong>
+                  <small>R$ {Number(item.valor)},00 {item.tipo === "recurring" ? "mensal" : "item avulso"} - /doacao/{item.chave}</small>
+                </span>
+              </button>
+              <button type="button" onClick={() => deleteProduct(item)}>Excluir</button>
+            </div>
+          ))}
+          {!products.length ? <p>Nenhum produto cadastrado ainda.</p> : null}
+        </div>
+      </div>
+      <form key={formKey} className="form editor-form" onSubmit={saveProduct}>
+        <h3>{selectedProduct ? `Editando ${selectedProduct.nome}` : "Novo produto"}</h3>
+        <label>Nome do produto<input name="nome" required defaultValue={selectedProduct?.nome || ""} placeholder="Ex: Saco de racao 10 kg" /></label>
+        <label>Valor<input name="valor" required type="number" min="1" step="0.01" defaultValue={selectedProduct?.valor || ""} placeholder="95" /></label>
+        <label>Tipo<select name="tipo" defaultValue={selectedProduct?.tipo || "item"}><option value="item">Item avulso</option><option value="recurring">Doacao mensal recorrente</option></select></label>
+        <label>Ordem<input name="ordem" type="number" defaultValue={selectedProduct?.ordem || 0} placeholder="0" /></label>
+        <label>Imagem do produto<input name="image" type="file" accept="image/*" onChange={(event) => handleProductImage(event.target.files)} /></label>
+        {productImage ? <div className="blog-cover-preview"><img src={productImage} alt="Previa do produto" /></div> : null}
+        <label>Descricao<textarea name="descricao" defaultValue={selectedProduct?.descricao || ""} placeholder="Explique como essa doacao ajuda os animais" /></label>
+        <button className="button primary" type="submit" disabled={savingProduct}>{savingProduct ? "Salvando..." : "Salvar produto"}</button>
+        {shopMessage ? <p className="login-warning">{shopMessage}</p> : null}
+      </form>
+    </div>
+  );
+}
+
+function ShopAdminPreviewLegacy() {
   const [productImage, setProductImage] = useState("");
 
   function handleProductImage(files: FileList | null) {

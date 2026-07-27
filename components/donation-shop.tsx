@@ -1,18 +1,30 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
-import { donationItems, type DonationProduct } from "@/lib/data";
+import Link from "next/link";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import type { DonationProduct } from "@/lib/data";
 
 type CartItem = DonationProduct & { qty: number };
 type CheckoutStep = "cart" | "donor";
 
-export function DonationShop() {
+export function DonationShop({ products, initialItemKey }: { products: DonationProduct[]; initialItemKey?: string }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [step, setStep] = useState<CheckoutStep>("cart");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [initialItemAdded, setInitialItemAdded] = useState(false);
   const total = useMemo(() => cart.reduce((sum, item) => sum + item.price * item.qty, 0), [cart]);
   const hasRecurring = cart.some((item) => item.type === "recurring");
+
+  useEffect(() => {
+    if (!initialItemKey || initialItemAdded) return;
+    const item = products.find((product) => product.key === initialItemKey);
+    if (!item) return;
+
+    setCart([{ ...item, qty: 1 }]);
+    setMessage(`${item.name} foi adicionado ao carrinho.`);
+    setInitialItemAdded(true);
+  }, [initialItemAdded, initialItemKey, products]);
 
   function addItem(item: DonationProduct) {
     setMessage("");
@@ -109,8 +121,8 @@ export function DonationShop() {
   return (
     <div className="donation-shop">
       <section className="item-grid" aria-label="Itens de doação">
-        {donationItems.map((item) => (
-          <article className={`donation-item ${item.type === "recurring" ? "recurring" : ""}`} key={item.key}>
+        {products.map((item) => (
+          <article className={`donation-item ${item.type === "recurring" ? "recurring" : ""} ${item.key === initialItemKey ? "featured-product" : ""}`} id={`produto-${item.key}`} key={item.key}>
             <img src={item.image} alt={item.name} />
             <div className="donation-item-copy">
               <span className="item-icon">{item.type === "recurring" ? "Mensal" : "Item solidário"}</span>
@@ -118,9 +130,13 @@ export function DonationShop() {
               <p>{item.description}</p>
               <strong>R$ {item.price},00{item.type === "recurring" ? "/mês" : ""}</strong>
             </div>
-            <button className="button small" type="button" onClick={() => addItem(item)}>Adicionar</button>
+            <div className="donation-item-actions">
+              <button className="button small" type="button" onClick={() => addItem(item)}>Adicionar</button>
+              <Link className="item-direct-link" href={`/doacao/${item.key}`}>Link do item</Link>
+            </div>
           </article>
         ))}
+        {!products.length ? <p className="empty-state">Nenhum produto cadastrado na lojinha.</p> : null}
       </section>
       <aside className="checkout-box">
         <h2>Carrinho solidário</h2>

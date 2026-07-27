@@ -1,6 +1,7 @@
 import { posts } from "@/lib/data";
 import { getAnimalSlug, getAnimals } from "@/lib/animals";
 import { getPostSlug } from "@/lib/blog";
+import { getShopProducts } from "@/lib/shop";
 import { site } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
@@ -8,7 +9,7 @@ export const dynamic = "force-dynamic";
 const routes = ["", "/adocao", "/doacao", "/cadastro", "/apadrinhamento", "/blog", "/eventos"];
 
 export default async function sitemap() {
-  const animals = await getAnimals();
+  const [animals, products] = await Promise.all([getAnimals(), getShopProducts()]);
 
   const staticRoutes = routes.map((route) => ({
     url: `${site.url}${route}`,
@@ -30,6 +31,12 @@ export default async function sitemap() {
     changeFrequency: "monthly" as const,
     priority: 0.75
   }));
+  const productRoutes = products.map((product) => ({
+    url: `${site.url}/doacao/${product.key}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.75
+  }));
 
-  return [...staticRoutes, ...animalRoutes, ...blogRoutes];
+  return [...staticRoutes, ...animalRoutes, ...blogRoutes, ...productRoutes];
 }

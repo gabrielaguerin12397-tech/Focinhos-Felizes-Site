@@ -1252,6 +1252,11 @@ h3 {
   background: #fff9ec;
 }
 
+.donation-item.featured-product {
+  border-color: var(--blue);
+  box-shadow: 0 14px 34px rgba(18, 107, 158, 0.18);
+}
+
 .donation-item > img {
   width: 88px;
   height: 78px;
@@ -1282,6 +1287,23 @@ h3 {
 .donation-item strong {
   color: var(--blue);
   font: 900 1.04rem "Nunito", sans-serif;
+}
+
+.donation-item-actions {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+}
+
+.item-direct-link {
+  color: var(--blue);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.item-direct-link:hover {
+  text-decoration: underline;
 }
 
 .item-icon {
@@ -1369,6 +1391,11 @@ h3 {
   .donation-item .button {
     grid-column: 1 / -1;
     width: 100%;
+  }
+
+  .donation-item-actions {
+    grid-column: 1 / -1;
+    justify-items: stretch;
   }
 }
 

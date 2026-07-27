@@ -10,6 +10,7 @@ export const revalidate = 0;
 
 type AnimalPageProps = {
   params: { slug: string };
+  searchParams?: { back?: string };
 };
 
 export async function generateMetadata({ params }: AnimalPageProps) {
@@ -34,7 +35,7 @@ export async function generateMetadata({ params }: AnimalPageProps) {
   };
 }
 
-export default async function AnimalProfilePage({ params }: AnimalPageProps) {
+export default async function AnimalProfilePage({ params, searchParams }: AnimalPageProps) {
   const animal = await getAnimalBySlug(params.slug);
 
   if (!animal) notFound();
@@ -58,11 +59,12 @@ export default async function AnimalProfilePage({ params }: AnimalPageProps) {
     animal.vacinado ? "Vacinado" : "",
     animal.vermifugado ? "Vermifugado" : ""
   ].filter(Boolean);
+  const backHref = searchParams?.back?.startsWith("/adocao") ? searchParams.back : "/adocao?ver=todos";
 
   return (
     <main className="page-main">
       <article className="section animal-profile-page compact-profile">
-        <Link className="button neutral" href="/adocao">Voltar para adoção</Link>
+        <Link className="button neutral" href={backHref}>Voltar para adoção</Link>
         <div className="animal-profile-hero">
           <img src={animal.foto} alt={`${animal.nome}, ${animal.especie.toLowerCase()} ${animal.cor.toLowerCase()} para adoção em Manaus`} />
           <div className="animal-profile-card">

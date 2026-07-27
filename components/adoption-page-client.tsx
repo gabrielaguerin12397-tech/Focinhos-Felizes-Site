@@ -1,20 +1,43 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Animal } from "@/lib/data";
 import { AnimalCard } from "@/components/animal-card";
 import { AdoptionMatch } from "@/components/adoption-match";
 
 export function AdoptionPageClient({ animals }: { animals: Animal[] }) {
-  const [showAnimals, setShowAnimals] = useState(false);
-  const [filters, setFilters] = useState({
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [showAnimals, setShowAnimals] = useState(searchParams.get("ver") === "todos");
+  const [filters, setFilters] = useState(() => ({
+    especie: searchParams.get("especie") || "",
+    cor: searchParams.get("cor") || "",
+    sexo: searchParams.get("sexo") || "",
+    castrado: searchParams.get("castrado") || "",
+    idade: searchParams.get("idade") || "",
+    porte: searchParams.get("porte") || ""
+  }));
+  const emptyFilters = {
     especie: "",
     cor: "",
     sexo: "",
     castrado: "",
     idade: "",
     porte: ""
-  });
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (showAnimals) params.set("ver", "todos");
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+    });
+
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }, [filters, pathname, router, showAnimals]);
 
   const filteredAnimals = useMemo(() => {
     return animals.filter((animal) => {
@@ -35,12 +58,25 @@ export function AdoptionPageClient({ animals }: { animals: Animal[] }) {
   }
 
   function clearFilters() {
-    setFilters({ especie: "", cor: "", sexo: "", castrado: "", idade: "", porte: "" });
+    setFilters(emptyFilters);
   }
+
+  function showAllAnimals() {
+    setShowAnimals(true);
+  }
+
+  const backHref = useMemo(() => {
+    const params = new URLSearchParams();
+    params.set("ver", "todos");
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+    });
+    return `/adocao?${params.toString()}`;
+  }, [filters]);
 
   return (
     <>
-      <AdoptionMatch animals={animals} onShowAll={() => setShowAnimals(true)} />
+      <AdoptionMatch animals={animals} onShowAll={showAllAnimals} />
 
       {showAnimals ? (
         <section className="adoption-browser" aria-label="Todos os animais disponíveis para adoção">
@@ -62,7 +98,7 @@ export function AdoptionPageClient({ animals }: { animals: Animal[] }) {
           </div>
 
           <div className="animal-grid">
-            {filteredAnimals.map((animal) => <AnimalCard key={animal.id} animal={animal} />)}
+            {filteredAnimals.map((animal) => <AnimalCard key={animal.id} animal={animal} backHref={backHref} />)}
           </div>
 
           {!filteredAnimals.length ? <p className="empty-state">Nenhum animal encontrado com esses filtros.</p> : null}
