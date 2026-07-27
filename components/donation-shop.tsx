@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import type { DonationProduct } from "@/lib/data";
 
@@ -44,6 +43,12 @@ export function DonationShop({ products, initialItemKey }: { products: DonationP
 
       return [...current, { ...item, qty: 1 }];
     });
+  }
+
+  async function copyProductLink(key: string) {
+    const link = `${window.location.origin}/doacao/${key}`;
+    await navigator.clipboard.writeText(link);
+    setMessage("Link do produto copiado.");
   }
 
   function removeItem(key: string) {
@@ -132,7 +137,7 @@ export function DonationShop({ products, initialItemKey }: { products: DonationP
             </div>
             <div className="donation-item-actions">
               <button className="button small" type="button" onClick={() => addItem(item)}>Adicionar</button>
-              <Link className="item-direct-link" href={`/doacao/${item.key}`}>Link do item</Link>
+              <button className="item-direct-link" type="button" onClick={() => copyProductLink(item.key)}>Copiar link do produto</button>
             </div>
           </article>
         ))}

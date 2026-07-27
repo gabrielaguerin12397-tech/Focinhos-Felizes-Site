@@ -622,6 +622,12 @@ function ShopAdminPreview({ session }: { session: Session }) {
     setShopMessage("Produto excluido.");
   }
 
+  async function copyProductLink(key: string) {
+    const link = `${window.location.origin}/doacao/${key}`;
+    await navigator.clipboard.writeText(link);
+    setShopMessage(`Link copiado: ${link}`);
+  }
+
   const formKey = selectedProduct?.chave || "new-product";
 
   return (
@@ -638,6 +644,7 @@ function ShopAdminPreview({ session }: { session: Session }) {
                   <small>R$ {Number(item.valor)},00 {item.tipo === "recurring" ? "mensal" : "item avulso"} - /doacao/{item.chave}</small>
                 </span>
               </button>
+              <button type="button" onClick={() => copyProductLink(item.chave)}>Copiar link do produto</button>
               <button type="button" onClick={() => deleteProduct(item)}>Excluir</button>
             </div>
           ))}
