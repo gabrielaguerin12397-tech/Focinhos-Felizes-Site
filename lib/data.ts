@@ -160,6 +160,57 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Adoção de cães e gatos idosos: como oferecer conforto, rotina e uma nova chance",
+    subtitle: "Animais mais velhos também esperam por família e podem se adaptar muito bem quando recebem cuidado adequado.",
+    category: "Adoção responsável",
+    summary: "Entenda os principais cuidados ao adotar cães e gatos idosos, da avaliação veterinária à adaptação da casa e da rotina.",
+    image: "/assets/blog-adocao-idosos-2026-08-11.png",
+    content: "Adotar um cão ou gato idoso é escolher uma forma muito concreta de cuidado. Animais mais velhos costumam ser tranquilos, gratos pela rotina e capazes de criar vínculos fortes, mas precisam de atenção especial com saúde, conforto e adaptação.",
+    body: [
+      "Muitos animais idosos passam mais tempo esperando por adoção porque as pessoas imaginam que apenas filhotes se adaptam bem. Na prática, cães e gatos mais velhos podem ser excelentes companheiros, especialmente para famílias que buscam uma rotina mais calma, previsível e afetiva.",
+      "A adoção de um animal idoso exige compromisso, mas não deve ser vista como um problema. Com avaliação veterinária, pequenas adaptações na casa e respeito ao ritmo do animal, essa chegada pode ser segura e muito significativa para todos."
+    ],
+    steps: [
+      {
+        title: "Converse com a ONG sobre o histórico do animal",
+        text: "Pergunte sobre comportamento, saúde, alimentação, rotina, medicações, exames já feitos, relação com outros animais e nível de energia. Quanto mais informações a família tiver antes da adoção, mais fácil será preparar um ambiente compatível."
+      },
+      {
+        title: "Faça uma avaliação veterinária inicial",
+        text: "A consulta ajuda a verificar peso, dentes, pele, visão, audição, articulações, vacinas, vermifugação e possíveis exames de rotina. Animais idosos podem precisar de acompanhamento mais próximo, mas prevenção bem organizada evita sofrimento e decisões tardias."
+      },
+      {
+        title: "Adapte a casa para conforto e mobilidade",
+        text: "Use caminhas baixas, mantas laváveis, potes em local acessível e tapetes antiderrapantes em pisos lisos. Se o animal tem dificuldade para subir em sofá, cama ou carro, rampas e degraus baixos reduzem esforço e risco de queda."
+      },
+      {
+        title: "Mantenha uma rotina previsível",
+        text: "Horários parecidos para alimentação, passeio, descanso e higiene dão segurança. Animais idosos se beneficiam de estabilidade, principalmente quando passaram por abandono, mudança de lar ou períodos de abrigo."
+      },
+      {
+        title: "Ajuste exercícios ao ritmo do animal",
+        text: "Passeios curtos, cheiros no caminho, brincadeiras leves e interação tranquila costumam ser melhores do que atividades intensas. O objetivo é manter movimento e estímulo sem causar dor, exaustão ou ansiedade."
+      },
+      {
+        title: "Observe sinais sutis de dor ou desconforto",
+        text: "Mudanças no apetite, dificuldade para levantar, isolamento, irritação, lambedura excessiva, mancar, evitar escadas ou dormir mais do que o normal merecem atenção. Animais nem sempre demonstram dor de forma evidente."
+      },
+      {
+        title: "Cuide da alimentação com orientação profissional",
+        text: "A dieta pode precisar de ajustes conforme idade, peso, dentes, rins, alergias ou doenças crônicas. Evite trocar ração ou oferecer suplementos sem orientação, porque animais idosos podem ser mais sensíveis a mudanças bruscas."
+      },
+      {
+        title: "Respeite o tempo de vínculo",
+        text: "Alguns idosos se aproximam rápido; outros precisam observar a casa antes de confiar. Dê espaço, fale com calma e evite excesso de visitas no início. Segurança emocional também faz parte da adoção responsável."
+      },
+      {
+        title: "Planeje custos e acompanhamento contínuo",
+        text: "Adoção de idoso pode envolver consultas mais frequentes, exames e medicamentos. Isso não diminui o valor da adoção; apenas torna o planejamento mais honesto. Com organização, a família oferece cuidado digno e evita abandono secundário."
+      }
+    ],
+    closing: "Animais idosos não precisam de pena: precisam de oportunidade, rotina e cuidado. Ao abrir espaço para um cão ou gato mais velho, a família oferece dignidade a quem ainda tem muito afeto para viver e compartilhar."
+  },
+  {
     title: "Vacinação e vermifugação: cuidados essenciais antes e depois da adoção",
     subtitle: "Prevenção organizada protege o animal, a família e outros cães e gatos da casa.",
     category: "Saúde preventiva",
