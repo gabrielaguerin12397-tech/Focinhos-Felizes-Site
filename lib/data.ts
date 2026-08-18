@@ -160,6 +160,61 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Como evitar fugas de cães e gatos: 10 passos para manter seu pet seguro",
+    subtitle: "Telas, identificação e uma rotina preventiva reduzem riscos dentro e fora de casa.",
+    category: "Segurança animal",
+    summary: "Aprenda a prevenir fugas de cães e gatos com um checklist prático para portas, janelas, passeios, transporte, identificação e situações de emergência.",
+    image: "/assets/blog-prevencao-fugas-2026-08-18.png",
+    content: "Uma porta aberta por poucos segundos, uma tela danificada ou um susto durante o passeio podem ser suficientes para um animal se perder. Prevenir fugas exige atenção ao ambiente, identificação atualizada e hábitos consistentes de toda a família.",
+    body: [
+      "Cães e gatos podem tentar sair por curiosidade, medo, instinto reprodutivo, ansiedade ou falta de adaptação. Fogos, tempestades, mudanças de casa e a chegada de visitas também aumentam o risco. Mesmo animais tranquilos podem reagir de forma inesperada quando se assustam.",
+      "A prevenção funciona melhor quando combina barreiras físicas, supervisão e identificação. O objetivo não é limitar o bem-estar do animal, mas permitir que ele explore, brinque e descanse em um espaço protegido. O checklist abaixo ajuda tutores, adotantes e lares temporários a revisar os pontos mais importantes."
+    ],
+    steps: [
+      {
+        title: "Revise portas, portões e rotas de saída",
+        text: "Observe a casa na altura do animal e procure frestas, portões que não travam, muros baixos e portas que ficam abertas durante entregas ou visitas. Instale trincos firmes e combine com a família que uma barreira só deve ser aberta depois que a outra estiver fechada."
+      },
+      {
+        title: "Instale telas resistentes em janelas e varandas",
+        text: "Gatos precisam de telas de proteção em todas as janelas, basculantes, sacadas e áreas de serviço acessíveis. Verifique fixação, tensão e desgaste com frequência. Mosquiteiros comuns não substituem redes próprias para proteção animal."
+      },
+      {
+        title: "Mantenha identificação visível e atualizada",
+        text: "Use coleira adequada com plaquinha contendo nome do animal e um telefone atualizado. Em gatos, prefira modelos com fecho de segurança. A identificação não evita a fuga, mas aumenta muito a chance de contato rápido caso alguém encontre o pet."
+      },
+      {
+        title: "Considere a microchipagem",
+        text: "O microchip oferece uma identificação permanente, lida por equipamento específico em clínicas e órgãos participantes. Mantenha os dados do responsável atualizados no cadastro e entenda que ele complementa, mas não substitui, a plaquinha visível."
+      },
+      {
+        title: "Use guia e equipamento compatíveis nos passeios",
+        text: "Escolha peitoral ou coleira ajustados ao corpo do cão, sem folgas que permitam escapar ao recuar. Para animais medrosos, o veterinário ou profissional de comportamento pode orientar uma combinação mais segura. Nunca solte o animal em vias públicas ou áreas sem fechamento confiável."
+      },
+      {
+        title: "Transporte sempre em caixa apropriada",
+        text: "Gatos e cães pequenos devem sair em caixa de transporte íntegra e bem fechada. Prenda a caixa com o cinto quando possível e confirme as travas antes de abrir o carro. Para cães maiores, use dispositivo de retenção próprio e coloque a guia antes de abrir a porta."
+      },
+      {
+        title: "Prepare a casa para visitas e prestadores de serviço",
+        text: "Antes de abrir portões para entregas, manutenção ou mudanças, acomode o animal em um cômodo seguro com água, ventilação e itens familiares. Avise quem entra na casa e coloque um lembrete discreto próximo à porta quando houver risco de fuga."
+      },
+      {
+        title: "Reduza gatilhos de medo e ansiedade",
+        text: "Em dias de fogos ou tempestades, mantenha o pet dentro de casa, feche acessos, ofereça esconderijos e use som ambiente suave. Não force contato. Se as reações forem intensas ou frequentes, procure orientação veterinária com antecedência e não ofereça medicamentos por conta própria."
+      },
+      {
+        title: "Organize rotina, atividade e adaptação",
+        text: "Passeios seguros, brincadeiras, enriquecimento ambiental e horários previsíveis ajudam a reduzir tédio e tentativas de saída. Após uma adoção ou mudança, dê tempo para o animal reconhecer o novo espaço e reforce os cuidados nas primeiras semanas."
+      },
+      {
+        title: "Tenha um plano para agir rapidamente",
+        text: "Guarde fotos recentes e nítidas, número do microchip, características marcantes e contatos de clínicas e protetores da região. Se houver fuga, procure primeiro nas proximidades, avise vizinhos, divulgue informações objetivas e registre o desaparecimento nos canais locais adequados."
+      }
+    ],
+    closing: "A segurança de cães e gatos depende de pequenas decisões repetidas todos os dias. Faça uma vistoria mensal nas telas, travas, coleiras e caixas de transporte, atualize os contatos de identificação e envolva toda a família no mesmo protocolo. Quem adota também pode pedir à ONG orientações específicas sobre o comportamento e o período de adaptação do novo companheiro."
+  },
+  {
     title: "Adoção de cães e gatos idosos: como oferecer conforto, rotina e uma nova chance",
     subtitle: "Animais mais velhos também esperam por família e podem se adaptar muito bem quando recebem cuidado adequado.",
     category: "Adoção responsável",
