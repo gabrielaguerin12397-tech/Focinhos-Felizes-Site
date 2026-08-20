@@ -160,6 +160,57 @@ export const donationItems: DonationProduct[] = [
 
 export const posts = [
   {
+    title: "Como apresentar um novo pet aos animais da casa: passo a passo para uma adaptação segura",
+    subtitle: "Uma aproximação gradual, com espaços separados e respeito aos sinais de cada animal, ajuda a construir uma convivência tranquila.",
+    category: "Comportamento e adaptação",
+    summary: "Veja como preparar a casa e conduzir o primeiro contato entre cães e gatos com segurança, paciência e associações positivas.",
+    image: "/assets/blog-adaptacao-entre-pets-2026-08-20.png",
+    content: "A chegada de um novo cão ou gato muda cheiros, espaços e rotinas. Mesmo animais sociáveis podem precisar de tempo para entender essa novidade. Uma apresentação gradual reduz o estresse, previne conflitos e permite que cada pet avance no próprio ritmo.",
+    body: [
+      "A adaptação não deve ser medida pela rapidez com que os animais ficam juntos. O verdadeiro objetivo é criar segurança e previsibilidade. Alguns pets relaxam em poucos dias; outros precisam de semanas. Idade, saúde, experiências anteriores, nível de energia e comportamento influenciam esse processo.",
+      "Antes da adoção, converse com a ONG sobre o perfil do novo animal e descreva com sinceridade os pets que já vivem na casa. Compatibilidade não significa personalidades idênticas: significa ter condições de manejar diferenças, oferecer recursos suficientes e supervisionar os encontros."
+    ],
+    steps: [
+      {
+        title: "Prepare um cômodo exclusivo para o recém-chegado",
+        text: "Organize um espaço tranquilo com água, alimento, cama, brinquedos e, para gatos, caixa de areia e esconderijos. Esse será o ponto seguro do novo pet nos primeiros dias. Não permita que os outros animais invadam o local enquanto ele ainda estiver se ambientando."
+      },
+      {
+        title: "Mantenha rotina e recursos separados",
+        text: "Ofereça potes, camas, brinquedos e locais de descanso suficientes para evitar competição. Caixas de areia devem ficar distribuídas em pontos acessíveis e tranquilos. Preserve horários de alimentação, passeios e atenção dos animais residentes para reduzir insegurança."
+      },
+      {
+        title: "Comece pela troca de cheiros",
+        text: "Antes do contato visual, troque mantas ou panos usados pelos animais e permita que explorem os ambientes separadamente. Associe o cheiro do outro a petiscos, brincadeiras ou carinho, sem forçar aproximação. Cheirar e se afastar é uma resposta normal."
+      },
+      {
+        title: "Faça o primeiro contato visual com uma barreira",
+        text: "Use portão infantil, tela ou porta entreaberta com proteção para que os pets se vejam sem alcançar um ao outro. Mantenha distância confortável e sessões curtas. Em encontros entre cão e gato, deixe o gato escolher onde ficar e garanta rotas de fuga e locais altos."
+      },
+      {
+        title: "Observe a linguagem corporal",
+        text: "Corpo relaxado, curiosidade e capacidade de desviar a atenção indicam que a sessão pode continuar. Rigidez, olhar fixo, perseguição, rosnados persistentes, orelhas muito baixas ou tentativa de esconder-se mostram que é hora de aumentar a distância e encerrar com calma."
+      },
+      {
+        title: "Reforce comportamentos tranquilos",
+        text: "Recompense quando os animais observarem um ao outro sem avançar, responderem ao chamado ou relaxarem no mesmo ambiente. Não puna rosnados ou assopros: esses sinais comunicam desconforto. A punição pode aumentar medo e retirar avisos importantes antes de um conflito."
+      },
+      {
+        title: "Avance para encontros supervisionados",
+        text: "Quando ambos estiverem confortáveis com a barreira, faça encontros curtos no mesmo espaço. Mantenha o cão com guia frouxa no início, sem puxar nem permitir perseguição. Nunca segure o gato para aproximá-lo. Termine a sessão enquanto todos ainda estão calmos."
+      },
+      {
+        title: "Aumente o tempo de convivência aos poucos",
+        text: "Amplie a duração somente após várias experiências tranquilas. Continue separando os animais quando ninguém puder supervisionar. O acesso livre à casa deve acontecer gradualmente, e cada pet precisa conservar locais onde possa descansar sem ser incomodado."
+      },
+      {
+        title: "Procure ajuda diante de sinais persistentes",
+        text: "Interrompa contatos diretos se houver brigas, perseguição intensa, recusa prolongada de alimento, eliminação fora do lugar ou medo constante. Uma avaliação veterinária descarta dor e outros problemas de saúde; um profissional de comportamento pode criar um plano individualizado."
+      }
+    ],
+    closing: "Paciência é parte do cuidado. Evite expectativas de amizade imediata e comemore avanços pequenos, como comer perto da barreira ou descansar no mesmo cômodo. Com ambiente bem organizado, supervisão e respeito aos limites, muitos cães e gatos aprendem a compartilhar a casa com segurança. Adotantes também podem manter contato com a ONG durante a adaptação para receber orientações sobre o histórico e as necessidades do novo companheiro."
+  },
+  {
     title: "Como evitar fugas de cães e gatos: 10 passos para manter seu pet seguro",
     subtitle: "Telas, identificação e uma rotina preventiva reduzem riscos dentro e fora de casa.",
     category: "Segurança animal",
